@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Route, Switch} from 'react-router-dom'
+import {Redirect, Route, Switch} from 'react-router-dom'
 import LoginForm from './loginForm'
 import RegisterUserForm from './registerUserForm'
 import StateManager from './StateManager'
@@ -8,6 +8,9 @@ import TestingLogin from './TestingLogin'
 import MyProvider from './StateManager'
 import Dashboard from './Dashboard'
 import RegisterMember from './registerMember'
+import NotFound from './NotFound'
+import TestingMain from './forms/TestingMain'
+import Logins from './Logins'
 // import { UserProvider } from '../../userContext'
 
 
@@ -19,18 +22,21 @@ class Main extends Component {
                      
                 <ToastContainer />
                 <Switch >
-                    <Route exact path="/register" component={RegisterUserForm} />
-                    <Route exact path="/login" component={LoginForm} />
-                    <Route exact path="/dashboard" component={ Dashboard }/>
-                    <Route exact path="/member" component={RegisterMember} />  
-                    <Route exact path="/" component={LoginForm} />
-                                   
+                    <Route path="/register" component={RegisterUserForm} />
+                    <Route path="/login/user" exact component={LoginForm} />
+                    <Route path="/login" component={Logins} />
+                    <Route path="/dashboard" component={ Dashboard }/>
+                    <Route path="/member" component={RegisterMember} />
+                    <Route path="/testing-form" component={TestingMain}/> 
+                    <Route path="/not-found" component={NotFound} />                                        
+                    <Route path="/" exact component={LoginForm} />
+                    <Redirect to="/not-found" />            
                 </Switch>
 
                 {/* <MyProvider>
                     <TestingLogin />
                 </MyProvider>     */}
-                {/* <Dashboard /> */}
+                {/*   */}
                 
             </div>
         );

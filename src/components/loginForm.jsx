@@ -28,6 +28,8 @@ class LoginForm extends Component {
         this.setState({errors: errors || {}})
         
         if(errors) return
+
+        this.props.history.replace('/dashboard')
     }
 
     validatePropoty = (input) => {
