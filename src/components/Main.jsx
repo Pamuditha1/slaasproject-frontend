@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
-import LoginForm from './loginForm'
-import RegisterUserForm from './registerUserForm'
-import StateManager from './StateManager'
 import {ToastContainer} from 'react-toastify'
-import TestingLogin from './TestingLogin'
-import MyProvider from './StateManager'
-import Dashboard from './Dashboard'
-import RegisterMember from './registerMember'
 import NotFound from './NotFound'
-import TestingMain from './forms/TestingMain'
-import Logins from './Logins'
+import Logins from './StartPage'
+import UserComponent from './UserComponent'
+import 'react-datepicker/dist/react-datepicker.css'
+import ApplicantComponent from './ApplicantComponent'
+import MemberComponent from './MemberComponent'
+import Header from './Header'
 // import { UserProvider } from '../../userContext'
 
 
@@ -18,18 +15,17 @@ import Logins from './Logins'
 class Main extends Component {
     render() {
         return (
-            <div className="container">    
-                     
+            <>
+            <Header />
+            <div className="container">
+                  
                 <ToastContainer />
                 <Switch >
-                    <Route path="/register" component={RegisterUserForm} />
-                    <Route path="/login/user" exact component={LoginForm} />
-                    <Route path="/login" component={Logins} />
-                    <Route path="/dashboard" component={ Dashboard }/>
-                    <Route path="/member" component={RegisterMember} />
-                    <Route path="/testing-form" component={TestingMain}/> 
-                    <Route path="/not-found" component={NotFound} />                                        
-                    <Route path="/" exact component={LoginForm} />
+                    <Route path="/applicant" component={ApplicantComponent}/> 
+                    <Route path="/user" component={UserComponent}/>   
+                    <Route path="/member" component={MemberComponent}/>
+                    <Route path="/not-found" component={NotFound} />  
+                    <Route path="/" component={Logins} /> 
                     <Redirect to="/not-found" />            
                 </Switch>
 
@@ -39,6 +35,7 @@ class Main extends Component {
                 {/*   */}
                 
             </div>
+            </>
         );
     }
 }

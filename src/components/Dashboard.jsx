@@ -8,9 +8,9 @@ class Dashboard extends Component {
         return (
             <>
                 <div className="row">
-                                           
-                        <DashboardItem link="/register" backgroundColor="1f262a" name="Register User" icn="faRegistered"/>                  
-                        <DashboardItem backgroundColor="green" name="Register Member" icn="faIdBadge"/>
+                 
+                        <DashboardItem link="/user/register-user" className="col-6" backgroundColor="1f262a" name="Register User" icn="faRegistered"/>                  
+                        <DashboardItem link="/user/register-member" className="col-6" backgroundColor="green" name="Register Member" icn="faIdBadge"/>
                         <DashboardItem backgroundColor="blue" name="View Users" icn="faSearch"/>
                         <DashboardItem backgroundColor="yellow" name="View Members"/>
                         <DashboardItem backgroundColor="blue" name="Member Profile" icn="faSearch"/>

@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
-import LoginForm from './loginForm'
 
 import { Link} from 'react-router-dom'
 import {Button} from 'reactstrap'
 
-class Logins extends Component {
-    
+class StartPage extends Component {
 
     render() {
         const itemstyle = {
         
-            backgroundColor: "blue",
+            backgroundColor: "grey",
             padding: "20px 10px 10px 10px",
             color: "white",
             margin: "10px",
@@ -30,14 +28,14 @@ class Logins extends Component {
                     
                     <div className="row" style={{marginTop: "20%"}}>
                         <div className="col-md col-sm-12">
-                        <Link to="/login/user">
+                        <Link to="/applicant">
                             <Button style={itemstyle} className="button">                            
-                                <div>Member</div>
+                                <div>Applicant</div>
                             </Button>
                         </Link>
                         </div>
                         <div className="col-md col-sm-12">
-                        <Link to="/login/user">
+                        <Link to="/user/login">
                             <Button style={itemstyle} className="button">                            
                                 <div>User</div>
                             </Button>
@@ -45,9 +43,9 @@ class Logins extends Component {
 
                         </div>
                         <div className="col-md col-sm-12">
-                        <Link to="/login/user">
+                        <Link to="/member/login">
                             <Button style={itemstyle} className="button">                            
-                                <div>Guest</div>
+                                <div>Member</div>
                             </Button>
                         </Link>
 
@@ -61,4 +59,4 @@ class Logins extends Component {
     }
 }
 
-export default Logins
+export default StartPage

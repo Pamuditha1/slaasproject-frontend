@@ -1,33 +1,25 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik'
 import * as Yup from 'yup'
+import PropTypes from 'prop-types';
 import ValidationError from '../../validationError'
 
-const initialValues = {
-    professional : {
-        profession: "",
-        fieldOfSpecial: "",
-        academic: [{
-            year: '', degree: '', disciplines: '', uni: ''
-        }]
-    }    
-}
-const onSubmit = values => {
-    console.log("Form Data", values)
-}
 const validationSchema = Yup.object({
-    profession: Yup.string().required('Required'),
-    fieldOfSpecial: Yup.string().required('Required'),     
+    profession: Yup.string(),
+    fieldOfSpecial: Yup.string(),    
      
 })
 
-function MemberProfessionalForm() {   
-     
+function MemberProfessionalForm({formData, setFormData, nextStep, prevStep}) {   
+    const [direction, setDirection] = useState('back');
     return (
         <Formik className="container"
-            initialValues={initialValues.professional}
-            validationSchema= {validationSchema}
-            onSubmit={onSubmit} 
+        initialValues={formData.professional}
+        validationSchema= {validationSchema}
+        onSubmit={values => {
+             setFormData(values);
+            direction === 'back' ? prevStep() : nextStep();
+        }} 
         >
             {
                 formik => {
@@ -95,8 +87,9 @@ function MemberProfessionalForm() {
                                 }
                             </FieldArray>
 
-                        </div>
-                        <button type="submit" className="btn btn-primary">Submit</button>
+                        </div>                        
+                        <button type="submit" onClick={() => setDirection('forward')} className="btn btn-primary float-right m-1">Next</button>
+                        <button type="submit" onClick={() => setDirection('back')} className="btn btn-primary float-right m-1">Back</button>
                     </Form> 
                     )
                 }
@@ -107,3 +100,10 @@ function MemberProfessionalForm() {
 }
 
 export default MemberProfessionalForm
+
+MemberProfessionalForm.propTypes = {
+    formData: PropTypes.object,
+    setFormData: PropTypes.func.isRequired,
+    nextStep: PropTypes.func.isRequired,
+    prevStep: PropTypes.func.isRequired
+  };
