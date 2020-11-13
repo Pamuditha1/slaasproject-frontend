@@ -10,14 +10,14 @@ const validationSchema = Yup.object({
      
 })
 
-function MemberProfessionalForm({formData, setFormData, nextStep, prevStep}) {   
+function MemberProfessionalForm({professionalData, setProfessionalData, nextStep, prevStep}) {   
     const [direction, setDirection] = useState('back');
     return (
         <Formik className="container"
-        initialValues={formData.professional}
+        initialValues={professionalData}
         validationSchema= {validationSchema}
         onSubmit={values => {
-             setFormData(values);
+            setProfessionalData(values)
             direction === 'back' ? prevStep() : nextStep();
         }} 
         >
@@ -39,9 +39,39 @@ function MemberProfessionalForm({formData, setFormData, nextStep, prevStep}) {
                             <ErrorMessage name="profession" component={ValidationError}/>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="fieldOfSpecial">Specialization Field</label> 
-                            <Field className={ `${handleStyle('fieldOfSpecial')}`} type="text" id="fieldOfSpecial" name="fieldOfSpecial"/>
-                            <ErrorMessage name="fieldOfSpecial" component={ValidationError}/>
+                            <label>Fields of Specialization</label> 
+                            <FieldArray name="fieldOfSpecial">
+                                {
+                                    (fieldArrayProps) => {
+                                        const {push, remove ,form} = fieldArrayProps
+                                        const {values} = form 
+                                        const {fieldOfSpecial} = values
+                                        
+                                        return (
+                                        <div>
+                                            {fieldOfSpecial.map((academic, index) => (
+                                                <div key={index} className="ml-5">
+                                                    <div className="row form-group">
+                                                        <Field className="col-5 form-control" name={`fieldOfSpecial[${index}]`} />
+                                                        <div className="col-3">
+                                                        {index>0 && 
+                                                        <button type="button"className="btn btn-warning m-1" onClick={() => remove(index)}> - </button>
+                                                        }
+                                                        {index<=3 && 
+                                                        <button type="button" className="btn btn-success m-1" onClick={() => push('')}> + </button>
+                                                        }                                                                                                                
+                                                        
+                                                        </div>                                                     
+                                                    </div>                                              
+                                                </div>
+                                            ))}
+                                        </div>
+                                        )
+                                    }
+                                }
+                            </FieldArray>
+                            {/* <Field className={ `${handleStyle('fieldOfSpecial')}`} type="text" id="fieldOfSpecial" name="fieldOfSpecial"/>
+                            <ErrorMessage name="fieldOfSpecial" component={ValidationError}/> */}
                         </div>
                         <div className="form-group">
                             <label>Academic Qualifications</label>
@@ -59,23 +89,25 @@ function MemberProfessionalForm({formData, setFormData, nextStep, prevStep}) {
                                                     <hr></hr>
                                                     <div className="row form-group">
                                                         <label className="col-4">Year</label>
-                                                        <Field className="col-8 form-control" name={`professional.academic[${index}].year`} />
+                                                        <Field className="col-2 form-control" name={`academic[${index}].year`} />
                                                     </div>
                                                     <div className="row form-group">
                                                         <label className="col-4">Degree/Diploma</label>
-                                                        <Field className="col-8 form-control" name={`professional.academic[${index}].degree`} />
+                                                        <Field className="col-8 form-control" name={`academic[${index}].degree`} />
                                                     </div>
                                                     <div className="row form-group">
                                                         <label className="col-4">Disciplines</label>
-                                                        <Field className="col-8 form-control" name={`professional.academic[${index}].disciplines`} />
+                                                        <Field className="col-8 form-control" name={`academic[${index}].disciplines`} />
                                                     </div>
                                                     <div className="row form-group">
                                                         <label className="col-4">University/Institution</label>
-                                                        <Field className="col-5 form-control" name={`professional.academic[${index}].uni`} />
-                                                        <div className="col-3">                                                        
-                                                        <button type="button" className="btn btn-success m-1" onClick={() => push('')}> + </button>
+                                                        <Field className="col-5 form-control" name={`academic[${index}].uni`} />
+                                                        <div className="col-3">
                                                         {index>0 && 
                                                         <button type="button"className="btn btn-warning m-1" onClick={() => remove(index)}> - </button>
+                                                        } 
+                                                        {index<=3 &&                                                        
+                                                        <button type="button" className="btn btn-success m-1" onClick={() => push('')}> + </button>
                                                         }
                                                         </div>                                                     
                                                     </div>                                              
@@ -88,7 +120,7 @@ function MemberProfessionalForm({formData, setFormData, nextStep, prevStep}) {
                             </FieldArray>
 
                         </div>                        
-                        <button type="submit" onClick={() => setDirection('forward')} className="btn btn-primary float-right m-1">Next</button>
+                        <button type="submit" onClick={() => setDirection('forward')} className="btn btn-primary float-right m-1">Continue</button>
                         <button type="submit" onClick={() => setDirection('back')} className="btn btn-primary float-right m-1">Back</button>
                     </Form> 
                     )
@@ -102,8 +134,8 @@ function MemberProfessionalForm({formData, setFormData, nextStep, prevStep}) {
 export default MemberProfessionalForm
 
 MemberProfessionalForm.propTypes = {
-    formData: PropTypes.object,
-    setFormData: PropTypes.func.isRequired,
+    professionalData: PropTypes.object,
+    setProfessionalData: PropTypes.func.isRequired,
     nextStep: PropTypes.func.isRequired,
     prevStep: PropTypes.func.isRequired
   };

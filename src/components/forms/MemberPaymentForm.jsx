@@ -13,21 +13,18 @@ const validationSchema = Yup.object({
 //         console.log(data)
 // }
 
-function MemberPaymentForm({paymentMethods,formData, setFormData, nextStep, prevStep}) {
+function MemberPaymentForm({paymentMethods,paymentData, setPaymentData, nextStep, prevStep}) {
 
     const [direction, setDirection] = useState('back');
     
 
     return (
         <Formik className="container"
-        initialValues={formData.payment}
+        initialValues={paymentData}
         validationSchema= {validationSchema}
         onSubmit={values => {
-            setFormData(values);
-            // submitForm(formData)
+            setPaymentData(values);
             direction === 'back' ? prevStep() : nextStep();
-            console.log(values)
-            console.log(formData)
             
         }} 
         >
@@ -101,7 +98,7 @@ function MemberPaymentForm({paymentMethods,formData, setFormData, nextStep, prev
                                 <ErrorMessage name="accountNo" component={ValidationError}/>
                             </div>
                         </div>
-                        <button type="submit" onClick={() => setDirection('forward')} className="btn btn-primary float-right m-1">Next</button>
+                        <button type="submit" onClick={() => setDirection('forward')} className="btn btn-primary float-right m-1">Continue</button>
                         {/* <button type="submit" className="btn btn-primary float-right m-1">Next</button> */}
                         <button type="submit" onClick={() => setDirection('back')} className="btn btn-primary float-right m-1">Back</button>
                     </Form> 
@@ -116,8 +113,8 @@ function MemberPaymentForm({paymentMethods,formData, setFormData, nextStep, prev
 export default MemberPaymentForm
 MemberPaymentForm.propTypes = {
     paymentMethods : PropTypes.array.isRequired,
-    formData: PropTypes.object,
-    setFormData: PropTypes.func.isRequired,
+    paymentData: PropTypes.object,
+    setPaymentData: PropTypes.func.isRequired,
     nextStep: PropTypes.func.isRequired,
     prevStep: PropTypes.func.isRequired
   };

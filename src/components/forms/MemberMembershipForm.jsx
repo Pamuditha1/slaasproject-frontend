@@ -22,16 +22,15 @@ const validationSchema = Yup.object({
      
 })
 
-function MemberMembershipForm({addressOptions,membershipGrades,sections, formData, setFormData, nextStep, prevStep}) {
+function MemberMembershipForm({addressOptions,membershipGrades,sections, membershipData, setMembershipData, nextStep, prevStep}) {
     const [direction, setDirection] = useState('back');
 
     return (
         <Formik className="container"
-        initialValues={formData.membership}
+        initialValues={membershipData}
         validationSchema= {validationSchema}
         onSubmit={values => {
-            setFormData(values);
-            // console.log(values.section)
+            setMembershipData(values);
             direction == 'back' ? prevStep() : nextStep();
         }} 
         >
@@ -72,7 +71,7 @@ function MemberMembershipForm({addressOptions,membershipGrades,sections, formDat
                                         {
                                             sections.map(option => {
                                                 return(
-                                                    <option key={option.value} value={option.value} style={{textAlign: "center"}}>
+                                                    <option key={option.value} value={option.key} style={{textAlign: "center"}}>
                                                         {option.key}
                                                     </option>
                                                 )
@@ -83,8 +82,8 @@ function MemberMembershipForm({addressOptions,membershipGrades,sections, formDat
                             </div>
                         </div>
                         <div className="form-group row">
-                            <div class="form-check-inline">
-                                <label class="form-check-label col-12" htmlFor="memBefore">Have you ever been a member before</label> 
+                            <div className="form-check-inline">
+                                <label className="form-check-label col-12" htmlFor="memBefore">Have you ever been a member before</label> 
                                 <Field className="form-check" type="checkbox" id="memBefore" name="memBefore"/>
                             </div>
                         </div> 
@@ -130,7 +129,7 @@ function MemberMembershipForm({addressOptions,membershipGrades,sections, formDat
                                                     return addressOptions.map( option => {
                                                         return(
                                                             <React.Fragment key={Option.key}>
-                                                                <input className="form-check-inline" type="radio" id={option.id} {...field} 
+                                                                <input key={Option.key} className="form-check-inline" type="radio" id={option.id} {...field} 
                                                                 value={option} checked={field.value === option}/>
                                                                 <label htmlFor={option} className="mr-3">{option}</label>
                                                             </React.Fragment>
@@ -192,7 +191,7 @@ function MemberMembershipForm({addressOptions,membershipGrades,sections, formDat
                             </div>
                         </div>                      
 
-                        <button type="submit" onClick={() => setDirection('forward')} className="btn btn-primary float-right m-1">Next</button>
+                        <button type="submit" onClick={() => setDirection('forward')} className="btn btn-primary float-right m-1">Continue</button>
                         <button type="submit" onClick={() => setDirection('back')} className="btn btn-primary float-right m-1">Back</button>
                     </Form> 
                     )
@@ -208,8 +207,8 @@ MemberMembershipForm.propTypes = {
     addressOptions : PropTypes.array.isRequired,
     membershipGrades : PropTypes.array.isRequired,
     sections : PropTypes.array.isRequired,
-    formData: PropTypes.object,
-    setFormData: PropTypes.func.isRequired,
+    membershipData: PropTypes.object,
+    setMembershipData: PropTypes.func.isRequired,
     nextStep: PropTypes.func.isRequired,
     prevStep: PropTypes.func.isRequired
   };

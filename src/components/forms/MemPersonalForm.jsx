@@ -22,18 +22,15 @@ const validationSchema = Yup.object({
      
 })
 
-function MemPersonalForm({titleOptions, genderOptions, formData, setFormData, nextStep}) {   
+function MemPersonalForm({titleOptions, genderOptions, personalData, setPersonalData, nextStep}) {   
      
     return (
         <Formik className="container mt-5 mb-5"
-        initialValues={formData.personal}
+        initialValues={personalData}
         validationSchema= {validationSchema}
         onSubmit={values => {
             
-            setFormData(values)
-            console.log(values)
-            console.log(formData)
-            
+            setPersonalData(values)            
             nextStep()
         }}
         >
@@ -119,7 +116,7 @@ function MemPersonalForm({titleOptions, genderOptions, formData, setFormData, ne
                                             ({form,field}) => {
                                                 const {setFieldValue} = form
                                                 const {value} = field
-                                                return <DateView className="form-control" id="dob" {...field} selected={value}
+                                                return <DateView className="form-control" id="dob" selected={value}
                                                 dateFormat="dd/MM/yyyy" maxDate={new Date()} showYearDropdown scrollableMonthYearDropdown
                                                 onChange={val => setFieldValue("dob", val)}/>
                                             }
@@ -219,14 +216,8 @@ function MemPersonalForm({titleOptions, genderOptions, formData, setFormData, ne
                                 <Field className={ `${handleStyle('email')}`} type="text" id="email" name="email"/>
                                 <ErrorMessage name="email" component={ValidationError}/>
                             </div>
-                            <div className="form-group col-6">
-                                <label htmlFor="fax">Fax</label> 
-                                <Field className={ `${handleStyle('fax')}`} type="text" id="fax" name="fax"/>
-                                <ErrorMessage name="fax" component={ValidationError}/>
-                            </div>
                         </div>                  
-                                           
-                        <button type="submit" className="btn btn-primary float-right m-2">Continue</button>
+                    <button type="submit" className="btn btn-primary float-right m-2">Continue</button>
                     </Form> 
                     )
                 }
@@ -241,7 +232,7 @@ export default MemPersonalForm
 MemPersonalForm.propTypes = {
     titleOptions: PropTypes.array.isRequired,
     genderOptions: PropTypes.array.isRequired,
-    formData: PropTypes.object,
-    setFormData: PropTypes.func.isRequired,
+    personalData: PropTypes.object,
+    setPersonalData: PropTypes.func.isRequired,
     nextStep: PropTypes.func.isRequired
   };

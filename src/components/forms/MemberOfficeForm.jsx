@@ -18,18 +18,16 @@ const validationSchema = Yup.object({
      
 })
 
-function MemberOfficeForm({formData, setFormData, nextStep, prevStep}) {   
+function MemberOfficeForm({officialData, setOfficialData, nextStep, prevStep}) {   
 
     const [direction, setDirection] = useState('back');
      
     return (
         <Formik className="container"
-        initialValues={formData.official}
+        initialValues={officialData}
         validationSchema= {validationSchema}
         onSubmit={values => {
-            setFormData(values);
-            console.log(values)
-            console.log(formData)
+            setOfficialData(values);
             direction === 'back' ? prevStep() : nextStep();
            
         }}
@@ -45,9 +43,7 @@ function MemberOfficeForm({formData, setFormData, nextStep, prevStep}) {
                             if(formik.errors[n] && formik.touched[n]) return "form-control is-invalid"
                         else if (!formik.errors[n] && formik.touched[n]) return "form-control is-valid"
                         else return "form-control" 
-                        }
-                                       
-                                                
+                        }                                                           
                     }
                     return( 
                         
@@ -138,8 +134,8 @@ function MemberOfficeForm({formData, setFormData, nextStep, prevStep}) {
 
 export default MemberOfficeForm
 MemberOfficeForm.propTypes = {
-    formData: PropTypes.object,
-    setFormData: PropTypes.func.isRequired,
+    officialData: PropTypes.object,
+    setOfficialData: PropTypes.func.isRequired,
     nextStep: PropTypes.func.isRequired,
     prevStep: PropTypes.func.isRequired
   };

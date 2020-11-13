@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { Confirm } from './Confirm'
-import { Success } from './stepsMethod/Success'
 import MemPersonalForm from './MemPersonalForm'
 import MemberOfficeForm from './MemberOfficeForm'
 import MemberProfessionalForm from './MemberProfessionalForm'
 import MemberMembershipForm from './MemberMembershipForm'
 import MemberPaymentForm from './MemberPaymentForm'
+import { Confirm } from './Confirm'
+import { Success } from './stepsMethod/Success'
+import {registerMember} from '../../services/registerMemberService'
 
 function MemberRegisterForm() {
 
@@ -26,75 +27,81 @@ function MemberRegisterForm() {
 
     const [step, setStep] = useState(1)
     
-    const [formData, setFormData] = useState({
-        personal : {
-            title: "",
-            nameWinitials: "" ,
-            nameInFull: "",
-            firstName: "",
-            middleName: "",
-            lastName: "",
-            gender: "",
-            nic : "",
-            dob : "",
-            resAddOne : "", resAddTwo : "", resAddThree : "", resAddFour : "", resAddFive : "",
-            perAddrsAvai : false,
-            perAddOne : "", perAddTwo : "", perAddThree : "", perAddFour : "", perAddFive : "",
-            mobileNo : "",
-            landNo : "",
-            email: "", 
-            fax: "",
-        },
-        official : {
-            designation: "" ,
-            division: "",
-            placeWork: "",    
-            offAddrslineOne : "",
-            offAddrslineTwo : "",
-            offAddrslineThree : "",
-            offAddrslineFour : "",
-            offAddrslineFive : "",   
-            offMobile : "",
-            offLandNo : "",
-            offEmail: "", 
-            offFax: ""
-        },
-        professional : {
-            profession: "",
-            fieldOfSpecial: "",
-            academic: [{
-                year: '', degree: '', disciplines: '', uni: ''
-            }]
-        },
-        membership : {
-            gradeOfMem : "",
-            section: "",
-            memBefore: false,
-            memFrom : "", memTo: "",
-            sendingAddrs: "",
-            proposer$seconder: {
-                proposer: {
-                    name: "", memNo: "", address: "", contactNo: ""
-                },
-                seconder: {
-                    name: "", memNo: "", address: "", contactNo: ""
-                }
-            }
-        },
-        payment : {
-            receivedDate: "",
-            paymentDoneDate: "",
-            paymentMethod: "",
-            amount: "",
-            bank: "",
-            branch: "",
-            accountNo: ""
-        }
-        
-        
+    const [personalData, setPersonalData] = useState({
+        title: "",
+        nameWinitials: "" ,
+        nameInFull: "",
+        firstName: "",
+        lastName: "",
+        gender: "",
+        nic : "",
+        dob : "",
+        resAddOne : "", resAddTwo : "", resAddThree : "", resAddFour : "", resAddFive : "",
+        perAddrsAvai : false,
+        perAddOne : "", perAddTwo : "", perAddThree : "", perAddFour : "", perAddFive : "",
+        mobileNo : "",
+        landNo : "",
+        email: "", 
     })
+    const [officialData, setOfficialData] = useState({
+        designation: "" ,
+        division: "",
+        placeWork: "",    
+        offAddrslineOne : "",
+        offAddrslineTwo : "",
+        offAddrslineThree : "",
+        offAddrslineFour : "",
+        offAddrslineFive : " ",   
+        offMobile : "",
+        offLandNo : "",
+        offEmail: "", 
+        offFax: ""
+    })
+    const [professionalData, setProfessionalData] = useState({
+        profession: "",
+        fieldOfSpecial: [''],
+        academic: [{
+            year: '', degree: '', disciplines: '', uni: ''
+        }]
+    })
+
+    const [membershipData, setMembershipData] = useState({
+        gradeOfMem : "",
+        section: "",
+        memBefore: false,
+        memFrom : "", memTo: "",
+        sendingAddrs: "",
+        proposer$seconder: {
+            proposer: {
+                name: "", memNo: "", address: "", contactNo: ""
+            },
+            seconder: {
+                name: "", memNo: "", address: "", contactNo: ""
+            }
+        }
+    })
+    const [paymentData, setPaymentData] = useState({
+        paymentDoneDate: "",
+        paymentMethod: "",
+        amount: "",
+        bank: "",
+        branch: "",
+        accountNo: ""
+    })
+
+
     const nextStep = () => setStep(prev => prev + 1)
     const prevStep = () => setStep(prev => prev - 1)
+    const submit = async () => {
+        const member = {
+            personalData: personalData,
+            officialData: officialData,
+            professionalData: professionalData,
+            membershipData: membershipData,
+            paymentData: paymentData
+        }
+        await registerMember(member)
+    }
     // if(step==4) {
     //     console.log(formData)
     // }
@@ -102,23 +109,24 @@ function MemberRegisterForm() {
 
     switch(step) {
         case 1 : return (
-            <MemPersonalForm formData={formData} setFormData={setFormData} nextStep={nextStep} genderOptions={genderOptions} titleOptions={titleOptions}/>
+            <MemPersonalForm personalData={personalData} setPersonalData={setPersonalData} nextStep={nextStep} genderOptions={genderOptions} titleOptions={titleOptions}/>
         )
         case 2 : return (
-            <MemberOfficeForm formData={formData} setFormData={setFormData} nextStep={nextStep} prevStep={prevStep}/>
+            <MemberOfficeForm officialData={officialData} setOfficialData={setOfficialData} nextStep={nextStep} prevStep={prevStep}/>
         )
         case 3 : return(
-            <MemberProfessionalForm formData={formData} setFormData={setFormData} nextStep={nextStep} prevStep={prevStep}/>
+            <MemberProfessionalForm professionalData={professionalData} setProfessionalData={setProfessionalData} nextStep={nextStep} prevStep={prevStep}/>
         )
         case 4 : return (
-            <MemberMembershipForm formData={formData} setFormData={setFormData} nextStep={nextStep} prevStep={prevStep} 
+            <MemberMembershipForm membershipData={membershipData} setMembershipData={setMembershipData} nextStep={nextStep} prevStep={prevStep} 
             addressOptions={addressOptions} membershipGrades={membershipGrades} sections={sections}/>
         )
         case 5 : return (
-            <MemberPaymentForm formData={formData} setFormData={setFormData} nextStep={nextStep} prevStep={prevStep} paymentMethods={paymentMethods}/>
+            <MemberPaymentForm paymentData={paymentData} setPaymentData={setPaymentData} nextStep={nextStep} prevStep={prevStep} paymentMethods={paymentMethods}/>
         )
-        case 6 : return (
-            <Confirm formData={formData} setFormData={setFormData} nextStep={nextStep} prevStep={prevStep}/>
+        case 6 : return(
+            <Confirm personalData={personalData} officialData={officialData} professionalData={professionalData}
+            membershipData={membershipData} paymentData={paymentData} nextStep={nextStep} prevStep={prevStep} submit={submit}/>
         )
         default: return <Success />
         

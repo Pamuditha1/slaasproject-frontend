@@ -11,7 +11,7 @@ axios.interceptors.response.use(null, error => {
         console.log("Logging the error", error)
         toast.error("An unexpexted error occured.")
     }
-
+    
     return Promise.reject(error)
 })
 

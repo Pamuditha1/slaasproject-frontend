@@ -4,6 +4,7 @@ import Main from './components/Main'
 import 'react-toastify/dist/ReactToastify.css'
 import './App.css';
 import MemberRegisterForm from './components/forms/MemberRegisterForm';
+import RegisterUserForm from './components/forms/RegisterUserForm';
 
 class App extends Component{
 
