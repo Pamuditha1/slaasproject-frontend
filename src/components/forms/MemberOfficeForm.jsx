@@ -29,7 +29,7 @@ function MemberOfficeForm({officialData, setOfficialData, nextStep, prevStep}) {
         onSubmit={values => {
             setOfficialData(values);
             direction === 'back' ? prevStep() : nextStep();
-           
+        
         }}
         >
             {   formik => {

@@ -18,7 +18,7 @@ class Main extends Component {
             <>
             <Header />
             <div className="container">
-                  
+                
                 <ToastContainer />
                 <Switch >
                     <Route path="/applicant" component={ApplicantComponent}/> 

@@ -7,14 +7,14 @@ class Header extends Component {
         textAlign: "center",
         marginBottom: "20px",
         color: "white",
-        fontSize: "50px",
+        fontSize: "30px",
         fontFamily: "Times New Roman",
-        padding: "10px"
+        padding: "10px",
 
     }
     render() {
         return (
-            <div style={this.style}>
+            <div style={this.style} className="sticky-top">
                 SLAAS Member Manager
             </div>
         );

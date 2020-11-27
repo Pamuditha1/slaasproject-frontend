@@ -71,7 +71,7 @@ function MemberMembershipForm({addressOptions,membershipGrades,sections, members
                                         {
                                             sections.map(option => {
                                                 return(
-                                                    <option key={option.value} value={option.key} style={{textAlign: "center"}}>
+                                                    <option key={option.value} value={option.value} style={{textAlign: "center"}}>
                                                         {option.key}
                                                     </option>
                                                 )

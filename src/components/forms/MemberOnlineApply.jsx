@@ -6,8 +6,9 @@ import MemberMembershipForm from './MemberMembershipForm'
 import MemberPaymentForm from './MemberPaymentForm'
 import { Confirm } from './Confirm'
 import {registerMember} from '../../services/registerMemberService'
+import { ConfirmApplicant } from './ConfirmApplicant'
 
-function MemberRegisterForm() {
+function MemberOnlineApply() {
 
     const genderOptions = [{key: "Male", value: "Male"},{key: "Female", value: "Female"}]
     const titleOptions = ["Rev.","Prof.","Dr.","Mr.","Mrs.","Miss."]
@@ -22,7 +23,6 @@ function MemberRegisterForm() {
                     {key: "Section E3 -  Computer Science", value: "E3"},
                     {key: "Section F  -  Social Sciences (Anthropology, Archaeology, Demography, Education, Economics, Geography, Psychology and Sociology)", value: "F"},
     ]
-    const paymentMethods = ["Cash","Bank Draft","Cheque","Online"]
 
     const [step, setStep] = useState(1)
     
@@ -70,7 +70,7 @@ function MemberRegisterForm() {
         memBefore: false,
         memFrom : "", memTo: "",
         sendingAddrs: "",
-        status: "member",
+        status: "applicant",
         proposer$seconder: {
             proposer: {
                 name: "", memNo: "", address: "", contactNo: ""
@@ -79,16 +79,6 @@ function MemberRegisterForm() {
                 name: "", memNo: "", address: "", contactNo: ""
             }
         }
-    })
-    const [paymentData, setPaymentData] = useState({
-        paymentDoneDate: "",
-        receivedData : new Date(),
-        paymentMethod: "",
-        amount: "",
-        bank: "",
-        branch: "",
-        accountNo: "",
-        description: ""
     })
 
 
@@ -99,11 +89,12 @@ function MemberRegisterForm() {
             personalData: personalData,
             officialData: officialData,
             professionalData: professionalData,
-            membershipData: membershipData,
-            paymentData: paymentData
+            membershipData: membershipData            
         }
         console.log(member)
         await registerMember(member)
+        const i = 0
+        console.log(member.professionalData.academic[i].degree);
     }
     // if(step==4) {
     //     console.log(formData)
@@ -125,15 +116,13 @@ function MemberRegisterForm() {
             addressOptions={addressOptions} membershipGrades={membershipGrades} sections={sections}/>
         )
         case 5 : return (
-            <MemberPaymentForm paymentData={paymentData} setPaymentData={setPaymentData} nextStep={nextStep} prevStep={prevStep} paymentMethods={paymentMethods}/>
-        )
-        case 6 : return(
-            <Confirm personalData={personalData} officialData={officialData} professionalData={professionalData}
-            membershipData={membershipData} paymentData={paymentData} nextStep={nextStep} prevStep={prevStep} submit={submit}/>
+            <ConfirmApplicant personalData={personalData} officialData={officialData} professionalData={professionalData}
+            membershipData={membershipData} nextStep={nextStep} prevStep={prevStep} submit={submit}/>
         )
         default: return <MemPersonalForm />
+        
         
     }
 }
 
-export default MemberRegisterForm
+export default MemberOnlineApply

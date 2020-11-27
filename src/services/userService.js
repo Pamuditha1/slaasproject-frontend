@@ -1,10 +1,7 @@
 import http from "./httpService"
-import axios from 'axios'
 import { toast } from "react-toastify";
 
-
-
-const apiEndPoint = "http://localhost:3000/slaas/api/users";
+const apiEndPoint = "http://localhost:3000/slaas/api/register-user";
 
 export function userRegister(user) {
 
@@ -18,6 +15,7 @@ export function userRegister(user) {
       .then(function (response) {
         console.log(response);
         toast.success(`${response.data}`);
+        return ({errors: "no"})
       })
       .catch(function (error) {
         console.log(error.response.data);

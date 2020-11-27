@@ -98,6 +98,11 @@ function MemberPaymentForm({paymentMethods,paymentData, setPaymentData, nextStep
                                 <ErrorMessage name="accountNo" component={ValidationError}/>
                             </div>
                         </div>
+                        <div className="form-group col-6">
+                                <label htmlFor="description">Description</label> 
+                                <Field className={ `${handleStyle('description')}`} type="text" id="description" name="description"/>
+                                <ErrorMessage name="description" component={ValidationError}/>
+                        </div>
                         <button type="submit" onClick={() => setDirection('forward')} className="btn btn-primary float-right m-1">Continue</button>
                         {/* <button type="submit" className="btn btn-primary float-right m-1">Next</button> */}
                         <button type="submit" onClick={() => setDirection('back')} className="btn btn-primary float-right m-1">Back</button>
