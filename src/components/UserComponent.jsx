@@ -5,7 +5,9 @@ import Dashboard from './Dashboard'
 import NotFound from './NotFound'
 import MemberRegisterForm from './forms/MemberRegisterForm'
 import UserLogin from './forms/UserLogin'
-import Sidebar from './forms/Sidebar'
+import Sidebar from './Sidebar'
+import ViewMembers from './ViewMembers'
+import MemberPaymentForm from './forms/MemberPaymentForm'
 
 
 class UserComponent extends Component {
@@ -18,17 +20,20 @@ class UserComponent extends Component {
         return (
             <div className="row">
                 { (currentLocation !== "/user/login") &&
-                    <div className="col-3">
-                    <Sidebar active={link}/>
+                    <div className="col-2">
+                    {/* <Sidebar active={link}/> */}
+                    <Sidebar />
                     </div> 
                 }                               
-                <div className="col-9"> 
-                    <Switch >                    
+                <div className="col-10"> 
+                    <Switch>                    
                         <Route path="/user/register-user" component={()=><RegisterUserForm accountType={accountType}/>} />
                         <Route path="/user/register-member" component={MemberRegisterForm} />
+                        <Route path="/user/members" component={ViewMembers}/>
                         <Route path="/user/login" exact component={UserLogin} />                    
-                        <Route path="/user/dashboard" component={ Dashboard }/>                                       
-                        <Route path="/user" exact component={Dashboard} />
+                        <Route path="/user/dashboard" component={ Dashboard }/> 
+                        <Route path="/user/receipt" component={MemberPaymentForm} />                                      
+                        <Route path="/user" exact component={Dashboard} />                        
                     </Switch>
                 </div>
             </div>

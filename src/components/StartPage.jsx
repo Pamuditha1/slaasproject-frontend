@@ -1,54 +1,36 @@
 import React, { Component } from 'react'
-
 import { Link} from 'react-router-dom'
 import {Button} from 'reactstrap'
+import '../css/startPageStyle.css'
 
 class StartPage extends Component {
 
     render() {
-        const itemstyle = {
-        
-            backgroundColor: "grey",
-            padding: "20px 10px 10px 10px",
-            color: "white",
-            margin: "10px",
-            borderRadius: "25px",
-            fontWeight: "bold",
-            fontFamily: "Arial",
-            fontSize: "30px",
-            textAlign: "center",
-            width: "100%",
-            height: "200px"
-            
-        };
-
         return (
             
-                <div className="container">
-                    
-                    <div className="row" style={{marginTop: "20%"}}>
+                <div className="container">    
+                    <h1 style={{marginTop: "6%"}}>Welcome !.</h1>               
+                    <div className="row" style={{marginTop: "10%"}}>
                         <div className="col-md col-sm-12">
                         <Link to="/applicant">
-                            <Button style={itemstyle} className="button">                            
-                                <div>Applicant</div>
+                            <Button className="btn selectionButton"  id="appBtn">                            
+                                <div className="textStyle">Applicant</div>
                             </Button>
                         </Link>
                         </div>
                         <div className="col-md col-sm-12">
                         <Link to="/user/login">
-                            <Button style={itemstyle} className="button">                            
-                                <div>User</div>
+                            <Button className="btn selectionButton" id="useBtn">                            
+                                <div className="textStyle">User</div>
                             </Button>
                         </Link>
-
                         </div>
                         <div className="col-md col-sm-12">
                         <Link to="/member/login">
-                            <Button style={itemstyle} className="button">                            
-                                <div>Member</div>
+                            <Button className="btn selectionButton" id="memBtn">                            
+                                <div className="textStyle">Member</div>
                             </Button>
                         </Link>
-
                         </div>
                     </div>
                     

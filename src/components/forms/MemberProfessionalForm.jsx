@@ -13,6 +13,9 @@ const validationSchema = Yup.object({
 function MemberProfessionalForm({professionalData, setProfessionalData, nextStep, prevStep}) {   
     const [direction, setDirection] = useState('back');
     return (
+        <>
+        <h4 style={{textAlign: "center"}}>Member Registration</h4>
+        <h6 style={{backgroundColor: "#19BDFF"}} className="pl-5 pt-1 pb-1">Professional Details</h6>
         <Formik className="container"
         initialValues={professionalData}
         validationSchema= {validationSchema}
@@ -23,7 +26,6 @@ function MemberProfessionalForm({professionalData, setProfessionalData, nextStep
         >
             {
                 formik => {
-                   
                     const handleStyle = (n)  => {                      
                         
                         if(formik.errors[n] && formik.touched[n]) return "form-control is-invalid"
@@ -128,6 +130,7 @@ function MemberProfessionalForm({professionalData, setProfessionalData, nextStep
             }
    
         </Formik>
+        </>
     )
 }
 

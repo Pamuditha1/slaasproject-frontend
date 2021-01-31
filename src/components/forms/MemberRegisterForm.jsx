@@ -21,11 +21,10 @@ function MemberRegisterForm() {
                     {key: "Section E2 -  Chemical Sciences (Chemistry, Bio-Chemistry, Agricultural Chemistry, Chemical Technology, Food Chemistry and Polymer Chemistry)", value: "E2"},
                     {key: "Section E3 -  Computer Science", value: "E3"},
                     {key: "Section F  -  Social Sciences (Anthropology, Archaeology, Demography, Education, Economics, Geography, Psychology and Sociology)", value: "F"},
-    ]
+    ]    
     const paymentMethods = ["Cash","Bank Draft","Cheque","Online"]
-
     const [step, setStep] = useState(1)
-    
+    const [loading, setLoading] = useState(false)
     const [personalData, setPersonalData] = useState({
         title: "",
         nameWinitials: "" ,
@@ -63,7 +62,7 @@ function MemberRegisterForm() {
             year: '', degree: '', disciplines: '', uni: ''
         }]
     })
-
+    var datetime = new Date();
     const [membershipData, setMembershipData] = useState({
         gradeOfMem : "",
         section: "",
@@ -71,6 +70,7 @@ function MemberRegisterForm() {
         memFrom : "", memTo: "",
         sendingAddrs: "",
         status: "member",
+        enrollDate: datetime,
         proposer$seconder: {
             proposer: {
                 name: "", memNo: "", address: "", contactNo: ""
@@ -80,57 +80,71 @@ function MemberRegisterForm() {
             }
         }
     })
-    const [paymentData, setPaymentData] = useState({
-        paymentDoneDate: "",
-        receivedData : new Date(),
-        paymentMethod: "",
-        amount: "",
-        bank: "",
-        branch: "",
-        accountNo: "",
-        description: ""
-    })
+    // const [paymentData, setPaymentData] = useState({
+    //     paymentDoneDate: "",
+    //     receivedData : new Date(),
+    //     paymentMethod: "",
+    //     amount: "",
+    //     bank: "",
+    //     branch: "",
+    //     accountNo: "",
+    //     description: ""
+    // })
 
 
     const nextStep = () => setStep(prev => prev + 1)
     const prevStep = () => setStep(prev => prev - 1)
     const submit = async () => {
+        setLoading(true)
         const member = {
             personalData: personalData,
             officialData: officialData,
             professionalData: professionalData,
             membershipData: membershipData,
-            paymentData: paymentData
+            // paymentData: paymentData
         }
         console.log(member)
         await registerMember(member)
+        setLoading(false)
     }
-    // if(step==4) {
-    //     console.log(formData)
-    // }
-
 
     switch(step) {
         case 1 : return (
-            <MemPersonalForm personalData={personalData} setPersonalData={setPersonalData} nextStep={nextStep} genderOptions={genderOptions} titleOptions={titleOptions}/>
+            <div className="container">
+                <MemPersonalForm personalData={personalData} setPersonalData={setPersonalData} nextStep={nextStep} genderOptions={genderOptions} titleOptions={titleOptions}/>
+            </div>
         )
         case 2 : return (
-            <MemberOfficeForm officialData={officialData} setOfficialData={setOfficialData} nextStep={nextStep} prevStep={prevStep}/>
+            <div className="container">
+                <MemberOfficeForm officialData={officialData} setOfficialData={setOfficialData} nextStep={nextStep} prevStep={prevStep}/>
+            </div>
+            
         )
-        case 3 : return(
-            <MemberProfessionalForm professionalData={professionalData} setProfessionalData={setProfessionalData} nextStep={nextStep} prevStep={prevStep}/>
+        case 3 : return(            
+            <div className="container">
+                <MemberProfessionalForm professionalData={professionalData} setProfessionalData={setProfessionalData} nextStep={nextStep} prevStep={prevStep}/>
+            </div>
         )
         case 4 : return (
             <MemberMembershipForm membershipData={membershipData} setMembershipData={setMembershipData} nextStep={nextStep} prevStep={prevStep} 
             addressOptions={addressOptions} membershipGrades={membershipGrades} sections={sections}/>
         )
         case 5 : return (
-            <MemberPaymentForm paymentData={paymentData} setPaymentData={setPaymentData} nextStep={nextStep} prevStep={prevStep} paymentMethods={paymentMethods}/>
+            // <div className="container">
+            //     <MemberPaymentForm paymentData={paymentData} setPaymentData={setPaymentData} nextStep={nextStep} prevStep={prevStep} paymentMethods={paymentMethods}/>
+            // </div>
+            <div className="container">
+                <Confirm personalData={personalData} officialData={officialData} professionalData={professionalData}
+                membershipData={membershipData} nextStep={nextStep} prevStep={prevStep} submit={submit} loading={loading}/>
+            </div>
         )
-        case 6 : return(
-            <Confirm personalData={personalData} officialData={officialData} professionalData={professionalData}
-            membershipData={membershipData} paymentData={paymentData} nextStep={nextStep} prevStep={prevStep} submit={submit}/>
-        )
+        // case 6 : return(
+        //     // <div className="container">
+        //     //     <Confirm personalData={personalData} officialData={officialData} professionalData={professionalData}
+        //     //     membershipData={membershipData} paymentData={paymentData} nextStep={nextStep} prevStep={prevStep} submit={submit} loading={loading}/>
+        //     // </div>
+            
+        // )
         default: return <MemPersonalForm />
         
     }

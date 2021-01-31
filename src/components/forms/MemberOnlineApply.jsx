@@ -63,7 +63,7 @@ function MemberOnlineApply() {
             year: '', degree: '', disciplines: '', uni: ''
         }]
     })
-
+    var datetime = new Date();
     const [membershipData, setMembershipData] = useState({
         gradeOfMem : "",
         section: "",
@@ -71,6 +71,7 @@ function MemberOnlineApply() {
         memFrom : "", memTo: "",
         sendingAddrs: "",
         status: "applicant",
+        appliedDate : datetime,
         proposer$seconder: {
             proposer: {
                 name: "", memNo: "", address: "", contactNo: ""

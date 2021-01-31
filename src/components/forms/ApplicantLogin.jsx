@@ -3,10 +3,11 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import ValidationError from '../../validationError'
 import { useHistory } from "react-router-dom";
+import {Link} from 'react-router-dom'
 
 
 
-function UserLogin(props) {
+function ApplicantLogin(props) {
     const history = useHistory()
 
     const initialValues = {
@@ -22,27 +23,31 @@ function UserLogin(props) {
     const onSubmit = (values,props) => {
         console.log("Form Data", values)
         // props.history.replace('/user/dashboard')
-        history.replace('/user/dashboard');
+        // history.replace('/user/dashboard');
     }
 
     return (
-        
-
-        <div className="container ml-5">        
-            <Formik
-            initialValues={initialValues}
-            validationSchema= {validationSchema}
-            onSubmit={onSubmit} >
-                {formik => {
-                    const handleStyle = (n)  => {                       
-                        if(formik.errors[n] && formik.touched[n]) return "form-control is-invalid"
-                        else if (!formik.errors[n] && formik.touched[n]) return "form-control is-valid"
-                        else return "form-control"                     
-                    } 
-                    return(
+        <Formik className="container"
+        initialValues={initialValues}
+        validationSchema= {validationSchema}
+        onSubmit={onSubmit} >
+            {formik => {
+                const handleStyle = (n)  => {                       
+                    if(formik.errors[n] && formik.touched[n]) return "form-control is-invalid"
+                    else if (!formik.errors[n] && formik.touched[n]) return "form-control is-valid"
+                    else return "form-control"                     
+                } 
+                return(
+                    <div>
+                        <Link to="/applicant/register-applicant">
+                            <button className="btn btn-success float-right">Singup Applicant</button>
+                        </Link>
+                        
                         <Form>
+                            
+                            <h4>Applicant Login</h4>
                             <div className="form-group">                         
-                                <label htmlFor="email">User Email</label> 
+                                <label htmlFor="email">Email</label> 
                                 <Field className={ `${handleStyle('email')}`} type="text" id="email" name="email"/>
                                 <ErrorMessage name="email" component={ValidationError}/>
                             </div>
@@ -50,14 +55,20 @@ function UserLogin(props) {
                                 <label htmlFor="password">Password</label> 
                                 <Field className={ `${handleStyle('password')}`} type="text" id="password" name="password"/>
                                 <ErrorMessage name="password" component={ValidationError}/>
-                            </div>
+                            </div>                         
+                                            
                             <button type="submit" className="btn btn-primary float-right">Submit</button>
                         </Form>
-                    )
-                }}
-            </Formik>
-        </div>
+                    </div> 
+
+                )
+                
+            }}
+
+
+
+        </Formik>
     )
 }
 
-export default UserLogin
+export default ApplicantLogin

@@ -13,24 +13,36 @@ const validationSchema = Yup.object({
 //         console.log(data)
 // }
 
-function MemberPaymentForm({paymentMethods,paymentData, setPaymentData, nextStep, prevStep}) {
-
-    const [direction, setDirection] = useState('back');
+function MemberPaymentForm() {
+    
+    const paymentMethods = ["Cash","Bank Draft","Cheque","Online"]
+    const [paymentData, setPaymentData] = useState({
+        paymentDoneDate: "",
+        receivedData : new Date(),
+        paymentMethod: "",
+        amount: "",
+        bank: "",
+        branch: "",
+        accountNo: "",
+        description: ""
+    })
     
 
     return (
+        <>
+        
+        <h6 style={{backgroundColor: "#19BDFF"}} className="pl-5 pt-1 pb-1">Payment Receipt</h6>
         <Formik className="container"
         initialValues={paymentData}
         validationSchema= {validationSchema}
         onSubmit={values => {
-            setPaymentData(values);
-            direction === 'back' ? prevStep() : nextStep();
+            setPaymentData(values);            
             
         }} 
         >
             {
                 formik => {
-                   
+                
                     const handleStyle = (n)  => {                      
                         
                         if(formik.errors[n] && formik.touched[n]) return "form-control is-invalid"
@@ -39,7 +51,7 @@ function MemberPaymentForm({paymentMethods,paymentData, setPaymentData, nextStep
                     }
                     return( 
                         
-                    <Form>
+                    <Form className="container">
                         <div className="row">
                             <div className="form-group col-6">
                                         <label htmlFor="paymentDoneDate" className="form-check">Payment Done Date</label> 
@@ -103,23 +115,24 @@ function MemberPaymentForm({paymentMethods,paymentData, setPaymentData, nextStep
                                 <Field className={ `${handleStyle('description')}`} type="text" id="description" name="description"/>
                                 <ErrorMessage name="description" component={ValidationError}/>
                         </div>
-                        <button type="submit" onClick={() => setDirection('forward')} className="btn btn-primary float-right m-1">Continue</button>
+                        <button type="submit"className="btn btn-primary float-right m-1">Continue</button>
                         {/* <button type="submit" className="btn btn-primary float-right m-1">Next</button> */}
-                        <button type="submit" onClick={() => setDirection('back')} className="btn btn-primary float-right m-1">Back</button>
+                        {/* <button type="submit" onClick={() => setDirection('back')} className="btn btn-primary float-right m-1">Back</button> */}
                     </Form> 
                     )
                 }
             }
    
         </Formik>
+        </>
     )
 }
 
 export default MemberPaymentForm
-MemberPaymentForm.propTypes = {
-    paymentMethods : PropTypes.array.isRequired,
-    paymentData: PropTypes.object,
-    setPaymentData: PropTypes.func.isRequired,
-    nextStep: PropTypes.func.isRequired,
-    prevStep: PropTypes.func.isRequired
-  };
+// MemberPaymentForm.propTypes = {
+//     paymentMethods : PropTypes.array.isRequired,
+//     paymentData: PropTypes.object,
+//     setPaymentData: PropTypes.func.isRequired,
+//     nextStep: PropTypes.func.isRequired,
+//     prevStep: PropTypes.func.isRequired
+//   };

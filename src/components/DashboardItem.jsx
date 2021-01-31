@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link} from 'react-router-dom'
-import { faSearch, faHome,faRegistered, faIdBadge} from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faHome,faRegistered, faIdBadge, faIdCard, faUserCircle} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {Button} from 'reactstrap'
 
@@ -25,7 +25,9 @@ function DashboardItem(props) {
     else if (props.icn === "faHome") icon = <FontAwesomeIcon icon={faHome} size="2x"/>
     else if (props.icn === "faRegistered") icon = <FontAwesomeIcon icon={faRegistered} size="2x"/>
     else if (props.icn === "faIdBadge") icon = <FontAwesomeIcon icon={faIdBadge} size="2x"/>
-
+    else if (props.icn === "faIdCard") icon = <FontAwesomeIcon icon={faIdCard} size="2x"/>
+    else if (props.icn === "faUserCircle") icon = <FontAwesomeIcon icon={faUserCircle} size="2x"/>
+    
     return (
         <div className="col-sm-12 col-lg-6" style={{marginBottom: 15}}>
             <Link to={props.link}>

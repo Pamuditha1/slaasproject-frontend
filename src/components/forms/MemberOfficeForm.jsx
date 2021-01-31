@@ -23,6 +23,9 @@ function MemberOfficeForm({officialData, setOfficialData, nextStep, prevStep}) {
     const [direction, setDirection] = useState('back');
      
     return (
+        <>
+        <h4 style={{textAlign: "center"}}>Member Registration</h4>
+        <h6 style={{backgroundColor: "#19BDFF"}} className="pl-5 pt-1 pb-1">Official Details</h6>
         <Formik className="container"
         initialValues={officialData}
         validationSchema= {validationSchema}
@@ -129,6 +132,7 @@ function MemberOfficeForm({officialData, setOfficialData, nextStep, prevStep}) {
             }
    
         </Formik>
+        </>
     )
 }
 

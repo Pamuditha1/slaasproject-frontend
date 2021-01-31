@@ -17,7 +17,7 @@ class Main extends Component {
         return (
             <>
             <Header />
-            <div className="container">
+            <div className="container-fulid">
                 
                 <ToastContainer />
                 <Switch >

@@ -26,6 +26,9 @@ function MemberMembershipForm({addressOptions,membershipGrades,sections, members
     const [direction, setDirection] = useState('back');
 
     return (
+        <>
+        <h4 style={{textAlign: "center"}}>Member Registration</h4>
+        <h6 style={{backgroundColor: "#19BDFF"}} className="pl-5 pt-1 pb-1">Membership Details</h6>
         <Formik className="container"
         initialValues={membershipData}
         validationSchema= {validationSchema}
@@ -199,6 +202,7 @@ function MemberMembershipForm({addressOptions,membershipGrades,sections, members
             }
    
         </Formik>
+        </>
     )
 }
 

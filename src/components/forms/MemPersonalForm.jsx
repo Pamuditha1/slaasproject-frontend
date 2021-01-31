@@ -25,6 +25,9 @@ const validationSchema = Yup.object({
 function MemPersonalForm({titleOptions, genderOptions, personalData, setPersonalData, nextStep}) {   
      
     return (
+        <>
+        <h4 style={{textAlign: "center"}}>Member Registration</h4>
+        <h6 style={{backgroundColor: "#19BDFF"}} className="pl-5 pt-1 pb-1">Personal Details</h6>
         <Formik className="container mt-5 mb-5"
         initialValues={personalData}
         validationSchema= {validationSchema}
@@ -43,7 +46,8 @@ function MemPersonalForm({titleOptions, genderOptions, personalData, setPersonal
                         else if (!formik.errors[n] && formik.touched[n]) return "form-control is-valid"
                         else return "form-control"
                     }
-                    return( 
+                    return(
+                    
                         
                     <Form>
                         <div className="row">                            
@@ -224,6 +228,7 @@ function MemPersonalForm({titleOptions, genderOptions, personalData, setPersonal
             }
    
         </Formik>
+        </>
     )
 }
 

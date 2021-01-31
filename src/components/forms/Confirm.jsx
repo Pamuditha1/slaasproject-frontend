@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button} from 'reactstrap'
+import Loader from 'react-loader-spinner'
 
 
-export const Confirm = ({personalData, officialData,professionalData,membershipData,paymentData, prevStep, nextStep, submit }) => {
+export const Confirm = ({personalData, officialData,professionalData,membershipData,paymentData, prevStep, nextStep, loading, submit }) => {
   const {title,nameWinitials,nameInFull,firstName,lastName,gender,nic,dob,resAddOne,
         resAddTwo, resAddThree, resAddFour, resAddFive,perAddrsAvai, perAddOne,perAddTwo,perAddThree,perAddFour,perAddFive,
         mobileNo,landNo,email} = personalData
@@ -11,7 +12,7 @@ export const Confirm = ({personalData, officialData,professionalData,membershipD
     offAddrslineFive, offMobile,offLandNo,offEmail, offFax} = officialData
   const {profession, fieldOfSpecial,academic} = professionalData
   const {gradeOfMem,section,memBefore,memFrom ,memTo,sendingAddrs,proposer$seconder} = membershipData
-  const {receivedDate,paymentDoneDate,paymentMethod,amount,bank,branch,accountNo} = paymentData
+  // const {receivedDate,paymentDoneDate,paymentMethod,amount,bank,branch,accountNo} = paymentData
   
 
   return (
@@ -122,7 +123,7 @@ export const Confirm = ({personalData, officialData,professionalData,membershipD
       </div>      
     </div>
 
-    <div className="row" id="payment">
+    {/* <div className="row" id="payment">
       <h3 className="col-12" style={{backgroundColor: "yellow"}}>Payment Details</h3>
       <p className="col-3">Payment done Date : </p><strong className="col-9">{paymentDoneDate}</strong>
       <p className="col-3">Payment Method: </p><strong className="col-9">{paymentMethod}</strong>
@@ -130,11 +131,26 @@ export const Confirm = ({personalData, officialData,professionalData,membershipD
       <p className="col-3">Bank: </p><strong className="col-9">{bank}</strong>
       <p className="col-3">Branch : </p><strong className="col-9">{branch}</strong>
       <p className="col-3">Account No: </p><strong className="col-9">{accountNo}</strong>
-    </div>      
+    </div>       */}
 
-    <Button onClick={() => prevStep()}>Back</Button>
-    <Button onClick={() => submit()}>Confirm & Continue </Button>
+    <Button color="secondary" onClick={() => prevStep()}>Back</Button>
+    <Button color="primary" onClick={() => submit()}>Confirm & Continue
+        <span>
+        { loading && 
+            <Loader
+              type="ThreeDots"
+              color="white"
+              height={30}
+              width={30}
+          />}
+          
         
+
+        </span>
+    </Button>
+    <div className="mb-5">
+
+    </div>
     </>
   );
 };
