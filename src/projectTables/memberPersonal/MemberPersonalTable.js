@@ -10,11 +10,12 @@ export const MemberPersonalTable = () => {
     const [memberPersonal, setMemberPersonal] = useState([]);
 
     useEffect(async () => {
-    const result = await axios(
-        'http://localhost:3000/slaas/api/user/view/members/personal'
-    );
 
-    setMemberPersonal(result.data);
+        axios('http://localhost:3000/slaas/api/user/view/members/personal')
+        .then(result => {
+            setMemberPersonal(result.data);
+        })
+        
     }, []);
         
 
