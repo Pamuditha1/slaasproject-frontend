@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 
 
-const apiEndPoint = "http://localhost:3000/slaas/api/user/register-member";
+const apiEndPoint = "http://localhost:3001/slaas/api/user/register-member";
 
 export function registerMember(member) {
 

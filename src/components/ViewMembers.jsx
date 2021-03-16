@@ -6,6 +6,7 @@ import { faSearch} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { MemberPersonalTable } from '../projectTables/memberPersonal/MemberPersonalTable'
 import { MemberOfficialTable } from '../projectTables/memberOfficial/MemberOfficialTable'
+import {MemberAllTable} from '../projectTables/memberAllRecords/MemberAllTable'
 import { searchMember} from '../services/searchMemberService'
 
 function ViewMembers() {
@@ -15,12 +16,13 @@ function ViewMembers() {
 
     const handleSubmit = async () => {
             
+        console.log(searchWord)
         await searchMember(searchWord)
     }
 
     return (
         <div className="container">
-            <div id="search" className="col-12">
+            {/* <div id="search" className="col-12">
                 <div class="input-group mb-5">
                     <div class="form-outline">
                         <input type="search" id="searchMember" onChange={e => setSearchWord(e.target.value)} class="form-control" placeholder="Search ..."/>
@@ -30,9 +32,16 @@ function ViewMembers() {
                     </button>
                 </div>
             </div>
+            <div className="col-12">
+                
+            </div> */}
+            
 
 
             <div className="row ml-5">
+                <Link to="/user/members/all">
+                        <Button color="primary">All Records</Button>
+                </Link>
                 <Link to="/user/members/personal">
                     <Button outline color="primary">Personal</Button>
                 </Link>
@@ -47,6 +56,7 @@ function ViewMembers() {
                 <Switch >                    
                     <Route path="/user/members/personal" component={MemberPersonalTable} />
                     <Route path="/user/members/official" component={MemberOfficialTable} />
+                    <Route path="/user/members/all" component={MemberAllTable} />
                     {/* <Route path="/user/members/personal" component={ViewMembers}/>
                     <Route path="/user/members/personal" exact component={UserLogin} />                    
                     <Route path="/user/members/personal" component={ Dashboard }/>                                       

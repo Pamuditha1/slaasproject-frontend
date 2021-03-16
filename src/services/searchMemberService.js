@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 
 
-const apiEndPoint = "http://localhost:3000/slaas/api/user/search";
+const apiEndPoint = "http://localhost:3001/slaas/api/user/search";
 
 export function searchMember(word) {
 

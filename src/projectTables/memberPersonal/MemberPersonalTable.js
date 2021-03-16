@@ -11,7 +11,7 @@ export const MemberPersonalTable = () => {
 
     useEffect(async () => {
 
-        axios('http://localhost:3000/slaas/api/user/view/members/personal')
+        axios('http://localhost:3001/slaas/api/user/view/members/personal')
         .then(result => {
             setMemberPersonal(result.data);
         })

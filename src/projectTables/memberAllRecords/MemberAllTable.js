@@ -1,6 +1,6 @@
 import React, {useMemo, useState, useEffect} from 'react'
 import {useTable, useSortBy, useGlobalFilter, useFilters, usePagination} from 'react-table'
-import {COLUMNS, GROUPED_COLUMNS} from './officialColumns'
+import {COLUMNS, GROUPED_COLUMNS} from './allColumns'
 import { Table, Button } from 'reactstrap';
 import Pagination from '../common/Pagination'
 import { GlobalFilter } from '../common/GlobalFilter';
@@ -8,8 +8,8 @@ import Loader from 'react-loader-spinner'
 import { Spinner } from 'reactstrap';
 import axios from 'axios'
 
-export const MemberOfficialTable = () => {
-    const [memberPersonal, setMemberPersonal] = useState([]);
+export const MemberAllTable = () => {
+    const [allMembers, setallMembers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     // useEffect(() => {
@@ -21,20 +21,20 @@ export const MemberOfficialTable = () => {
     //         );
     //     }
     //     fetchData();
-    //     setMemberPersonal(result.data);
+    //     setallMembers(result.data);
     //     setIsLoading(false)
     // }, []);
 
     useEffect(async () => {
         setIsLoading(true)
         const fetchData = () => {
-            axios('http://localhost:3001/slaas/api/user/view/members/official')
+            axios('http://localhost:3001/slaas/api/user/view/members/all')
             .then(function (res) {
                 console.log(res.data)
-                setMemberPersonal(res.data)
+                setallMembers(res.data)
             })      
             .then(function () {
-                console.log(memberPersonal)
+                console.log(allMembers)
             })      
             
         };    
@@ -54,7 +54,7 @@ export const MemberOfficialTable = () => {
 
     const columns = useMemo(() => COLUMNS, [])
     // const data = useMemo(() => memberPrsonal, [])
-    const data = memberPersonal
+    const data = allMembers
 
 
     const {
@@ -100,7 +100,7 @@ export const MemberOfficialTable = () => {
                     <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
                     <div className="row">
                         <div className="col-12">
-                            <input type="checkbox" {...getToggleHideAllColumnsProps()} />Toggle All
+                            <input type="checkbox" {...getToggleHideAllColumnsProps()} />All Columns
                         </div>
                         {
                             allColumns.map(column => (
