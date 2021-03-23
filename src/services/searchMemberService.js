@@ -9,9 +9,8 @@ const apiEndPoint = "http://localhost:3001/slaas/api/user/search";
 export function searchMember(word) {
 
     console.log(word)
-    return http.get(apiEndPoint, {
-        searchWord : word
-    })
+
+    return axios.get(apiEndPoint, word)
     .then(function (response) {
         console.log(response.data);
         toast.success(`${response.data}`);

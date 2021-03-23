@@ -15,6 +15,7 @@
     "joi-browser": "^13.4.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
+    "react-autosuggest": "^10.1.0",
     "react-datepicker": "^3.3.0",
     "react-dom": "^16.13.1",
     "react-loader-spinner": "^3.1.14",
@@ -24,6 +25,7 @@
     "react-to-print": "^2.12.2",
     "react-toastify": "^6.0.9",
     "reactstrap": "^8.6.0",
+    "to-words": "^2.3.1",
     "typescript": "^4.0.5",
     "yup": "^0.29.3"
   },

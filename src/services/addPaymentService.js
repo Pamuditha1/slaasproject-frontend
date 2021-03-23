@@ -4,11 +4,11 @@ import { toast } from "react-toastify";
 
 
 
-const apiEndPoint = "http://localhost:3001/slaas/api/user/register-member";
+const apiEndPoint = "http://localhost:3001/slaas/api/user/payment";
 
-export function registerMember(member) {
+export function addPayment(paymentData) {
 
-    return http.post(apiEndPoint, member)
+    return http.post(apiEndPoint, paymentData)
     .then(function (response) {
         console.log(response.data);
         toast.success(`${response.data}`);

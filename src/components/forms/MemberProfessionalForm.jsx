@@ -12,16 +12,19 @@ const validationSchema = Yup.object({
 
 function MemberProfessionalForm({professionalData, setProfessionalData, nextStep, prevStep}) {   
     const [direction, setDirection] = useState('back');
+    const [isConfirmed, setIsConfirmed] = useState(false)
+    
     return (
         <>
-        <h4 style={{textAlign: "center"}}>Member Registration</h4>
-        <h6 style={{backgroundColor: "#19BDFF"}} className="pl-5 pt-1 pb-1">Professional Details</h6>
+        {/* <h4 style={{textAlign: "center"}}>Member Registration</h4> */}
+        <h6 style={{backgroundColor: "#e95045"}} className="pl-5 pt-1 pb-1">Professional Details</h6>
         <Formik className="container"
         initialValues={professionalData}
         validationSchema= {validationSchema}
         onSubmit={values => {
             setProfessionalData(values)
-            direction === 'back' ? prevStep() : nextStep();
+            setIsConfirmed(true) 
+            // direction === 'back' ? prevStep() : nextStep();
         }} 
         >
             {
@@ -34,7 +37,7 @@ function MemberProfessionalForm({professionalData, setProfessionalData, nextStep
                     }
                     return( 
                         
-                    <Form>
+                    <Form style={{marginBottom : 60}}>
                         <div className="form-group">
                             <label htmlFor="profession">Profession</label> 
                             <Field className={ `${handleStyle('profession')}`} type="text" id="profession" name="profession"/>
@@ -122,8 +125,11 @@ function MemberProfessionalForm({professionalData, setProfessionalData, nextStep
                             </FieldArray>
 
                         </div>                        
-                        <button type="submit" onClick={() => setDirection('forward')} className="btn btn-primary float-right m-1">Continue</button>
-                        <button type="submit" onClick={() => setDirection('back')} className="btn btn-primary float-right m-1">Back</button>
+                        <button type="submit" onClick={() => setDirection('forward')} 
+                        className={isConfirmed ? "btn btn-success float-right m-2 is-valid" :"btn btn-primary float-right m-2"}>
+                            { isConfirmed ? "Confirmed" : "Confirm" }
+                        </button>
+                        {/* <button type="submit" onClick={() => setDirection('back')} className="btn btn-primary float-right m-1">Back</button> */}
                     </Form> 
                     )
                 }

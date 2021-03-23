@@ -19,16 +19,16 @@ const validationSchema = Yup.object({
     resAddFour : Yup.string(),
     resAddFive : Yup.string(),
     email: Yup.string().email('Invalid Email')
-     
+    
 })
 
-function MemberMembershipForm({addressOptions,membershipGrades,sections, membershipData, setMembershipData, nextStep, prevStep}) {
+function MemberMembershipForm({addressOptions,membershipGrades,sections, membershipData, setMembershipData, nextStep, prevStep, reload}) {
     const [direction, setDirection] = useState('back');
 
     return (
         <>
-        <h4 style={{textAlign: "center"}}>Member Registration</h4>
-        <h6 style={{backgroundColor: "#19BDFF"}} className="pl-5 pt-1 pb-1">Membership Details</h6>
+        {/* <h4 style={{textAlign: "center"}}>Member Registration</h4> */}
+        <h6 style={{backgroundColor: "#e95045"}} className="pl-5 pt-1 pb-1">Membership Details</h6>
         <Formik className="container"
         initialValues={membershipData}
         validationSchema= {validationSchema}
@@ -39,7 +39,7 @@ function MemberMembershipForm({addressOptions,membershipGrades,sections, members
         >
             {
                 formik => {
-                   
+                
                     const handleStyle = (n)  => {                      
                         
                         if(formik.errors[n] && formik.touched[n]) return "form-control is-invalid"
@@ -195,7 +195,7 @@ function MemberMembershipForm({addressOptions,membershipGrades,sections, members
                         </div>                      
 
                         <button type="submit" onClick={() => setDirection('forward')} className="btn btn-primary float-right m-1">Continue</button>
-                        <button type="submit" onClick={() => setDirection('back')} className="btn btn-primary float-right m-1">Back</button>
+                        <button type="submit" onClick={() => reload()} className="btn btn-warning float-right m-1">Reset</button>
                     </Form> 
                     )
                 }

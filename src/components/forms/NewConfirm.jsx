@@ -4,14 +4,12 @@ import { Button} from 'reactstrap'
 import Loader from 'react-loader-spinner'
 
 
-export const Confirm = ({personalData, officialData,professionalData,membershipData,paymentData, prevStep, nextStep, loading, submit }) => {
+export const NewConfirm = ({memberData, prevStep, nextStep, loading, submit }) => {
   const {title,nameWinitials,nameInFull,firstName,lastName,gender,nic,dob,resAddOne,
         resAddTwo, resAddThree, resAddFour, resAddFive,perAddrsAvai, perAddOne,perAddTwo,perAddThree,perAddFour,perAddFive,
-        mobileNo,landNo,email} = personalData
-  const {designation,division,placeWork,offAddrslineOne,offAddrslineTwo,offAddrslineThree,offAddrslineFour,
-    offAddrslineFive, offMobile,offLandNo,offEmail, offFax} = officialData
-  const {profession, fieldOfSpecial,academic} = professionalData
-  const {gradeOfMem,section,memBefore,memFrom ,memTo,sendingAddrs,proposer$seconder} = membershipData
+        mobileNo,landNo,email,designation,division,placeWork,offAddrslineOne,offAddrslineTwo,offAddrslineThree,offAddrslineFour,
+        offAddrslineFive, offMobile,offLandNo,offEmail, offFax, profession, fieldOfSpecial,academic,gradeOfMem,section,memBefore,memFrom ,memTo,
+        sendingAddrs,proposer$seconder} = memberData
   // const {receivedDate,paymentDoneDate,paymentMethod,amount,bank,branch,accountNo} = paymentData
   
 
@@ -157,12 +155,8 @@ export const Confirm = ({personalData, officialData,professionalData,membershipD
   );
 };
 
-Confirm.propTypes = {
-  personalData: PropTypes.object,
-  officialData: PropTypes.object,
-  professionalData: PropTypes.object,
-  membershipData: PropTypes.object,
-  paymentData: PropTypes.object,
+NewConfirm.propTypes = {
+  memberData: PropTypes.object,
   prevStep: PropTypes.func.isRequired,
   nextStep: PropTypes.func.isRequired,
   submit: PropTypes.func.isRequired

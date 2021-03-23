@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import ValidationError from '../../validationError'
@@ -19,27 +19,30 @@ const validationSchema = Yup.object({
     resAddFour : Yup.string(),
     resAddFive : Yup.string(),
     email: Yup.string().email('Invalid Email')
-     
+    
 })
 
-function MemPersonalForm({titleOptions, genderOptions, personalData, setPersonalData, nextStep}) {   
-     
+function MemPersonalForm({titleOptions, genderOptions, personalData, setPersonalData, nextStep}) { 
+
+    const [isConfirmed, setIsConfirmed] = useState(false)
+
     return (
         <>
-        <h4 style={{textAlign: "center"}}>Member Registration</h4>
-        <h6 style={{backgroundColor: "#19BDFF"}} className="pl-5 pt-1 pb-1">Personal Details</h6>
+        {/* <h4 style={{textAlign: "center"}}>Member Registration</h4> */}
+        <h6 style={{backgroundColor: "#e95045"}} className="pl-5 pt-1 pb-1">Personal Details</h6>
         <Formik className="container mt-5 mb-5"
         initialValues={personalData}
         validationSchema= {validationSchema}
         onSubmit={values => {
             
-            setPersonalData(values)            
-            nextStep()
+            setPersonalData(values)     
+            setIsConfirmed(true)  
+            // nextStep()
         }}
         >
             {
                 formik => {
-                   
+                
                     const handleStyle = (n)  => {                      
                         
                         if(formik.errors[n] && formik.touched[n]) return "form-control is-invalid"
@@ -49,7 +52,7 @@ function MemPersonalForm({titleOptions, genderOptions, personalData, setPersonal
                     return(
                     
                         
-                    <Form>
+                    <Form style={{marginBottom : 50}}>
                         <div className="row">                            
                             <div className="form-group col-12">
                                 <label htmlFor="nameWinitials" className="form-group"> Name with Initials</label>
@@ -221,12 +224,15 @@ function MemPersonalForm({titleOptions, genderOptions, personalData, setPersonal
                                 <ErrorMessage name="email" component={ValidationError}/>
                             </div>
                         </div>                  
-                    <button type="submit" className="btn btn-primary float-right m-2">Continue</button>
+                    <button type="submit" className={isConfirmed ? "btn btn-success float-right m-2 is-valid" :"btn btn-primary float-right m-2"}>
+                        { isConfirmed ? "Confirmed" : "Confirm" }
+                    </button>
+
                     </Form> 
                     )
                 }
             }
-   
+
         </Formik>
         </>
     )

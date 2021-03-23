@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link} from 'react-router-dom'
-import { faHome, faRegistered, faIdBadge, faIdCard, faFileInvoiceDollar} from "@fortawesome/free-solid-svg-icons";
+import { faHome, faRegistered, faIdBadge, faIdCard, faFileInvoiceDollar, faMoneyCheckAlt} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Nav, NavItem, NavLink } from 'reactstrap';
 import '../css/sideBar.css'
@@ -16,14 +16,17 @@ function Sidebar() {
             <Link to="/user/register-member">
                 <p><span style={{marginRight: 10}}><FontAwesomeIcon icon={faIdBadge} size="2x"/></span>Register Member</p>
             </Link>
-            <Link to="/user/register-user">
-                <p><span style={{marginRight: 10}}><FontAwesomeIcon icon={faRegistered} size="2x"/></span>Register User</p>
-            </Link>
             <Link to="/user/members">
                 <p><span style={{marginRight: 10}}><FontAwesomeIcon icon={faIdCard} size="2x"/></span>Members</p>
             </Link>
+            <Link to="/user/payments/view">
+                <p><span style={{marginRight: 10}}><FontAwesomeIcon icon={faMoneyCheckAlt} size="2x"/></span>Payments</p>
+            </Link>
             <Link to="/user/receipt">
                 <p><span style={{marginRight: 10}}><FontAwesomeIcon icon={faFileInvoiceDollar} size="2x"/></span>Receipt</p>
+            </Link>        
+            <Link to="/user/register-user">
+                <p><span style={{marginRight: 10}}><FontAwesomeIcon icon={faRegistered} size="2x"/></span>Register User</p>
             </Link>
         </div>
         // <div>

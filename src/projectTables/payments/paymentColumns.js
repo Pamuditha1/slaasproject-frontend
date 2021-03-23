@@ -2,12 +2,22 @@ import { ColumnFilter } from '../common/ColumnFilter'
 
 export const COLUMNS = [
     {
-        Header: 'Title',
-        accessor: 'title',
+        Header: 'Date',
+        accessor: 'date',
         Filter: ColumnFilter
     },
     {
-        Header: 'Name with Initials',
+        Header: 'Time',
+        accessor: 'time',
+        Filter: ColumnFilter
+    },
+    {
+        Header: 'Invoice No',
+        accessor: 'invoiceNo',
+        Filter: ColumnFilter
+    },
+    {
+        Header: 'Name',
         accessor: 'nameWinitials',
         Filter: ColumnFilter
     },
@@ -16,148 +26,52 @@ export const COLUMNS = [
         accessor: 'membershipNo',
         Filter: ColumnFilter
     },
-    {
-        Header: 'Personal Email',
-        accessor: 'email',
-        Filter: ColumnFilter
-    },
-    {
-        Header: 'Section',
-        accessor: 'section',
-        Filter: ColumnFilter
-    },
     
-    {
-        Header: 'Grade of Membership',
-        accessor: 'gradeOfMembership',
-        Filter: ColumnFilter
-    },
-    {
-        Header: 'First Name',
-        accessor: 'commonFirst',
-        Filter: ColumnFilter
-    },
-    {
-        Header: 'Last Name',
-        accessor: 'commomLast',
-        Filter: ColumnFilter
-    },
-    {
-        Header: 'Gender',
-        accessor: 'gender',
-        Filter: ColumnFilter,
-    },
-    {
-        Header: 'Date of Birth',
-        accessor: 'dob',
-        Filter: ColumnFilter,
-    },
     {
         Header: 'NIC',
         accessor: 'nic',
+        Filter: ColumnFilter
+    },
+    {
+        Header: 'Total Amount',
+        accessor: 'total',
+        Filter: ColumnFilter
+    },
+    {
+        Header: 'Year of Payment',
+        accessor: 'yearOfPayment',
+        Filter: ColumnFilter
+    },
+    {
+        Header: 'Payment Type',
+        accessor: 'type',
         Filter: ColumnFilter,
     },
     {
-        Header: 'Mobile No',
-        accessor: 'mobileNo',
-        Filter: ColumnFilter
-    },
-    {
-        Header: 'Fixed No',
-        accessor: 'fixedNo',
-        Filter: ColumnFilter
-    },
-    {
-        Header: 'Residence Address',
-        accessor: 'resAddrs',
-        Filter: ColumnFilter
-    },
-    {
-        Header: 'Permanent Address',
-        accessor: 'perAddrs',
-        Filter: ColumnFilter
-    },
-    
-    {
-        Header: 'Enrolled Date',
-        accessor: 'enrollDate',
-        Filter: ColumnFilter
-    },
-    {
-        Header: 'Council Position',
-        accessor: 'councilPosition',
+        Header: 'Admission Fee',
+        accessor: 'admission',
         Filter: ColumnFilter,
     },
     {
-        Header: 'Member Folio Number',
-        accessor: 'memberFolioNo',
+        Header: 'Arrears Payment',
+        accessor: 'arrears',
         Filter: ColumnFilter,
     },
     {
-        Header: 'Designation',
-        accessor: 'designation',
+        Header: 'Yearly Fee',
+        accessor: 'yearlyFee',
         Filter: ColumnFilter
     },
     {
-        Header: 'Department',
-        accessor: 'department',
-        Filter: ColumnFilter,
-    },
-    {
-        Header: 'Place of Work',
-        accessor: 'placeOfWork',
-        Filter: ColumnFilter,
-    },
-    {
-        Header: 'Official Contact(Mobile)',
-        accessor: 'offMobile',
+        Header: 'ID Card Fee',
+        accessor: 'idCardFee',
         Filter: ColumnFilter
     },
     {
-        Header: 'Official Contact(Fixed)',
-        accessor: 'offLand',
+        Header: 'Description',
+        accessor: 'description',
         Filter: ColumnFilter
-    },
-    {
-        Header: 'Fax',
-        accessor: 'offFax',
-        Filter: ColumnFilter,
-    },
-    {
-        Header: 'Official Email',
-        accessor: 'offEmail',
-        Filter: ColumnFilter,
-    },
-    {
-        Header: 'Official Address',
-        accessor: 'offAddrs',
-        Filter: ColumnFilter
-    },
-    {
-        Header: 'Profession',
-        accessor: 'profession',
-        Filter: ColumnFilter,
-    },
-    {
-        Header: 'Specialization 1',
-        accessor: 'specialization1',
-        Filter: ColumnFilter,
-    },
-    {
-        Header: 'Specialization 2',
-        accessor: 'specialization2',
-        Filter: ColumnFilter
-    },
-    {
-        Header: 'Degree',
-        accessor: 'degree',
-        Filter: ColumnFilter,
-    },
-    {
-        Header: 'University',
-        accessor: 'university',
-        Filter: ColumnFilter
-    },
+    }
 
 ]
 

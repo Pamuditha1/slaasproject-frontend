@@ -7,7 +7,9 @@ import MemberRegisterForm from './forms/MemberRegisterForm'
 import UserLogin from './forms/UserLogin'
 import Sidebar from './Sidebar'
 import ViewMembers from './ViewMembers'
+import ViewPayments from './ViewPayments'
 import MemberPaymentForm from './forms/MemberPaymentForm'
+import NewRegisterForm from '../components/forms/NewRegisterForm'
 
 
 class UserComponent extends Component {
@@ -28,8 +30,9 @@ class UserComponent extends Component {
                 <div className="col-10"> 
                     <Switch>                    
                         <Route path="/user/register-user" component={()=><RegisterUserForm accountType={accountType}/>} />
-                        <Route path="/user/register-member" component={MemberRegisterForm} />
+                        <Route path="/user/register-member" component={NewRegisterForm} />
                         <Route path="/user/members" component={ViewMembers}/>
+                        <Route path="/user/payments/view" component={ViewPayments}/>
                         <Route path="/user/login" exact component={UserLogin} />                    
                         <Route path="/user/dashboard" component={ Dashboard }/> 
                         <Route path="/user/receipt" component={MemberPaymentForm} />                                      

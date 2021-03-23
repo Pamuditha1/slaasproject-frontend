@@ -8,7 +8,7 @@ import ReceiptGenerator from '../ReceiptGenerator'
 
 const validationSchema = Yup.object({
     
-     
+    
 })
 // const submitForm = (data) => {
 //         console.log(data)
@@ -22,21 +22,23 @@ function MemberPaymentForm() {
         membershipNo: '',
         nic: '',
 
-        paymentDoneDate: "",
-        receivedData : new Date(),
+        admissionFee: '',
+        yearOfPayment: '',
+        yearlyFee : '',
+        arrearsFee: '',
+        idCardFee: '',
+
         paymentMethod: "",
-        amount: "",
-        bank: "",
-        branch: "",
-        accountNo: "",
         description: ""
     })
+    const [totalState, setTotalState] = useState(0)
+
     
     switch(step) {
         case 1 : return (
             <>
             
-            <h6 style={{backgroundColor: "#19BDFF"}} className="pl-5 pt-1 pb-1">Payment Receipt</h6>
+            <h6 style={{backgroundColor: "#e95045"}} className="pl-5 pt-1 pb-1">Payment Receipt</h6>
             <Formik className="container"
             initialValues={paymentData}
             validationSchema= {validationSchema}
@@ -74,22 +76,6 @@ function MemberPaymentForm() {
                                     <Field className={ `${handleStyle('nic')}`} type="text" id="nic" name="nic"/>
                                     <ErrorMessage name="nic" component={ValidationError}/>
                                 </div>
-                                <div className="col-6"></div>
-                                <div className="form-group col-6">
-                                            <label htmlFor="paymentDoneDate" className="form-check">Payment Done Date</label> 
-                                            <Field className={ `${handleStyle('paymentDoneDate')}`} name="paymentDoneDate" >
-                                            {
-                                                    ({form,field}) => {
-                                                        const {setFieldValue} = form
-                                                        const {value} = field
-                                                        return <DateView className="form-control" id="paymentDoneDate" {...field} selected={value}
-                                                        dateFormat="dd/MM/yyyy" maxDate={new Date()} showYearDropdown scrollableMonthYearDropdown
-                                                        onChange={val => setFieldValue("paymentDoneDate", val)}/>
-                                                    }
-                                            }
-                                            </Field>
-                                            <ErrorMessage name="paymentDoneDate" component={ValidationError}/>
-                                </div>
                                 <div className="form-group col-6">
                                     <label htmlFor="paymentMethod">Payment Method</label> 
                                     <div>
@@ -107,36 +93,68 @@ function MemberPaymentForm() {
                                             <ErrorMessage name="gradeOfMem" component={ValidationError}/> 
                                     </div>
                                 </div>
+                                
+                                
+                                <div className="form-group col-12">
+                                    Payment Amount
+                                            {/* <label htmlFor="paymentDoneDate" className="form-check">Date</label> 
+                                            <Field className={ `${handleStyle('paymentDoneDate')}`} name="paymentDoneDate" >
+                                            {
+                                                    ({form,field}) => {
+                                                        const {setFieldValue} = form
+                                                        const {value} = field
+                                                        return <DateView className="form-control" id="paymentDoneDate" {...field} selected={value}
+                                                        dateFormat="dd/MM/yyyy" maxDate={new Date()} showYearDropdown scrollableMonthYearDropdown
+                                                        onChange={val => setFieldValue("paymentDoneDate", val)}/>
+                                                    }
+                                            }
+                                            </Field>
+                                            <ErrorMessage name="paymentDoneDate" component={ValidationError}/> */}
+                                </div>
                             </div>
                             <div className="row">
                                 <div className="form-group col-6">
-                                    <label htmlFor="amount">Amount</label> 
-                                    <Field className={ `${handleStyle('amount')}`} type="number" id="amount" name="amount"/>
-                                    <ErrorMessage name="amount" component={ValidationError}/>
+                                    <label htmlFor="yearOfPayment">Year of Payment</label> 
+                                    <Field className={ `${handleStyle('yearOfPayment')}`} type="number" id="yearOfPayment" name="yearOfPayment"/>
+                                    <ErrorMessage name="yearOfPayment" component={ValidationError}/>
                                 </div>
                                 <div className="form-group col-6">
-                                    <label htmlFor="bank">Bank</label> 
-                                    <Field className={ `${handleStyle('bank')}`} type="text" id="bank" name="bank"/>
-                                    <ErrorMessage name="bank" component={ValidationError}/>
+                                    <label htmlFor="yearlyFee">Yearly Fee</label> 
+                                    <Field className={ `${handleStyle('yearlyFee')}`} type="number" id="yearlyFee" name="yearlyFee"/>
+                                    <ErrorMessage name="yearlyFee" component={ValidationError}/>
                                 </div>
+                                <div className="form-group col-6">
+                                    <label htmlFor="admissionFee">Admission Fee</label> 
+                                    <Field className={ `${handleStyle('admissionFee')}`} type="number" id="admissionFee" name="admissionFee"/>
+                                    <ErrorMessage name="admissionFee" component={ValidationError}/>
+                                </div>
+                                
                             </div>
                             <div className="row">
                                 <div className="form-group col-6">
-                                    <label htmlFor="branch">Branch</label> 
-                                    <Field className={ `${handleStyle('branch')}`} type="text" id="branch" name="branch"/>
-                                    <ErrorMessage name="branch" component={ValidationError}/>
+                                    <label htmlFor="arrearsFee">Arrears Fee</label> 
+                                    <Field className={ `${handleStyle('arrearsFee')}`} type="number" id="arrearsFee" name="arrearsFee"/>
+                                    <ErrorMessage name="arrearsFee" component={ValidationError}/>
                                 </div>
                                 <div className="form-group col-6">
-                                    <label htmlFor="accountNo">Account No</label> 
-                                    <Field className={ `${handleStyle('accountNo')}`} type="text" id="accountNo" name="accountNo"/>
-                                    <ErrorMessage name="accountNo" component={ValidationError}/>
+                                    <label htmlFor="idCardFee">ID Card Fee</label> 
+                                    <Field className={ `${handleStyle('idCardFee')}`} type="number" id="idCardFee" name="idCardFee"/>
+                                    <ErrorMessage name="idCardFee" component={ValidationError}/>
                                 </div>
                             </div>
-                            <div className="form-group col-6">
-                                    <label htmlFor="description">Description</label> 
-                                    <Field className={ `${handleStyle('description')}`} type="text" id="description" name="description"/>
-                                    <ErrorMessage name="description" component={ValidationError}/>
+                            <div className="row">
+                                {/* <div className="form-group col-6">
+                                        <label htmlFor="totalWords">Sum of Rupees</label> 
+                                        <Field className={ `${handleStyle('totalWords')}`} type="text" id="totalWords" name="totalWords"/>
+                                        <ErrorMessage name="totalWords" component={ValidationError}/>
+                                </div> */}
+                                <div className="form-group col-12">
+                                        <label htmlFor="description">Description</label> 
+                                        <Field className={ `${handleStyle('description')}`} type="text" id="description" name="description"/>
+                                        <ErrorMessage name="description" component={ValidationError}/>
+                                </div>
                             </div>
+                            
                             <button type="submit" className="btn btn-primary float-right m-1">Continue</button>
                             {/* <button type="submit" className="btn btn-primary float-right m-1">Next</button> */}
                             {/* <button type="submit" onClick={() => setStep(1)} className="btn btn-primary float-right m-1">Back</button> */}
