@@ -17,7 +17,7 @@ function CSVuploader() {
         formData.append('file', file) 
         console.log(file)
         try{
-            const res = await axios.post('http://localhost:3000/slaas/api/user/upload-members', formData, {
+            const res = await axios.post('http://localhost:3001/slaas/api/user/upload-members', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

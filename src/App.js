@@ -7,18 +7,29 @@ import './App.css';
 import NewRegisterForm from './components/forms/NewRegisterForm';
 import {AutoSuggest} from './testingComponents/AutoSuggest.jsx'
 import Example from './testingComponents/AutoSuggest.jsx'
+import {TestingMemberTable} from './testingComponents/TestingMemberTable';
+import UploadPreview from './testingComponents/imageUpload';
+import ProfilePicUpload from './testingComponents/imageUpload2';
+import CSVuploader from './components/CSVuploader';
+import ViewImage from './testingComponents/ViewImage';
 
 class App extends Component{
 
 
   render() {
     return (
-      <div>
+      <>
         <Main />    
+        {/* <ViewImage /> */}
+        {/* <UploadPreview /> */}
+        {/* <ProfilePicUpload/> */}
+        {/* <CSVuploader /> */}
+        {/* <TestingMemberTable /> */}
+        {/* <MembersTable /> */}
         {/* <Example /> */}
         {/* <NewRegisterForm /> */}
         {/* <Example /> */}
-      </div>
+      </>
     );
   }
 

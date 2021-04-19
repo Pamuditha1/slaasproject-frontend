@@ -2,28 +2,16 @@ import React, {useMemo, useState, useEffect} from 'react'
 import {useTable, useSortBy, useGlobalFilter, useFilters, usePagination} from 'react-table'
 import {COLUMNS, GROUPED_COLUMNS} from './allColumns'
 import { Table, Button } from 'reactstrap';
-import Pagination from '../common/Pagination'
-import { GlobalFilter } from '../common/GlobalFilter';
+import Pagination from '../projectTables/common/Pagination'
+import { GlobalFilter } from '../projectTables/common/GlobalFilter'
 import Loader from 'react-loader-spinner'
 import { Spinner } from 'reactstrap';
 import axios from 'axios'
 
-export const MemberAllTable = () => {
+export const TestingMemberTable = () => {
     const [allMembers, setallMembers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    // useEffect(() => {
-    //     setIsLoading(true)
-    //     const result
-    //     async function fetchData() {
-    //         result = await axios(
-    //             'http://localhost:3000/slaas/api/user/view/members/official'
-    //         );
-    //     }
-    //     fetchData();
-    //     setallMembers(result.data);
-    //     setIsLoading(false)
-    // }, []);
 
     useEffect(async () => {
         setIsLoading(true)
@@ -42,18 +30,7 @@ export const MemberAllTable = () => {
         setIsLoading(false)
     }, []);
 
-    // useEffect(() => {
-    //     async function fetchData() {
-    //       // You can await here
-    //       const response = await MyAPI.getData(someId);
-    //       // ...
-    //     }
-    //     fetchData();
-    //   }, [someId]);
-        
-
     const columns = useMemo(() => COLUMNS, [])
-    // const data = useMemo(() => memberPrsonal, [])
     const data = allMembers
 
 
@@ -87,7 +64,9 @@ export const MemberAllTable = () => {
     const {globalFilter, pageIndex, pageSize} = state
 
     return (
+        
         <div>
+            
             {
                 isLoading ? 
                 <Loader style={{marginLeft : "35%"}}
@@ -96,6 +75,7 @@ export const MemberAllTable = () => {
                     height={300}
                     width={300}
                 /> :
+
                 <div>
                     <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
                     <div className="row">
@@ -114,7 +94,8 @@ export const MemberAllTable = () => {
                             
                         }
                     </div>
-                    <Table size="sm" dark hover {...getTableProps()} responsive style={{height: "200px"}}>
+                    
+                    <Table size="sm" dark hover {...getTableProps()} responsive style={{height: "200px"}} show>
                         <thead> 
                             {headerGroups.map((headerGroups) => (
                                 <tr {...headerGroups.getHeaderGroupProps()}>
@@ -151,6 +132,7 @@ export const MemberAllTable = () => {
                             }
                         </tbody>
                     </Table>
+
                     <div>
                         <span>
                             Page{' '}

@@ -6,6 +6,7 @@ import ReceiptPrint from './ReceiptPrint';
 
 class ReceiptGenerator extends React.PureComponent {
   render() {
+    console.log('Receipt generater rendered')
     return (
         <div className='container'>
             <ReceiptPrint ref={el => (this.componentRef = el)} paymentData={this.props.paymentData} />

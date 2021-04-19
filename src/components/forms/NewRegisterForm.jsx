@@ -6,6 +6,9 @@ import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik'
 import * as Yup from 'yup'
 import DateView from 'react-datepicker'
 import {registerMember} from '../../services/registerMemberService'
+import ProfilePicUpload from '../ProfilePicUpload';
+import axios from 'axios'
+import { toast } from "react-toastify";
 
 function NewRegisterForm () {
 
@@ -96,14 +99,47 @@ function NewRegisterForm () {
     
     })
 
+    const [file, setFile] = useState('')
+    const [filePreview, setFilePreview] = useState('')
+    const [filename, setFilename] = useState('Choose File')
+    const [nameOfImage, setNameOfImage] = useState('')
+    
+
+
+    const onImageSubmit = async () => {
+        // e.preventDefault()
+        
+        const formData = new FormData()
+        formData.append('file', file)
+        console.log(file)
+        try{
+            const res = await axios.post('http://localhost:3001/slaas/api/user/add-profilepic', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'NameOfImage' : nameOfImage
+                }
+            })
+            console.log(res)
+            toast.success(res.data) 
+        } 
+        catch(err){
+            console.log(err)
+            toast.error(err.response.data) 
+        }
+    }
+
     const nextStep = () => setStep(prev => prev + 1)
     const prevStep = () => setStep(prev => prev - 1)
     const submit = async () => {
         setLoading(true)
+        setNameOfImage(memberData.nic)
+        console.log(nameOfImage)
         const member = memberData
         console.log(member)
         await registerMember(member)
+        onImageSubmit()
         setLoading(false)
+        
     }
     const reload = () => {
         window.location.reload(false);
@@ -118,7 +154,7 @@ function NewRegisterForm () {
         initialValues={memberData}
         validationSchema= {validationSchema}
         onSubmit={values => {
-            
+            setNameOfImage(`${values.nic}`)
             setMemberData(values)     
             // setIsConfirmed(true)
             nextStep()
@@ -135,7 +171,16 @@ function NewRegisterForm () {
                     }
                     return(
                     
-                        
+                    <>
+                    <ProfilePicUpload onImageSubmit={onImageSubmit} 
+                        file={file} 
+                        setFile={setFile} 
+                        filePreview={filePreview}
+                        setFilePreview={setFilePreview}
+                        filename={filename}
+                        setFilename={setFilename}
+                        nameOfImage={nameOfImage}
+                    />
                     <Form style={{marginBottom : 50}}>
                         <div className="row">                            
                             <div className="form-group col-12">
@@ -625,6 +670,7 @@ function NewRegisterForm () {
                     </button>
 
                     </Form> 
+                    </>
                     )
                 }
             }
@@ -635,7 +681,7 @@ function NewRegisterForm () {
 
     case 2 : return(
         <div className="container">
-                <NewConfirm memberData={memberData} nextStep={nextStep} prevStep={prevStep} submit={submit} loading={loading}/>
+                <NewConfirm memberData={memberData} file={file} filePrevie={filePreview} nextStep={nextStep} prevStep={prevStep} submit={submit} loading={loading}/>
         </div>
     )
 

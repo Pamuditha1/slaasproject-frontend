@@ -10,6 +10,7 @@ import ViewMembers from './ViewMembers'
 import ViewPayments from './ViewPayments'
 import MemberPaymentForm from './forms/MemberPaymentForm'
 import NewRegisterForm from '../components/forms/NewRegisterForm'
+import {MemberProfile} from '../components/MemberProfile'
 
 
 class UserComponent extends Component {
@@ -32,6 +33,7 @@ class UserComponent extends Component {
                         <Route path="/user/register-user" component={()=><RegisterUserForm accountType={accountType}/>} />
                         <Route path="/user/register-member" component={NewRegisterForm} />
                         <Route path="/user/members" component={ViewMembers}/>
+                        <Route path="/user/member/profile/:id" component={MemberProfile}/>
                         <Route path="/user/payments/view" component={ViewPayments}/>
                         <Route path="/user/login" exact component={UserLogin} />                    
                         <Route path="/user/dashboard" component={ Dashboard }/> 

@@ -4,7 +4,7 @@ import { Button} from 'reactstrap'
 import Loader from 'react-loader-spinner'
 
 
-export const NewConfirm = ({memberData, prevStep, nextStep, loading, submit }) => {
+export const NewConfirm = ({memberData, prevStep, nextStep, loading, submit , filePreview, file}) => {
   const {title,nameWinitials,nameInFull,firstName,lastName,gender,nic,dob,resAddOne,
         resAddTwo, resAddThree, resAddFour, resAddFive,perAddrsAvai, perAddOne,perAddTwo,perAddThree,perAddFour,perAddFive,
         mobileNo,landNo,email,designation,division,placeWork,offAddrslineOne,offAddrslineTwo,offAddrslineThree,offAddrslineFour,
@@ -12,9 +12,13 @@ export const NewConfirm = ({memberData, prevStep, nextStep, loading, submit }) =
         sendingAddrs,proposer$seconder} = memberData
   // const {receivedDate,paymentDoneDate,paymentMethod,amount,bank,branch,accountNo} = paymentData
   
-
+  console.log('File Previewing', filePreview)
   return (
+    
     <>
+    {/* <div className="col-4">                
+      <img style={{ width: "100%" }, { height: "200px"}} src={file} />
+    </div> */}
     <div className="row" id="personal">
       <h3 className="col-12" style={{backgroundColor: "yellow"}}>Personal Details</h3>
       <p className="col-3">Name with Initials : </p><strong className="col-9">{title} {nameWinitials}</strong>

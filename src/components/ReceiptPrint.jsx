@@ -42,20 +42,23 @@ class ReceiptPrint extends React.PureComponent {
     })
 
     // console.log("Mount" + this.state)
-    console.log("Mount")
+    console.log("Receipt Print Mount")
+    console.log(this.state)
     
   }
 
   async recordPayment() {
     // await addPayment(this.state)
     // console.log("Record" + this.state)
-    console.log("Record")
+    console.log("Receipt Print Record")
+    console.log(this.state || 'No state record')
   }
 
     render() {
 
       // console.log("Render" + this.state)
-      console.log("Render")
+      console.log("Receipt Print Render")
+      console.log(this.state || 'No state render')
 
       const backgroundStyle = {
         height: '1122px',
