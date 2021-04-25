@@ -8,9 +8,14 @@ function ViewImage(props) {
 
     useEffect(
         async () => {
+            // const res = await axios.get(`http://localhost:3001/slaas/api/user/get-profilepic/abcde`)
+            // console.log(res)
+            // console.log(imagePath)
+            // setImagePath(res)
+
             axios
             .get(
-                `http://localhost:3001/slaas/api/user/get-profilepic/${props.nic}`,
+                'http://localhost:3001/slaas/api/user/get-profilepic/TESTING1',
                 { responseType: 'arraybuffer' },
             )
             .then(response => {
@@ -26,7 +31,7 @@ function ViewImage(props) {
 
     return (
         <div className="row mb-2">
-            <p1>Profile Picture</p1>
+            <h1>Viewing Image</h1>
             <img src={imagePath} height="200px" width="auto"/>
         </div>
     )

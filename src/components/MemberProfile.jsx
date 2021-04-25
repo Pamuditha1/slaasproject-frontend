@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Button} from 'reactstrap'
 import Loader from 'react-loader-spinner'
 import axios from 'axios'
+import ViewImage from './ViewImage';
 
 
 export const MemberProfile = (props) => {
@@ -52,6 +53,7 @@ export const MemberProfile = (props) => {
 
     <>
     <div className="row" id="personal">
+        <ViewImage nic={nic}/>
         <h3 className="col-12" style={{backgroundColor: "yellow"}}>Personal Details</h3>
         <p className="col-3">Name with Initials : </p><strong className="col-9">{title} {nameWinitials}</strong>
         <p className="col-3">Name in Full : </p><strong className="col-9">{fullName}</strong>
