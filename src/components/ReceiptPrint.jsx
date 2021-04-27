@@ -4,6 +4,8 @@ import { ToWords } from 'to-words';
 import {getInvoice} from '../services/getInvoiceNo'
 import {addPayment} from '../services/addPaymentService'
 import RecordPayment from './RecordPayment';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck , faExclamation} from "@fortawesome/free-solid-svg-icons";
 
 const toWords = new ToWords();
 
@@ -16,47 +18,64 @@ class ReceiptPrint extends React.PureComponent {
       invoiceNo: '',
       today : '',
       time: '',
+      dateTimeSave: '',
       total: '',
       totalWords: '',     
-      paymentRecord : this.props.paymentData
+      paymentRecord : this.props.paymentData,
+      paymentRecorded : false
     };
   }
 
   async componentDidMount() {
 
+    const dateTimeSave = new Date()
     const todayD = new Date().toLocaleDateString()
     const timeD = new Date().toLocaleTimeString()      
-    let totalD = this.props.paymentData.admissionFee + this.props.paymentData.yearlyFee 
-    + this.props.paymentData.arrearsFee + this.props.paymentData.idCardFee|| ''
+    let totalD = parseInt(this.props.paymentData.admissionFee)  + parseInt(this.props.paymentData.yearlyFee) 
+    + parseInt(this.props.paymentData.arrearsFee) + parseInt(this.props.paymentData.idCardFee)|| 0
     if(totalD) {
-      var totalWordsD = toWords.convert(totalD, { currency: true , ignoreDecimal: true});
+      var totalWordsD = toWords.convert(totalD.toString(), { currency: true , ignoreDecimal: true});
     }
 
-    const invoice = await getInvoice()
+    // const invoice = await getInvoice()
     this.setState({
-      invoiceNo: invoice,
+      invoiceNo: this.props.invoiceNum,
+      dateTimeSave: dateTimeSave,
       today : todayD,
       time: timeD,
       total: totalD,
-      totalWords: totalWordsD,
+      totalWords: totalWordsD
+      
     })
 
-    // console.log("Mount" + this.state)
+    console.log("Mount" + this.state)
     console.log("Receipt Print Mount")
     console.log(this.state)
     
   }
-
-  async recordPayment() {
-    // await addPayment(this.state)
-    // console.log("Record" + this.state)
-    console.log("Receipt Print Record")
-    console.log(this.state || 'No state record')
+  changePaymentRecorded = () => {
+    this.setState({
+      paymentRecorded : true
+    })
   }
+  onChangeInNo = (e) => {
+    this.setState({
+      invoiceNo: e.target.value
+    })
+    this.props.setInvoiceNum(e.target.value)
+
+  }
+
+  // async recordPayment() {
+  //   await addPayment(this.state)
+  //   console.log("Record" + this.state)
+  //   console.log("Receipt Print Record")
+  //   console.log(this.state || 'No state record')
+  // }
 
     render() {
 
-      // console.log("Render" + this.state)
+      console.log("Render" + this.state)
       console.log("Receipt Print Render")
       console.log(this.state || 'No state render')
 
@@ -64,7 +83,7 @@ class ReceiptPrint extends React.PureComponent {
         height: '1122px',
         width: '792px',
         border: '3px solid black',
-        margin: '10px 5px 10px 5px',
+        margin: '5% 10% 10px 5%',
         padding: '40px'
       }
       const logoStyle = {
@@ -84,7 +103,13 @@ class ReceiptPrint extends React.PureComponent {
 
             <div className="col-12" style={{marginTop: '5%'}}>
               <div className="row">
-                <p className="col-9">Invoice No - <strong>{this.state.invoiceNo}</strong></p>
+                {/* <p className="col-9">Invoice No - <strong>{this.state.invoiceNo}</strong></p> */}
+                <div className="col-9">
+                  <label  htmlFor="invoiceNo" className="col-3"><strong>Invoice No</strong></label> 
+                  <input type="text" id="invoiceNo"  className="col-4 mt-1" name="invoiceNo" value={this.state.invoiceNo} 
+                  onChange={this.onChangeInNo}/>
+                </div>                
+
                 <p className="col-3">Date : <strong>{this.state.today}</strong></p>
                 <div className='col-9'></div>
                 <p className="col-3">Time : <strong>{this.state.time}</strong></p>
@@ -108,11 +133,15 @@ class ReceiptPrint extends React.PureComponent {
             <p className="col-3">Total Payment : </p><strong className="col-9">{this.state.totalWords}</strong>
             <p className="col-3">Description : </p><strong className="col-9">{this.props.paymentData.description}</strong>
           </div>
+        </div>        
+        <div style={{marginLeft: '10%'}}>        
+          {this.state.paymentRecorded ?        
+          <h6 style={{color: "green"}} ><FontAwesomeIcon icon={faCheck} size="2x"/> Payment has been Recorded</h6> : 
+          <h6 style={{color: "red"}} ><FontAwesomeIcon icon={faExclamation} size="2x"/> Payment hasn't been Recorded yet</h6>}
 
-          
+          {/* <button type="button" onClick={this.recordPayment} className="btn btn-primary float-right m-1">Record the Payment</button> */}
+          <RecordPayment payment={this.state} paymentRecords={this.props.paymentRecords} record={this.recordPayment} changePaymentRecorded={this.changePaymentRecorded}/>
         </div>
-        <button type="button" onClick={this.recordPayment} className="btn btn-primary float-right m-1">Record the Payment</button>
-          {/* <RecordPayment payment={this.state} record={this.recordPayment}/> */}
         </>
       );
     }

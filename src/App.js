@@ -12,6 +12,8 @@ import UploadPreview from './testingComponents/imageUpload';
 import ProfilePicUpload from './testingComponents/imageUpload2';
 import CSVuploader from './components/CSVuploader';
 import ViewImage from './testingComponents/ViewImage';
+import NewMemberPaymentForm from './components/forms/NewMemberPaymentForm';
+import PaymentRecordsForReceipt from './components/PaymentRecordsForReceipt';
 
 class App extends Component{
 
@@ -20,6 +22,8 @@ class App extends Component{
     return (
       <>
         <Main />    
+        {/* <PaymentRecordsForReceipt /> */}
+        {/* <NewMemberPaymentForm /> */}
         {/* <ViewImage /> */}
         {/* <UploadPreview /> */}
         {/* <ProfilePicUpload/> */}

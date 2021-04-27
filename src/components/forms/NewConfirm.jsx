@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button} from 'reactstrap'
 import Loader from 'react-loader-spinner'
+import MembershipNo from './MembershipNo'
 
-
-export const NewConfirm = ({memberData, prevStep, nextStep, loading, submit , filePreview, file}) => {
+export const NewConfirm = ({membershipNo, setMembershipNo, proposer, seconder, memberData, prevStep, nextStep, loading, submit , filePreview, file}) => {
   const {title,nameWinitials,nameInFull,firstName,lastName,gender,nic,dob,resAddOne,
         resAddTwo, resAddThree, resAddFour, resAddFive,perAddrsAvai, perAddOne,perAddTwo,perAddThree,perAddFour,perAddFive,
         mobileNo,landNo,email,designation,division,placeWork,offAddrslineOne,offAddrslineTwo,offAddrslineThree,offAddrslineFour,
@@ -20,7 +20,7 @@ export const NewConfirm = ({memberData, prevStep, nextStep, loading, submit , fi
       <img style={{ width: "100%" }, { height: "200px"}} src={file} />
     </div> */}
     <div className="row" id="personal">
-      <h3 className="col-12" style={{backgroundColor: "yellow"}}>Personal Details</h3>
+      <h6 className="col-12" style={{backgroundColor: "yellow"}}>Personal Details</h6>     
       <p className="col-3">Name with Initials : </p><strong className="col-9">{title} {nameWinitials}</strong>
       <p className="col-3">Name in Full : </p><strong className="col-9">{nameInFull}</strong>
       <p className="col-3 ">Name in Common Use : </p><strong className="col-9">{firstName} {lastName} </strong>
@@ -29,11 +29,11 @@ export const NewConfirm = ({memberData, prevStep, nextStep, loading, submit , fi
       <p className="col-3">Date of Birth : </p><strong className="col-9">{dob}</strong>
       <p className="col-3">Residence Address : 
       </p><strong className="col-9">
-                  {resAddOne ? `${resAddOne}` : null}  
-                  {resAddTwo ? `, ${resAddTwo}` : null} 
-                  {resAddThree ? `, ${resAddThree}` : null} 
-                  {resAddFour ? `, ${resAddFour}` : null} 
-                  {resAddFive ? `, ${resAddFive}` : null}
+          {resAddOne ? `${resAddOne}` : null}  
+          {resAddTwo ? `, ${resAddTwo}` : null} 
+          {resAddThree ? `, ${resAddThree}` : null} 
+          {resAddFour ? `, ${resAddFour}` : null} 
+          {resAddFive ? `, ${resAddFive}` : null}
           </strong>
       { perAddrsAvai && 
         <>
@@ -53,7 +53,7 @@ export const NewConfirm = ({memberData, prevStep, nextStep, loading, submit , fi
     </div>
 
     <div className="row" id="official">
-      <h3 className="col-12" style={{backgroundColor: "yellow"}}>Official Details</h3>
+      <h6 className="col-12" style={{backgroundColor: "yellow"}}>Official Details</h6>
       <p className="col-3">Designation : </p><strong className="col-9">{designation}</strong>
       <p className="col-3">Division/Department : </p><strong className="col-9">{division}</strong>
       <p className="col-3 ">Place of Work : </p><strong className="col-9">{placeWork} </strong>
@@ -72,7 +72,7 @@ export const NewConfirm = ({memberData, prevStep, nextStep, loading, submit , fi
     </div>
 
     <div className="row" id="professional">
-      <h3 className="col-12" style={{backgroundColor: "yellow"}}>Professional Details</h3>
+      <h6 className="col-12" style={{backgroundColor: "yellow"}}>Professional Details</h6>
       <p className="col-3">Profession : </p><strong className="col-9">{profession}</strong>
       <p className="col-3">Fields of Specialization : </p>
         <div  className="col-9">
@@ -96,8 +96,11 @@ export const NewConfirm = ({memberData, prevStep, nextStep, loading, submit , fi
         </div>
     </div>
 
-    <div className="row" id="membership">
-      <h3 className="col-12" style={{backgroundColor: "yellow"}}>Membership Details</h3>
+    <div className="row" id="membership">      
+      <h6 className="col-12" style={{backgroundColor: "yellow"}}>Membership Details</h6>
+      <div className="col-12 mt-3 mb-3">
+        <MembershipNo membershipNo={membershipNo} section={section} setMembershipNo={setMembershipNo} />
+      </div>      
       <p className="col-3">Grade of Membership : </p><strong className="col-9">{gradeOfMem}</strong>
       <p className="col-3">Section: </p><strong className="col-9">{section}</strong>
       {
@@ -111,29 +114,19 @@ export const NewConfirm = ({memberData, prevStep, nextStep, loading, submit , fi
       <p className="col-5 ">Address to which correspondences should be : </p><strong className="col-7">{sendingAddrs} {(sendingAddrs) ? "Address" : null} </strong>
       <div className="col-6">
         <p className="col-12 ml-5">- Proposer - </p>
-        <div className="row col-12"><p className="col-3">Name : </p><strong className="col-9">{proposer$seconder.proposer.name}</strong></div>
-        <div className="row col-12"><p className="col-3">Membership No : </p><strong className="col-9">{proposer$seconder.proposer.memNo}</strong></div>
-        <div className="row col-12"><p className="col-3">Address : </p><strong className="col-9">{proposer$seconder.proposer.address}</strong></div>
-        <div className="row col-12"><p className="col-3">Contact No : </p><strong className="col-9">{proposer$seconder.proposer.contactNo}</strong></div>
+        <div className="row col-12"><p className="col-3">Membership No : </p><strong className="col-9">{proposer.memNo}</strong></div>
+        <div className="row col-12"><p className="col-3">Name : </p><strong className="col-9">{proposer.name}</strong></div>
+        <div className="row col-12"><p className="col-3">Address : </p><strong className="col-9">{proposer.address}</strong></div>
+        <div className="row col-12"><p className="col-3">Contact No : </p><strong className="col-9">{proposer.contactNo}</strong></div>
       </div>
       <div className="col-6">
         <p className="col-12 ml-5">- Seconder -</p>
-        <div className="row col-12"><p className="col-3">Name : </p><strong className="col-9">{proposer$seconder.seconder.name}</strong></div>
-        <div className="row col-12"><p className="col-3">Membership No : </p><strong className="col-9">{proposer$seconder.seconder.memNo}</strong></div>
-        <div className="row col-12"><p className="col-3">Address : </p><strong className="col-9">{proposer$seconder.seconder.address}</strong></div>
-        <div className="row col-12"><p className="col-3">Contact No : </p><strong className="col-9">{proposer$seconder.seconder.contactNo}</strong></div>
+        <div className="row col-12"><p className="col-3">Membership No : </p><strong className="col-9">{seconder.memNo}</strong></div>
+        <div className="row col-12"><p className="col-3">Name : </p><strong className="col-9">{seconder.name}</strong></div>
+        <div className="row col-12"><p className="col-3">Address : </p><strong className="col-9">{seconder.address}</strong></div>
+        <div className="row col-12"><p className="col-3">Contact No : </p><strong className="col-9">{seconder.contactNo}</strong></div>
       </div>      
     </div>
-
-    {/* <div className="row" id="payment">
-      <h3 className="col-12" style={{backgroundColor: "yellow"}}>Payment Details</h3>
-      <p className="col-3">Payment done Date : </p><strong className="col-9">{paymentDoneDate}</strong>
-      <p className="col-3">Payment Method: </p><strong className="col-9">{paymentMethod}</strong>
-      <p className="col-3">Amount : </p><strong className="col-9">{amount}</strong>
-      <p className="col-3">Bank: </p><strong className="col-9">{bank}</strong>
-      <p className="col-3">Branch : </p><strong className="col-9">{branch}</strong>
-      <p className="col-3">Account No: </p><strong className="col-9">{accountNo}</strong>
-    </div>       */}
 
     
     <Button color="primary" className="float-right m-1" onClick={() => submit()}>Confirm & Continue
@@ -145,10 +138,7 @@ export const NewConfirm = ({memberData, prevStep, nextStep, loading, submit , fi
               height={30}
               width={30}
           />}
-          
-        
-
-        </span>
+          </span>
     </Button>
     <Button color="secondary" className="float-right m-1" onClick={() => prevStep()}>Back</Button>
     

@@ -5,11 +5,13 @@ import Loader from 'react-loader-spinner'
 import axios from 'axios'
 import ViewImage from './ViewImage';
 
-
 export const MemberProfile = (props) => {
 
     
     const [memberData, setMemberData] = useState({});
+    const [academicData, setAcademicData] = useState([])
+    const [proposer, setProposer] = useState({})
+    const [seconder, setSeconder] = useState({})
     const [isLoading, setIsLoading] = useState(true);
 
     console.log(props.match.params.id)
@@ -20,7 +22,10 @@ export const MemberProfile = (props) => {
             .then(function (res) {
                 console.log("Response data", res.data)
                 console.log(typeof res.data)
-                setMemberData(res.data)
+                setMemberData(res.data.member)
+                setAcademicData(res.data.academic)
+                setProposer(res.data.proposer)
+                setSeconder(res.data.seconder)
             })      
             .then(function () {
                 console.log("Member data", memberData)
@@ -36,10 +41,11 @@ export const MemberProfile = (props) => {
         title, nameWinitials, fullName, memPaidLast, lastPaidForYear, arrearsConti, commonFirst, commomLast, gender, dob, nic,
         mobileNo, fixedNo, email, resAddrs, perAddrs, sendingAddrs, designation, department, placeOfWork, offMobile,
         offLand, offFax, offEmail, offAddrs, memberBefore, memberFrom, memberTo, profession, specialization1, specialization2, specialization3, specialization4, 
-        specialization5, password, academicID, year, degree, disciplines, university ,
-        proposerID, seconderID,
+        specialization5, password, proposerID, seconderID
         
-    } = memberData    
+    } = memberData   
+    // const enrolledDate = Date(`${enrollDate}`).toLocaleDateString()
+    const displayMembershipNo = `${membershipNo}/${section}`
 
     return (
     
@@ -52,12 +58,31 @@ export const MemberProfile = (props) => {
     /> :
 
     <>
+    <div className="row" id="main">
+        <h3 className="col-12 text-center mb-5" style={{color: "#e95045"}}>Member Profile</h3>
+        <div className="col-2 mr-5">
+          <ViewImage nic={props.match.params.id}/>
+        </div>
+        <div className="col-5" id="personalData">
+          <p className="row">Name with Initials : </p><strong className="row">{title} {nameWinitials}</strong>
+          <p className="row">NIC : </p><strong className="row">{nic}</strong>
+          <p className="row">Email : </p><strong className="row">{email}</strong>
+          <p className="row">Mobile No : </p><strong className="row">{mobileNo}</strong>
+          <p className="row">Preffered Address : </p><strong className="row">{sendingAddrs}</strong>
+        </div>
+        <div className="col-4" id="membershipData">
+          <p className="row">Membership No: </p><strong className="row">{displayMembershipNo}</strong>
+          <p className="row">Grade of Membership : </p><strong className="row">{gradeOfMembership}</strong>
+          <p className="row">Section: </p><strong className="row">{section}</strong>
+          <p className="row">Date of Enrolment: </p><strong className="row">{enrollDate}</strong>
+        </div>
+    </div>    
+
     <div className="row" id="personal">
-        <ViewImage nic={nic}/>
-        <h3 className="col-12" style={{backgroundColor: "yellow"}}>Personal Details</h3>
+        <h5 className="col-12" style={{backgroundColor: "#e95045"}}>Personal Details</h5>
         <p className="col-3">Name with Initials : </p><strong className="col-9">{title} {nameWinitials}</strong>
         <p className="col-3">Name in Full : </p><strong className="col-9">{fullName}</strong>
-        <p className="col-3 ">Name in Common Use : </p><strong className="col-9">{commonFirst} {commomLast} </strong>
+        <p className="col-3">Name in Common Use : </p><strong className="col-9">{commonFirst} {commomLast} </strong>
         <p className="col-3">Gender : </p><strong className="col-9">{gender}</strong>
         <p className="col-3">NIC : </p><strong className="col-9">{nic}</strong>
         <p className="col-3">Date of Birth : </p><strong className="col-9">{dob}</strong>
@@ -71,7 +96,7 @@ export const MemberProfile = (props) => {
     </div>
 
     <div className="row" id="official">
-        <h3 className="col-12" style={{backgroundColor: "yellow"}}>Official Details</h3>
+        <h5 className="col-12" style={{backgroundColor: "#e95045"}}>Official Details</h5>
         <p className="col-3">Designation : </p><strong className="col-9">{designation}</strong>
         <p className="col-3">Division/Department : </p><strong className="col-9">{department}</strong>
         <p className="col-3">Place of Work : </p><strong className="col-9">{placeOfWork} </strong>
@@ -83,7 +108,7 @@ export const MemberProfile = (props) => {
     </div>
 
     <div className="row" id="professional">
-        <h3 className="col-12" style={{backgroundColor: "yellow"}}>Professional Details</h3>
+        <h5 className="col-12" style={{backgroundColor: "#e95045"}}>Professional Details</h5>
         <p className="col-3">Profession : </p><strong className="col-9">{profession}</strong>
         <p className="col-3">Fields of Specialization : </p>
         <div  className="col-9">
@@ -93,10 +118,10 @@ export const MemberProfile = (props) => {
             <strong>{specialization4}</strong>
             <strong>{specialization5}</strong>
         </div>
-        {/* <p className="col-3">Academic Qualifications : </p>
+        <p className="col-3">Academic Qualifications : </p>
         <div  className="col-9">
         {
-            academic.map( field => { 
+            academicData.map( field => { 
                 return (
                     <div  className="col-12">
                     <strong>{field.year} -  {field.degree} -  {field.disciplines} -  {field.uni}</strong>
@@ -104,11 +129,12 @@ export const MemberProfile = (props) => {
                 )
             })
         }
-        </div> */}
+        </div>
     </div>
 
     <div className="row" id="membership">
-      <h3 className="col-12" style={{backgroundColor: "yellow"}}>Membership Details</h3>
+      <h5 className="col-12" style={{backgroundColor: "#e95045"}}>Membership Details</h5>
+      <p className="col-3">Membership No : </p><strong className="col-9">{displayMembershipNo}</strong>
       <p className="col-3">Grade of Membership : </p><strong className="col-9">{gradeOfMembership}</strong>
       <p className="col-3">Section: </p><strong className="col-9">{section}</strong>
       {
@@ -119,21 +145,21 @@ export const MemberProfile = (props) => {
           <p className="col-2">To : </p><strong className="col-2">{memberTo}</strong>
         </>
       }
-      {/* <p className="col-5 ">Address to which correspondences should be : </p><strong className="col-7">{sendingAddrs} {(sendingAddrs) ? "Address" : null} </strong> */}
-      {/* <div className="col-6">
+      <p className="col-5 ">Address to which correspondences should be : </p><strong className="col-7">{sendingAddrs} {(sendingAddrs) ? "Address" : null} </strong>
+      <div className="col-6">
         <p className="col-12 ml-5">- Proposer - </p>
-        <div className="row col-12"><p className="col-3">Name : </p><strong className="col-9">{proposer$seconder.proposer.name}</strong></div>
-        <div className="row col-12"><p className="col-3">Membership No : </p><strong className="col-9">{proposer$seconder.proposer.memNo}</strong></div>
-        <div className="row col-12"><p className="col-3">Address : </p><strong className="col-9">{proposer$seconder.proposer.address}</strong></div>
-        <div className="row col-12"><p className="col-3">Contact No : </p><strong className="col-9">{proposer$seconder.proposer.contactNo}</strong></div>
+        <div className="row col-12"><p className="col-3">Name : </p><strong className="col-9">{proposer.name}</strong></div>
+        <div className="row col-12"><p className="col-3">Membership No : </p><strong className="col-9">{proposer.memNo}</strong></div>
+        <div className="row col-12"><p className="col-3">Address : </p><strong className="col-9">{proposer.address}</strong></div>
+        <div className="row col-12"><p className="col-3">Contact No : </p><strong className="col-9">{proposer.contactNo}</strong></div>
       </div>
       <div className="col-6">
         <p className="col-12 ml-5">- Seconder -</p>
-        <div className="row col-12"><p className="col-3">Name : </p><strong className="col-9">{proposer$seconder.seconder.name}</strong></div>
-        <div className="row col-12"><p className="col-3">Membership No : </p><strong className="col-9">{proposer$seconder.seconder.memNo}</strong></div>
-        <div className="row col-12"><p className="col-3">Address : </p><strong className="col-9">{proposer$seconder.seconder.address}</strong></div>
-        <div className="row col-12"><p className="col-3">Contact No : </p><strong className="col-9">{proposer$seconder.seconder.contactNo}</strong></div>
-      </div>       */}
+        <div className="row col-12"><p className="col-3">Name : </p><strong className="col-9">{seconder.name}</strong></div>
+        <div className="row col-12"><p className="col-3">Membership No : </p><strong className="col-9">{seconder.memNo}</strong></div>
+        <div className="row col-12"><p className="col-3">Address : </p><strong className="col-9">{seconder.address}</strong></div>
+        <div className="row col-12"><p className="col-3">Contact No : </p><strong className="col-9">{seconder.contactNo}</strong></div>
+      </div>      
     </div>
 
     {/* <div className="row" id="payment">

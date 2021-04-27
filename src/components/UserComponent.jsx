@@ -11,6 +11,7 @@ import ViewPayments from './ViewPayments'
 import MemberPaymentForm from './forms/MemberPaymentForm'
 import NewRegisterForm from '../components/forms/NewRegisterForm'
 import {MemberProfile} from '../components/MemberProfile'
+import NewMemberPaymentForm from './forms/NewMemberPaymentForm'
 
 
 class UserComponent extends Component {
@@ -37,7 +38,7 @@ class UserComponent extends Component {
                         <Route path="/user/payments/view" component={ViewPayments}/>
                         <Route path="/user/login" exact component={UserLogin} />                    
                         <Route path="/user/dashboard" component={ Dashboard }/> 
-                        <Route path="/user/receipt" component={MemberPaymentForm} />                                      
+                        <Route path="/user/receipt" component={NewMemberPaymentForm} />                                      
                         <Route path="/user" exact component={Dashboard} />                        
                     </Switch>
                 </div>

@@ -9,6 +9,10 @@ import {registerMember} from '../../services/registerMemberService'
 import ProfilePicUpload from '../ProfilePicUpload';
 import axios from 'axios'
 import { toast } from "react-toastify";
+import Proposer from './Proposer';
+import Seconder from './Seconder';
+import MembershipNo from './MembershipNo';
+import validationSchema from './registerFormValidationSchema'
 
 function NewRegisterForm () {
 
@@ -32,22 +36,22 @@ function NewRegisterForm () {
     
     var datetime = new Date();
 
-    const validationSchema = Yup.object({
-        nameWinitials: Yup.string(),
-        nameInFull : Yup.string(),
-        firstName: Yup.string(),
-        middleName: Yup.string(),
-        lastName : Yup.string(),
-        nic : Yup.string(),
-        dob : Yup.string(),
-        resAddOne : Yup.string(),
-        resAddTwo : Yup.string(),
-        resAddThree : Yup.string(),
-        resAddFour : Yup.string(),
-        resAddFive : Yup.string(),
-        email: Yup.string().email('Invalid Email')
+    // const validationSchema = Yup.object({
+    //     nameWinitials: Yup.string(),
+    //     nameInFull : Yup.string(),
+    //     firstName: Yup.string(),
+    //     middleName: Yup.string(),
+    //     lastName : Yup.string(),
+    //     nic : Yup.string(),
+    //     dob : Yup.string(),
+    //     resAddOne : Yup.string(),
+    //     resAddTwo : Yup.string(),
+    //     resAddThree : Yup.string(),
+    //     resAddFour : Yup.string(),
+    //     resAddFive : Yup.string(),
+    //     email: Yup.string().email('Invalid Email')
         
-    })
+    // })
 
     const [memberData, setMemberData] = useState({
         title: "",
@@ -57,7 +61,7 @@ function NewRegisterForm () {
         lastName: "",
         gender: "",
         nic : "",
-        dob : "",
+        dob : null,
         resAddOne : "", resAddTwo : "", resAddThree : "", resAddFour : "", resAddFive : "",
         perAddrsAvai : false,
         perAddOne : "", perAddTwo : "", perAddThree : "", perAddFour : "", perAddFive : "",
@@ -88,16 +92,19 @@ function NewRegisterForm () {
         sendingAddrs: "",
         status: "member",
         enrollDate: datetime,
-        proposer$seconder: {
-            proposer: {
-                name: "", memNo: "", address: "", contactNo: ""
-            },
-            seconder: {
-                name: "", memNo: "", address: "", contactNo: ""
-            }
-        }
+        // proposer$seconder: {
+        //     proposer: {
+        //         name: "", memNo: "", address: "", contactNo: ""
+        //     },
+        //     seconder: {
+        //         name: "", memNo: "", address: "", contactNo: ""
+        //     }
+        // }
     
     })
+    const [proposer, setProposer] = useState({name: "", memNo: "", address: "", contactNo: ""})
+    const [seconder, setSeconder] = useState({name: "", memNo: "", address: "", contactNo: ""})
+    const [membershipNo, setMembershipNo] = useState('')
 
     const [file, setFile] = useState('')
     const [filePreview, setFilePreview] = useState('')
@@ -134,11 +141,18 @@ function NewRegisterForm () {
         setLoading(true)
         setNameOfImage(memberData.nic)
         console.log(nameOfImage)
-        const member = memberData
-        console.log(member)
+        const member = {
+            memberData : memberData,
+            proposer: proposer,
+            seconder: seconder,
+            membershipNo: membershipNo.split('/')[0]
+        }
+        console.log("Member before save", member)
         await registerMember(member)
         onImageSubmit()
         setLoading(false)
+        setTimeout(function(){ reload() }, 3000);
+        
         
     }
     const reload = () => {
@@ -162,7 +176,7 @@ function NewRegisterForm () {
         >
             {
                 formik => {
-                
+
                     const handleStyle = (n)  => {                      
                         
                         if(formik.errors[n] && formik.touched[n]) return "form-control is-invalid"
@@ -181,7 +195,7 @@ function NewRegisterForm () {
                         setFilename={setFilename}
                         nameOfImage={nameOfImage}
                     />
-                    <Form style={{marginBottom : 50}}>
+                    <Form style={{marginBottom : 50}}   autocomplete="off">
                         <div className="row">                            
                             <div className="form-group col-12">
                                 <label htmlFor="nameWinitials" className="form-group"> Name with Initials</label>
@@ -247,14 +261,16 @@ function NewRegisterForm () {
                                 </div> 
                                 <div className="form-group col-4">
                                     <label htmlFor="dob" className="form-check">Date of Birth</label> 
-                                    <Field className={ `${handleStyle('dob')}`} name="dob" >
+                                    <Field className={ `${handleStyle('dob')}`} name="dob">
                                     {
                                             ({form,field}) => {
                                                 const {setFieldValue} = form
                                                 const {value} = field
-                                                return <DateView className="form-control" id="dob" selected={value}
+                                                return <DateView className="form-control" id="dob" {...field} selected={value}
                                                 dateFormat="dd/MM/yyyy" maxDate={new Date()} showYearDropdown scrollableMonthYearDropdown
-                                                onChange={val => setFieldValue("dob", val)}/>
+                                                onChange={val => setFieldValue("dob", val)}
+                                                // onChange={val => console.log("DOB", val)}
+                                                />
                                             }
                                     }
                                     </Field>
@@ -456,7 +472,8 @@ function NewRegisterForm () {
                                                         }
                                                         {index<=3 && 
                                                         <button type="button" className="btn btn-success m-1" onClick={() => push('')}> + </button>
-                                                        }                                                                                                                
+                                                        }   
+                                                        <ErrorMessage name="fieldOfSpecial" component={ValidationError}/>                                                                                                             
                                                         
                                                         </div>                                                     
                                                     </div>                                              
@@ -515,11 +532,15 @@ function NewRegisterForm () {
                                     }
                                 }
                             </FieldArray>
+                            
 
                         </div> 
 
                         
                         <h6 style={{backgroundColor: "#e95045"}} className="pl-5 pt-1 pb-1">Membership Details</h6>
+                        {/* <div className="row form-group">
+                            <MembershipNo membershipNo={membershipNo} section={memberData.section} setMembershipNo={setMembershipNo} />
+                        </div> */}
                         <div className="form-group row">
                             <label htmlFor="gradeOfMem" className="col-4">Grade of Membership</label> 
                             <div className="row col-5">
@@ -624,6 +645,13 @@ function NewRegisterForm () {
                                 
                                 <hr></hr>
                                 <div className="col-6">
+                                    <Proposer proposer={proposer} setProposer={setProposer} />
+                                </div>
+                                <div className="col-6">
+                                    <Seconder seconder={seconder} setSeconder={setSeconder} />
+                                </div>
+                                
+                                {/* <div className="col-6">
                                     <label className="ml-5">Proposer</label>
                                     <div className="row form-group">
                                         <label className="col-4">Name</label>
@@ -660,7 +688,7 @@ function NewRegisterForm () {
                                         <label className="col-4">Contact No</label>
                                         <Field className="col-8 form-control" name="proposer$seconder.seconder.contactNo"/>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
 
@@ -668,6 +696,7 @@ function NewRegisterForm () {
                     <button type="submit" className={isConfirmed ? "btn btn-success float-right m-2 is-valid" :"btn btn-primary float-right m-2"}>
                         { isConfirmed ? "Confirmed" : "Confirm" }
                     </button>
+                    <button type="reset" onClick={() => formik.resetForm()}>Reset</button>
 
                     </Form> 
                     </>
@@ -681,7 +710,11 @@ function NewRegisterForm () {
 
     case 2 : return(
         <div className="container">
-                <NewConfirm memberData={memberData} file={file} filePrevie={filePreview} nextStep={nextStep} prevStep={prevStep} submit={submit} loading={loading}/>
+            <NewConfirm membershipNo={membershipNo} section={memberData.section} setMembershipNo={setMembershipNo} 
+            proposer={proposer} seconder={seconder} 
+            memberData={memberData} file={file} filePrevie={filePreview} 
+            nextStep={nextStep} prevStep={prevStep} 
+            submit={submit} loading={loading}/>
         </div>
     )
 

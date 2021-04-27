@@ -5,14 +5,12 @@ import PropTypes from 'prop-types'
 import ValidationError from '../../validationError'
 import DateView from 'react-datepicker'
 import ReceiptGenerator from '../ReceiptGenerator'
+import axios from 'axios'
 
 const validationSchema = Yup.object({
     
     
 })
-// const submitForm = (data) => {
-//         console.log(data)
-// }
 
 function MemberPaymentForm() {
     const [step, setStep] = useState(1)
@@ -31,7 +29,57 @@ function MemberPaymentForm() {
         paymentMethod: "",
         description: ""
     })
+    const [paymentRecords, setPaymentRecords] = useState({
+        memPaidLast: null,
+        lastPaidForYear: null,
+        arrearsConti: null
+    })
     const [totalState, setTotalState] = useState(0)
+
+    const [loading, setLoading] = useState(false)
+    const [viewData, setViewData] = useState({
+        memberName: '',
+        membershipNo: '',
+        nic: '',
+    })
+
+    const onChangeMemNo = async (e) => {
+        // setLoading(true)
+        console.log(e.target.value)
+        setPaymentData({membershipNo: e.target.value})
+        // const fetchData = () => {            
+        //     axios(`http://localhost:3001/slaas/api/user/receipt/${e.target.value}`)
+        //     .then(function (res) {
+        //         console.log("Member Data Received", res.data)
+        //         // const memberData = {
+        //         //     memberName: res.data.nameWinitials,
+        //         //     nic: res.data.nic,
+        //         // }
+        //         // const paymentRecords = {
+        //         //     memPaidLast: res.data.memPaidLast,
+        //         //     lastPaidForYear: res.data.memPaidLast,
+        //         //     arrearsConti: res.data.memPaidLast
+        //         // }
+        //         // setPaymentData({
+        //         //     memberName: res.data.nameWinitials,
+        //         //     nic: res.data.nic,
+        //         //     membershipNo: res.data.membershipNo
+        //         // })
+        //         // setPaymentRecords(paymentRecords)
+        //         // setViewData({
+        //         //     membershipNo: e.target.value,
+        //         //     memberName: res.data.nameWinitials,
+        //         //     nic: res.data.nic
+        //         // })
+        //     })    
+            
+        // };    
+        // await fetchData();
+        // console.log("Payment Records", paymentRecords)
+        // console.log("Payment Data", paymentData)
+        // console.log("Viewing Data", viewData)
+        // setLoading(false)
+    }
 
     
     switch(step) {
@@ -50,7 +98,6 @@ function MemberPaymentForm() {
             >
                 {
                     formik => {
-                    
                         const handleStyle = (n)  => {                      
                             
                             if(formik.errors[n] && formik.touched[n]) return "form-control is-invalid"
@@ -68,7 +115,7 @@ function MemberPaymentForm() {
                                 </div>
                                 <div className="form-group col-6">
                                     <label htmlFor="membershipNo">Membership No</label> 
-                                    <Field className={ `${handleStyle('membershipNo')}`} type="text" id="membershipNo" name="membershipNo"/>
+                                    <Field className={ `${handleStyle('membershipNo')}`} onChange={onChangeMemNo} type="text" id="membershipNo" name="membershipNo"/>
                                     <ErrorMessage name="membershipNo" component={ValidationError}/>
                                 </div>
                                 <div className="form-group col-6">
@@ -162,7 +209,6 @@ function MemberPaymentForm() {
                         )
                     }
                 }
-       
             </Formik>
             </>
         )
