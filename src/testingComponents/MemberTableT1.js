@@ -2,21 +2,21 @@ import React, {useMemo, useState, useEffect} from 'react'
 import {useTable, useSortBy, useGlobalFilter, useFilters, usePagination, useRowSelect} from 'react-table'
 import {COLUMNS, GROUPED_COLUMNS} from './allColumns'
 import { Table, Button } from 'reactstrap';
-import Pagination from '../common/Pagination'
-import { GlobalFilter } from '../common/GlobalFilter';
+import Pagination from '../projectTables/common/Pagination'
+import { GlobalFilter } from '../projectTables/common/GlobalFilter';
 import Loader from 'react-loader-spinner'
 import { Spinner } from 'reactstrap';
 import axios from 'axios'
-import {Checkbox} from '../common/Checkbox'
-import EmailComponent from '../../components/EmailComponent';
-import { Link, Redirect, Route, Switch} from 'react-router-dom'
+import {Checkbox} from '../projectTables/common/Checkbox'
+import { Link, Redirect} from 'react-router-dom'
 import {useSticky} from 'react-table-sticky'
 
 import { useExportData } from "react-table-plugins";
-import ExportingButtons from '../common/ExportingButtons';
-import getExportFileBlob from '../common/exportFunction'
+import ExportingButtons from '../projectTables/common/ExportingButtons.js';
+import getExportFileBlob from '../projectTables/common/exportFunction'
 
-export const MemberAllTable = (props) => {
+
+export const MemberTableT1 = () => {
     const [allMembers, setallMembers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -66,6 +66,7 @@ export const MemberAllTable = (props) => {
             columns,
             data,
             getExportFileBlob
+            // exportFunctions
         },
         useSticky,
         useFilters,
@@ -81,9 +82,10 @@ export const MemberAllTable = (props) => {
                     Header: ({ getToggleAllRowsSelectedProps}) => (
                         <Checkbox {...getToggleAllRowsSelectedProps()}/>
                     ),
+                    
                     Cell: ({row}) => (
                         <Checkbox {...row.getToggleRowSelectedProps()}/>
-                    )
+                    ),
                 }
                 ,...columns]
             })
@@ -93,11 +95,10 @@ export const MemberAllTable = (props) => {
     const {globalFilter, pageIndex, pageSize} = state
     console.log(selectedFlatRows[0] && selectedFlatRows[0].original)
     
-    const [selectedMails, setselectedMails] = useState([])
-    const saveMails = () => {
-        setselectedMails(selectedFlatRows)
-        // props.history.push("/user/members/send-emails")
-    }
+    // const [selectedMails, setselectedMails] = useState([])
+    // const saveMails = () => {
+    //     setselectedMails(selectedFlatRows)
+    // }
     return (
         <div>
             {
@@ -109,7 +110,7 @@ export const MemberAllTable = (props) => {
                     width={300}
                 /> :
                 <div>
-                    
+                    <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
                     <div className="row">
                         <div className="col-12">
                             <input type="checkbox" {...getToggleHideAllColumnsProps()} />All Columns
@@ -126,12 +127,12 @@ export const MemberAllTable = (props) => {
                             
                         }
                     </div>
-                    <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
-                    
+
+                    <ExportingButtons exportData={exportData} />
                     {/* <EmailComponent mails={selectedFlatRows}/> */}
                     {selectedFlatRows != 0 ?
 
-                        <h6 style={{color: 'green'}} className="mt-2">{selectedFlatRows.length} records selected</h6>
+                        <h6 style={{color: 'green'}}>{selectedFlatRows.length} records selected</h6>
                         : <p></p>
                         // <Link to={{
                         //     pathname: '/user/members/emails',
@@ -141,21 +142,12 @@ export const MemberAllTable = (props) => {
                         // }}>
                         //     <Button color="primary">Send Emails</Button>
                         // </Link> 
-                                            
+                        // <Link to="/user/members/emails">
+                        // <Button color="primary">Send Emails</Button>
+                        // </Link>                    
                         
                     
                     }
-                    <div className="row">
-                        <div className="col-5">
-                            <Link to="/user/members/send-emails"> 
-                                <Button onClick={saveMails} color="primary">Send Emails</Button>
-                            </Link>
-                        </div>
-                        <div className="col-7 mb-2">
-                            <ExportingButtons exportData={exportData}/>
-                        </div>
-                    </div>
-                    
                     
                     <Table size="sm" dark hover {...getTableProps()} responsive style={{height: "200px"}}>
                         <thead> 
@@ -234,12 +226,8 @@ export const MemberAllTable = (props) => {
                         </code>
                     </pre> */}
                 </div>
-                
             }
-        <Switch>
-            <Route path="/user/members/send-emails" render={(props) => 
-                <EmailComponent emails={selectedMails} flat={selectedFlatRows} {...props}/>} />
-        </Switch>
+        
         
         {/* <Pagination /> */}
         </div>

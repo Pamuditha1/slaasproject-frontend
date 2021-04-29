@@ -1,12 +1,16 @@
 import React from 'react'
+import { Link} from 'react-router-dom'
 import { ColumnFilter } from '../projectTables/common/ColumnFilter'
 
 export const COLUMNS = [
     {
         Header: 'Profile',
         Cell : props => {
+            const memberID = props.row.original.membershipNo ? props.row.original.membershipNo : props.row.original.nic
             return (
-                <button onClick={() => {console.log('view button clicked', props.row.original.nic)}}>View</button>
+                <Link to={`/user/member/profile/${memberID}`}>            
+                <button className="btn btn-outline-primary" onClick={() => {console.log('view button clicked', memberID )}}>View</button>
+                </Link>
             )
         }
     },
@@ -37,6 +41,8 @@ export const COLUMNS = [
         accessor: 'section',
         Filter: ColumnFilter
     },
+
+    
     
     {
         Header: 'Grade of Membership',

@@ -14,6 +14,7 @@ import CSVuploader from './components/CSVuploader';
 import ViewImage from './testingComponents/ViewImage';
 import NewMemberPaymentForm from './components/forms/NewMemberPaymentForm';
 import PaymentRecordsForReceipt from './components/PaymentRecordsForReceipt';
+import { MemberTableT1 } from './testingComponents/MemberTableT1';
 
 class App extends Component{
 
@@ -22,6 +23,7 @@ class App extends Component{
     return (
       <>
         <Main />    
+        {/* <MemberTableT1 /> */}
         {/* <PaymentRecordsForReceipt /> */}
         {/* <NewMemberPaymentForm /> */}
         {/* <ViewImage /> */}

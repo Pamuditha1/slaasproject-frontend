@@ -20,7 +20,7 @@ class Main extends Component {
             <div className="container-fulid">
                 
                 <ToastContainer />
-                <Switch >
+                <Switch>
                     <Route path="/applicant" component={ApplicantComponent}/> 
                     <Route path="/user" component={UserComponent}/>   
                     <Route path="/member" component={MemberComponent}/>

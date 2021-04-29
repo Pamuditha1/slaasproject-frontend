@@ -36,23 +36,6 @@ function NewRegisterForm () {
     
     var datetime = new Date();
 
-    // const validationSchema = Yup.object({
-    //     nameWinitials: Yup.string(),
-    //     nameInFull : Yup.string(),
-    //     firstName: Yup.string(),
-    //     middleName: Yup.string(),
-    //     lastName : Yup.string(),
-    //     nic : Yup.string(),
-    //     dob : Yup.string(),
-    //     resAddOne : Yup.string(),
-    //     resAddTwo : Yup.string(),
-    //     resAddThree : Yup.string(),
-    //     resAddFour : Yup.string(),
-    //     resAddFive : Yup.string(),
-    //     email: Yup.string().email('Invalid Email')
-        
-    // })
-
     const [memberData, setMemberData] = useState({
         title: "",
         nameWinitials: "" ,

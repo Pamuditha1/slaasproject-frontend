@@ -8,11 +8,14 @@ import { MemberPersonalTable } from '../projectTables/memberPersonal/MemberPerso
 import { MemberOfficialTable } from '../projectTables/memberOfficial/MemberOfficialTable'
 import {MemberAllTable} from '../projectTables/memberAllRecords/MemberAllTable'
 import { searchMember} from '../services/searchMemberService'
+import { MemberSearchTable } from '../projectTables/memberSearch/MemberSearchTable';
 
-function ViewMembers() {
+function ViewMembers(props) {
 
     const [searchWord, setSearchWord] = useState('')
     const [members, setMembers] = useState('')
+    const [searchedResults, setsearchedResults] = useState([])
+    const [allSelected, setallSelected] = useState(false)
 
     const handleSubmit = async () => {
             
@@ -20,50 +23,44 @@ function ViewMembers() {
         const searching = {
             word: searchWord
         }
-        await searchMember(searching)
+        const results = await searchMember(searching)
+        setsearchedResults(results)
+        console.log(results)
+        props.history.push("/user/members/search")
     }
 
     return (
         <div className="container">
-            <div id="search" className="col-12">
-                <div class="input-group mb-5">
-                    <div class="form-outline">
-                        <input type="search" id="searchMember" onChange={e => setSearchWord(e.target.value)} class="form-control" placeholder="Search ..."/>
+            <div className="col-12">
+                <Link to="/user/members/all">
+                    <Button onClick={() => setallSelected(true)} color="success mb-3 col-12">{allSelected ? "All Member Records" : "Get All Records"}</Button>
+                </Link>
+            </div>
+
+            {!allSelected &&
+            <div id="search" className="row">
+                <div class="input-group col-12">
+                    <div class="form-outline col-10">
+                        <input type="search" id="searchMember" 
+                        onChange={e => setSearchWord(e.target.value)} class="form-control" placeholder="Search ..."/>
                     </div>
-                    <button type="submit" onClick={handleSubmit} class="btn btn-primary">
+                    <button type="submit" onClick={handleSubmit} class="btn btn-primary col-2">
                         <FontAwesomeIcon icon={faSearch} size="1x"/>
                     </button>
+                    {searchedResults.length != 0 ?
+                        <h6 className="ml-5 mt-2">{searchedResults.length} members found.</h6>
+                        : <h6 className="ml-5 mt-2">No member found.</h6>
+                    }                
                 </div>
             </div>
-            <div className="col-12">
-                
-            </div>
+            }
+
             
-
-
-            <div className="row ml-5">
-                <Link to="/user/members/all">
-                        <Button color="primary">All Records</Button>
-                </Link>
-                <Link to="/user/members/personal">
-                    <Button outline color="primary">Personal</Button>
-                </Link>
-                <Link to="/user/members/official">
-                    <Button outline color="primary">Official</Button>
-                </Link>
-                <Button className="col-2" outline color="primary">Professional</Button>
-                <Button className="col-2" outline color="primary">Membership</Button>
-                <Button className="col-2" outline color="primary">Payment</Button>
-            </div>
             <div className="mt-5">
                 <Switch >                    
-                    <Route path="/user/members/personal" component={MemberPersonalTable} />
-                    <Route path="/user/members/official" component={MemberOfficialTable} />
                     <Route path="/user/members/all" component={MemberAllTable} />
-                    {/* <Route path="/user/members/personal" component={ViewMembers}/>
-                    <Route path="/user/members/personal" exact component={UserLogin} />                    
-                    <Route path="/user/members/personal" component={ Dashboard }/>                                       
-                    <Route path="/user/members/personal" exact component={Dashboard} />  */}
+                    <Route path="/user/members/search" render={(props) => 
+                    <MemberSearchTable members={searchedResults} {...props}/>} />
                 </Switch>
             </div>
         </div>

@@ -1,6 +1,6 @@
 import React, {useMemo, useState, useEffect} from 'react'
 import {useTable, useSortBy, useGlobalFilter, useFilters, usePagination, useRowSelect} from 'react-table'
-import {COLUMNS, GROUPED_COLUMNS} from './allColumns'
+import {COLUMNS, GROUPED_COLUMNS} from './searchedColumns'
 import { Table, Button } from 'reactstrap';
 import Pagination from '../common/Pagination'
 import { GlobalFilter } from '../common/GlobalFilter';
@@ -9,37 +9,25 @@ import { Spinner } from 'reactstrap';
 import axios from 'axios'
 import {Checkbox} from '../common/Checkbox'
 import EmailComponent from '../../components/EmailComponent';
-import { Link, Redirect, Route, Switch} from 'react-router-dom'
-import {useSticky} from 'react-table-sticky'
+import { Link, Redirect} from 'react-router-dom'
 
 import { useExportData } from "react-table-plugins";
 import ExportingButtons from '../common/ExportingButtons';
 import getExportFileBlob from '../common/exportFunction'
 
-export const MemberAllTable = (props) => {
-    const [allMembers, setallMembers] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+export const MemberSearchTable = (props) => {
+    const [searchedMembers, setsearchedMembers] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(async () => {
-        setIsLoading(true)
-        const fetchData = () => {
-            axios('http://localhost:3001/slaas/api/user/view/members/all')
-            .then(function (res) {
-                console.log(res.data)
-                setallMembers(res.data)
-            })      
-            .then(function () {
-                console.log(allMembers)
-            })      
-            
-        };    
-        await fetchData();
-        setIsLoading(false)
-    }, []);
+    // useEffect(() => {
+    //     setsearchedMembers(props.members)
+    //     setIsLoading(false)
+    //     console.log("Received data", setsearchedMembers)
+    // }, []);
 
     const columns = useMemo(() => COLUMNS, [])
     // const data = useMemo(() => memberPrsonal, [])
-    const data = allMembers
+    const data = props.members
 
 
     const {
@@ -67,7 +55,6 @@ export const MemberAllTable = (props) => {
             data,
             getExportFileBlob
         },
-        useSticky,
         useFilters,
         useGlobalFilter,
         useSortBy,
@@ -93,11 +80,10 @@ export const MemberAllTable = (props) => {
     const {globalFilter, pageIndex, pageSize} = state
     console.log(selectedFlatRows[0] && selectedFlatRows[0].original)
     
-    const [selectedMails, setselectedMails] = useState([])
-    const saveMails = () => {
-        setselectedMails(selectedFlatRows)
-        // props.history.push("/user/members/send-emails")
-    }
+    // const [selectedMails, setselectedMails] = useState([])
+    // const saveMails = () => {
+    //     setselectedMails(selectedFlatRows)
+    // }
     return (
         <div>
             {
@@ -127,35 +113,34 @@ export const MemberAllTable = (props) => {
                         }
                     </div>
                     <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
-                    
                     {/* <EmailComponent mails={selectedFlatRows}/> */}
+                    {/* {selectedFlatRows &&
+                        <Link to={{
+                            pathname: '/user/members/emails',
+                            data: {
+                                emails: selectedFlatRows
+                            }
+                        }}>
+                            <Button color="primary">Send Emails</Button>
+                        </Link> 
+                        // <Link to="/user/members/emails">
+                        // <Button color="primary">Send Emails</Button>
+                        // </Link>  
+                    } */}
                     {selectedFlatRows != 0 ?
+                    <h6 style={{color: 'green'}}>{selectedFlatRows.length} records selected</h6>
+                    : <p></p>}
 
-                        <h6 style={{color: 'green'}} className="mt-2">{selectedFlatRows.length} records selected</h6>
-                        : <p></p>
-                        // <Link to={{
-                        //     pathname: '/user/members/emails',
-                        //     data: {
-                        //         emails: selectedFlatRows
-                        //     }
-                        // }}>
-                        //     <Button color="primary">Send Emails</Button>
-                        // </Link> 
-                                            
-                        
-                    
-                    }
                     <div className="row">
                         <div className="col-5">
                             <Link to="/user/members/send-emails"> 
-                                <Button onClick={saveMails} color="primary">Send Emails</Button>
+                                <Button color="primary">Send Emails</Button>
                             </Link>
                         </div>
                         <div className="col-7 mb-2">
                             <ExportingButtons exportData={exportData}/>
                         </div>
                     </div>
-                    
                     
                     <Table size="sm" dark hover {...getTableProps()} responsive style={{height: "200px"}}>
                         <thead> 
@@ -234,12 +219,8 @@ export const MemberAllTable = (props) => {
                         </code>
                     </pre> */}
                 </div>
-                
             }
-        <Switch>
-            <Route path="/user/members/send-emails" render={(props) => 
-                <EmailComponent emails={selectedMails} flat={selectedFlatRows} {...props}/>} />
-        </Switch>
+        
         
         {/* <Pagination /> */}
         </div>

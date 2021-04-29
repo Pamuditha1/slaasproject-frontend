@@ -4,16 +4,17 @@ import { toast } from "react-toastify";
 
 
 
-const apiEndPoint = "http://localhost:3001/slaas/api/user/search";
+const apiEndPoint = "http://localhost:3001/slaas/api/user/search/";
 
 export function searchMember(word) {
 
     console.log(word)
 
-    return axios.get(apiEndPoint, word)
+    return http.get(`${apiEndPoint}${word.word}`)
     .then(function (response) {
-        console.log(response.data);
-        toast.success(`${response.data}`);
+        // console.log(response.data);
+        // toast.success(`${response.data}`);
+        return response.data
     })
     .catch(function (error) {
         if(error.response.data) {

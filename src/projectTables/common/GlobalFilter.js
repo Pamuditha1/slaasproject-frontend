@@ -10,8 +10,7 @@ export const GlobalFilter = ({filter, setFilter}) => {
     },1000)
     return (
         <span className="">
-            Search: {' '}
-            <Input className="col-6" value={value || ''} 
+            <Input className="col-12 bg-dark text-white" value={value || ''} placeholder="Search in table..."
             onChange={(e) => {
                 setValue(e.target.value)
                 onChange(e.target.value)
