@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import Loader from 'react-loader-spinner'
+import {api} from '../../services/api'
 
 function Seconder(props) {
 
@@ -13,7 +14,7 @@ function Seconder(props) {
         setLoading(true)
         console.log('On Change Called')
         const fetchData = () => {
-            axios(`http://localhost:3001/slaas/api/user/refrees/proposer/${e.target.value}`)
+            axios(`${api}/user/refrees/proposer/${e.target.value}`)
             .then(function (res) {
                 console.log("Proposer Data", res.data)
                 console.log(typeof res.data)

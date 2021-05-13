@@ -1,10 +1,9 @@
 import http from "./httpService"
 import axios from 'axios'
 import { toast } from "react-toastify";
+import {api} from './api'
 
-
-
-const apiEndPoint = "http://localhost:3001/slaas/api/user/search/";
+const apiEndPoint = `${api}/user/search/`;
 
 export function searchMember(word) {
 

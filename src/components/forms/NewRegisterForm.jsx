@@ -12,7 +12,9 @@ import { toast } from "react-toastify";
 import Proposer from './Proposer';
 import Seconder from './Seconder';
 import MembershipNo from './MembershipNo';
-import validationSchema from './registerFormValidationSchema'
+import validationSchema from '../validationObjects/registerFormValidationSchema'
+
+import {api} from '../../services/api'
 
 function NewRegisterForm () {
 
@@ -73,16 +75,11 @@ function NewRegisterForm () {
         memBefore: false,
         memFrom : "", memTo: "",
         sendingAddrs: "",
-        status: "member",
+        status: "Member",
         enrollDate: datetime,
-        // proposer$seconder: {
-        //     proposer: {
-        //         name: "", memNo: "", address: "", contactNo: ""
-        //     },
-        //     seconder: {
-        //         name: "", memNo: "", address: "", contactNo: ""
-        //     }
-        // }
+
+        lastPaidForYear: '',
+        arrearstoPay: 0
     
     })
     const [proposer, setProposer] = useState({name: "", memNo: "", address: "", contactNo: ""})
@@ -103,7 +100,7 @@ function NewRegisterForm () {
         formData.append('file', file)
         console.log(file)
         try{
-            const res = await axios.post('http://localhost:3001/slaas/api/user/add-profilepic', formData, {
+            const res = await axios.post(`${api}/user/add-profilepic`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'NameOfImage' : nameOfImage
@@ -131,10 +128,10 @@ function NewRegisterForm () {
             membershipNo: membershipNo.split('/')[0]
         }
         console.log("Member before save", member)
-        await registerMember(member)
+        let result = await registerMember(member)
         onImageSubmit()
         setLoading(false)
-        setTimeout(function(){ reload() }, 3000);
+        if(result) setTimeout(function(){ reload() }, 3000);
         
         
     }
@@ -149,7 +146,7 @@ function NewRegisterForm () {
         <h6 style={{backgroundColor: "#e95045"}} className="pl-5 pt-1 pb-1">Personal Details</h6>
         <Formik className="container mt-5 mb-5"
         initialValues={memberData}
-        validationSchema= {validationSchema}
+        // validationSchema= {validationSchema}
         onSubmit={values => {
             setNameOfImage(`${values.nic}`)
             setMemberData(values)     
@@ -178,7 +175,7 @@ function NewRegisterForm () {
                         setFilename={setFilename}
                         nameOfImage={nameOfImage}
                     />
-                    <Form style={{marginBottom : 50}}   autocomplete="off">
+                    <Form style={{marginBottom : 50}}   autoComplete="off">
                         <div className="row">                            
                             <div className="form-group col-12">
                                 <label htmlFor="nameWinitials" className="form-group"> Name with Initials</label>
@@ -624,8 +621,7 @@ function NewRegisterForm () {
                         </div>
                         <div className="form-group">
                             <label>Proposer & Seconder </label>
-                            <div className="row">
-                                
+                            <div className="row">                                
                                 <hr></hr>
                                 <div className="col-6">
                                     <Proposer proposer={proposer} setProposer={setProposer} />
@@ -633,45 +629,20 @@ function NewRegisterForm () {
                                 <div className="col-6">
                                     <Seconder seconder={seconder} setSeconder={setSeconder} />
                                 </div>
-                                
-                                {/* <div className="col-6">
-                                    <label className="ml-5">Proposer</label>
-                                    <div className="row form-group">
-                                        <label className="col-4">Name</label>
-                                        <Field className="col-8 form-control" name="proposer$seconder.proposer.name" />
-                                    </div>
-                                    <div className="row form-group">
-                                        <label className="col-4">Membership No</label>
-                                        <Field className="col-8 form-control" name="proposer$seconder.proposer.memNo"/>
-                                    </div>
-                                    <div className="row form-group">
-                                        <label className="col-4">Address</label>
-                                        <Field className="col-8 form-control" name="proposer$seconder.proposer.address" />
-                                    </div>
-                                    <div className="row form-group">
-                                        <label className="col-4">Contact No</label>
-                                        <Field className="col-8 form-control" name="proposer$seconder.proposer.contactNo"/>
-                                    </div>
-                                </div>
-                                <div className="col-6">
-                                    <label className="ml-5">Seconder</label>
-                                    <div className="row form-group">
-                                        <label className="col-4">Name</label>
-                                        <Field className="col-8 form-control" name="proposer$seconder.seconder.name" />
-                                    </div>
-                                    <div className="row form-group">
-                                        <label className="col-4">Membership No</label>
-                                        <Field className="col-8 form-control" name="proposer$seconder.seconder.memNo"/>
-                                    </div>
-                                    <div className="row form-group">
-                                        <label className="col-4">Address</label>
-                                        <Field className="col-8 form-control" name="proposer$seconder.seconder.address" />
-                                    </div>
-                                    <div className="row form-group">
-                                        <label className="col-4">Contact No</label>
-                                        <Field className="col-8 form-control" name="proposer$seconder.seconder.contactNo"/>
-                                    </div>
-                                </div> */}
+                            </div>
+                        </div>
+                        <h6 style={{backgroundColor: "#e95045"}} className="pl-5 pt-1 pb-1">Payment Details</h6>
+                        <p style={{color: "red"}}>Payment History for Registering Current Members</p>
+                        <div className="row">
+                            <div className="form-group col-6">
+                                <label htmlFor="lastPaidForYear">Last Membership Payment for Year : </label> 
+                                <Field className={ `${handleStyle('lastPaidForYear')}`} type="text" id="lastPaidForYear" name="lastPaidForYear"/>
+                                <ErrorMessage name="lastPaidForYear" component={ValidationError}/>
+                            </div>
+                            <div className="form-group col-6">
+                                <label htmlFor="arrearstoPay">Arrears to Pay : </label> 
+                                <Field className={ `${handleStyle('arrearstoPay')}`} type="number" id="arrearstoPay" name="arrearstoPay"/>
+                                <ErrorMessage name="arrearstoPay" component={ValidationError}/>
                             </div>
                         </div>
 
@@ -679,7 +650,7 @@ function NewRegisterForm () {
                     <button type="submit" className={isConfirmed ? "btn btn-success float-right m-2 is-valid" :"btn btn-primary float-right m-2"}>
                         { isConfirmed ? "Confirmed" : "Confirm" }
                     </button>
-                    <button type="reset" onClick={() => formik.resetForm()}>Reset</button>
+                    <button type="reset" className="btn btn-warning" onClick={() => formik.resetForm()}>Reset</button>
 
                     </Form> 
                     </>

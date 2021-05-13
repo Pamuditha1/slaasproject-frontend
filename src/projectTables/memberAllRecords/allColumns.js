@@ -32,6 +32,11 @@ export const COLUMNS = [
         Filter: ColumnFilter
     },
     {
+        Header: 'Member Status',
+        accessor: 'status',
+        Filter: ColumnFilter
+    },
+    {
         Header: 'Personal Email',
         accessor: 'email',
         Filter: ColumnFilter
@@ -41,9 +46,6 @@ export const COLUMNS = [
         accessor: 'section',
         Filter: ColumnFilter
     },
-
-    
-    
     {
         Header: 'Grade of Membership',
         accessor: 'gradeOfMembership',

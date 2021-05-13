@@ -1,6 +1,8 @@
 import React from 'react'
+// import { Link} from 'react-router-dom'
+import { HashLink } from 'react-router-hash-link';
 
-function PaymentRecordsForReceipt({paymentRecords}) {
+function PaymentRecordsForReceipt({paymentRecords, membershipNo}) {
     const backgroundStyle = {
         height: 'auto',
         width: '80%',
@@ -18,7 +20,11 @@ function PaymentRecordsForReceipt({paymentRecords}) {
             : <p className="col-12"><strong>No Record</strong></p>}
             {paymentRecords.memPaidLast ? <p className="col-12">Last payment date- <strong>{paymentRecords.memPaidLast}</strong></p> 
             : <p className="col-12"><strong>No Record</strong></p>}
-
+            <center>
+                <HashLink to={`/user/member/profile/${membershipNo}#paymentRecords`}>
+                    <button className="btn btn-light" style={{color: 'black'}}>View Payment Records</button>
+                </HashLink>
+            </center>
             
         </div>
     )

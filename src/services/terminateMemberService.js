@@ -3,15 +3,18 @@ import axios from 'axios'
 import { toast } from "react-toastify";
 import {api} from './api'
 
-const apiEndPoint = `${api}/user/payment`;
+const apiEndPoint = `${api}/user/terminate-member/`;
 
-export function addPayment(paymentData) {
+export function terminateMember(memNo) {
 
-    return http.post(apiEndPoint, paymentData)
+    console.log(memNo)
+    console.log(typeof memNo)
+
+    return http.post(`${apiEndPoint}${memNo}`)
     .then(function (response) {
-        console.log(response.msg);
-        toast.success(`${response.data.msg}`);
-        toast.dark(`Arrears continue Rs. ${response.data.data}`);
+        console.log(response.data);
+        toast.dark(`${response.data}`);
+        // return response.data
     })
     .catch(function (error) {
         if(error.response.data) {

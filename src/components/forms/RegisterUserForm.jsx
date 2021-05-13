@@ -110,7 +110,7 @@ import http from '../../services/httpService'
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
-
+import {api} from '../../services/api'
 
 
 
@@ -143,7 +143,7 @@ function RegisterUserForm(props) {
         // if(res=="no" && props.accountType == "applicant") {
         //     history.replace('/applicant/register');
         // }
-        const apiEndPoint = "http://localhost:3000/slaas/api/register-user";
+        const apiEndPoint = `${api}/register-user`;
         http.post(apiEndPoint, {
             userName : user.userName ,
             officeID : user.officeID,

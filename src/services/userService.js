@@ -1,7 +1,8 @@
 import http from "./httpService"
 import { toast } from "react-toastify";
+import {api} from './api'
 
-const apiEndPoint = "http://localhost:3000/slaas/api/register-user";
+const apiEndPoint = `${api}/register-user`;
 
 export function userRegister(user) {
 

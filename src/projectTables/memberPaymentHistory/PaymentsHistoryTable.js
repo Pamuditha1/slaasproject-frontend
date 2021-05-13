@@ -1,47 +1,60 @@
 import React, {useMemo, useState, useEffect} from 'react'
-import {useTable, useSortBy, useGlobalFilter, useFilters, usePagination, useRowSelect} from 'react-table'
-import {COLUMNS, GROUPED_COLUMNS} from './allColumns'
+import {useTable, useSortBy, useGlobalFilter, useFilters, usePagination} from 'react-table'
+import {COLUMNS, GROUPED_COLUMNS} from './paymentHistoryColumns'
 import { Table, Button } from 'reactstrap';
 import Pagination from '../common/Pagination'
 import { GlobalFilter } from '../common/GlobalFilter';
 import Loader from 'react-loader-spinner'
 import { Spinner } from 'reactstrap';
 import axios from 'axios'
-import {Checkbox} from '../common/Checkbox'
-import EmailComponent from '../../components/EmailComponent';
-import { Link, Redirect, Route, Switch} from 'react-router-dom'
-import {useSticky} from 'react-table-sticky'
 
-import { useExportData } from "react-table-plugins";
-import ExportingButtons from '../common/ExportingButtons';
-import getExportFileBlob from '../common/exportFunction'
+export const PaymentsHistoryTable = ({records}) => {
+    const [payments, setPayments] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
-import {api} from '../../services/api'
+    // useEffect(() => {
+    //     setIsLoading(true)
+    //     const result
+    //     async function fetchData() {
+    //         result = await axios(
+    //             'http://localhost:3000/slaas/api/user/view/members/official'
+    //         );
+    //     }
+    //     fetchData();
+    //     setallMembers(result.data);
+    //     setIsLoading(false)
+    // }, []);
 
-export const MemberAllTable = (props) => {
-    const [allMembers, setallMembers] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(async () => {
-        setIsLoading(true)
-        const fetchData = () => {
-            axios(`${api}/user/view/members/all`)
-            .then(function (res) {
-                console.log(res.data)
-                setallMembers(res.data)
-            })      
-            .then(function () {
-                console.log(allMembers)
-            })      
+    // useEffect(async () => {
+    //     setIsLoading(true)
+    //     const fetchData = () => {
+    //         axios('http://localhost:3001/slaas/api/user/payment/view')
+    //         .then(function (res) {
+    //             console.log(res.data)
+    //             setPayments(res.data)
+    //         })      
+    //         .then(function () {
+    //             console.log(payments)
+    //         })      
             
-        };    
-        await fetchData();
-        setIsLoading(false)
-    }, []);
+    //     };    
+    //     await fetchData();
+    //     setIsLoading(false)
+    // }, []);
+
+    // useEffect(() => {
+    //     async function fetchData() {
+    //       // You can await here
+    //       const response = await MyAPI.getData(someId);
+    //       // ...
+    //     }
+    //     fetchData();
+    //   }, [someId]);
+        
 
     const columns = useMemo(() => COLUMNS, [])
     // const data = useMemo(() => memberPrsonal, [])
-    const data = allMembers
+    const data = records
 
 
     const {
@@ -61,56 +74,18 @@ export const MemberAllTable = (props) => {
         setPageSize,
         state,
         setGlobalFilter,
-        prepareRow,
-        selectedFlatRows,
-        exportData
+        prepareRow
     } = useTable({
-            columns,
-            data,
-            getExportFileBlob
-        },
-        useSticky,
-        useFilters,
-        useGlobalFilter,
-        useSortBy,
-        usePagination,
-        useExportData,
-        useRowSelect,
-        (hooks) => {
-            hooks.visibleColumns.push((columns) => {
-                return[{
-                    id: 'selection',
-                    Header: ({ getToggleAllRowsSelectedProps}) => (
-                        <Checkbox {...getToggleAllRowsSelectedProps()}/>
-                    ),
-                    Cell: ({row}) => (
-                        <Checkbox {...row.getToggleRowSelectedProps()}/>
-                    )
-                }
-                ,...columns]
-            })
-        }
-    )
+        columns,
+        data
+    },
+    useFilters,
+    useGlobalFilter,
+    useSortBy,
+    usePagination)
 
     const {globalFilter, pageIndex, pageSize} = state
-    console.log(selectedFlatRows[0] && selectedFlatRows[0].original)
-    
-    const [selectedMails, setselectedMails] = useState([])
-    const saveMails = () => {
-        // setselectedMails(selectedFlatRows)
-        // props.setMails(selectedFlatRows)
-        // props.history.push({
-        //     pathname: ('/user/members/send-emails', selectedFlatRows)
-        // });
-        setselectedMails(selectedFlatRows)
-        props.history.push({
-            pathname: '/user/members/send-emails',
-            state: {
-                emailsList: selectedMails
-            }
-        })
-        // props.history.push("/user/members/send-emails")
-    }
+
     return (
         <div>
             {
@@ -122,7 +97,7 @@ export const MemberAllTable = (props) => {
                     width={300}
                 /> :
                 <div>
-                    
+                    {/* <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/> */}
                     <div className="row">
                         <div className="col-12">
                             <input type="checkbox" {...getToggleHideAllColumnsProps()} />All Columns
@@ -139,37 +114,6 @@ export const MemberAllTable = (props) => {
                             
                         }
                     </div>
-                    <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
-                    
-                    {/* <EmailComponent mails={selectedFlatRows}/> */}
-                    {selectedFlatRows != 0 ?
-
-                        <h6 style={{color: 'green'}} className="mt-2">{selectedFlatRows.length} records selected</h6>
-                        : <p></p>
-                        // <Link to={{
-                        //     pathname: '/user/members/emails',
-                        //     data: {
-                        //         emails: selectedFlatRows
-                        //     }
-                        // }}>
-                        //     <Button color="primary">Send Emails</Button>
-                        // </Link> 
-                                            
-                        
-                    
-                    }
-                    <div className="row">
-                        <div className="col-5">
-                            {/* <Link to="/user/members/send-emails">  */}
-                                <Button onClick={saveMails} color="primary">Send Emails</Button>
-                            {/* </Link> */}
-                        </div>
-                        <div className="col-7 mb-2">
-                            <ExportingButtons exportData={exportData}/>
-                        </div>
-                    </div>
-                    
-                    
                     <Table size="sm" dark hover {...getTableProps()} responsive style={{height: "200px"}}>
                         <thead> 
                             {headerGroups.map((headerGroups) => (
@@ -200,7 +144,7 @@ export const MemberAllTable = (props) => {
                                             {row.cells.map((cell) => {
                                                 return <td {...cell.getCellProps()} >{cell.render('Cell')}</td>
                                             })}
-                                            
+                                            {/* <Button>Hello</Button> */}
                                         </tr>
                                     )
                                 })
@@ -234,25 +178,9 @@ export const MemberAllTable = (props) => {
                         <button onClick={() => nextPage()} disabled={!canNextPage}>Next</button>
                         <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>{'>>'}</button>
                     </div>
-                    {/* <pre>
-                        <h1>{selectedFlatRows.length}</h1>
-                        <code>
-                            {JSON.stringify(
-                                {
-                                    selectedFlatRows: selectedFlatRows.map((row) => row.original.email)
-                                },
-                                null,
-                                2
-                            )}
-                        </code>
-                    </pre> */}
                 </div>
-                
             }
-        {/* <Switch>
-            <Route path="/user/members/send-emails" render={(props) => 
-                <EmailComponent emails={selectedMails} flat={selectedFlatRows} {...props}/>} />
-        </Switch> */}
+        
         
         {/* <Pagination /> */}
         </div>

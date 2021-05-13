@@ -6,12 +6,14 @@ import ReceiptGenerator from '../ReceiptGenerator'
 import axios from 'axios'
 import PaymentRecordsForReceipt from '../PaymentRecordsForReceipt'
 import {getInvoice} from '../../services/getInvoiceNo'
+import {api} from '../../services/api'
 
 
 function NewMemberPaymentForm() {
     const [step, setStep] = useState(1)
     const paymentMethods = ["Cash","Bank Draft","Cheque","Online"]
     const [paymentData, setPaymentData] = useState({
+        memberID: '',
         memberName: '',
         membershipNo: '',
         nic: '',
@@ -52,7 +54,7 @@ function NewMemberPaymentForm() {
         console.log(e.target.value)
         setPaymentData({membershipNo: e.target.value})
         const fetchData = () => {            
-            axios(`http://localhost:3001/slaas/api/user/receipt/${e.target.value}`)
+            axios(`${api}/user/receipt/${e.target.value}`)
             .then(function (res) {
                 console.log("Member Data Received", res.data)
                 const paymentRecords = {
@@ -62,6 +64,7 @@ function NewMemberPaymentForm() {
                 }
                 setPaymentData({
                     ...paymentData,
+                    memberID : res.data.memberID,
                     memberName: res.data.nameWinitials,
                     nic: res.data.nic,
                     membershipNo: res.data.membershipNo
@@ -88,10 +91,24 @@ function NewMemberPaymentForm() {
         // else if (!formik.errors[n] && formik.touched[n]) return "form-control is-valid"
         // else return "form-control"
     }
+    const onClick = () => {
+        setPaymentData({
+            ...paymentData,
+            memberID : '',
+            memberName: '',
+            nic: '',
+            membershipNo: ''
+        })
+        setPaymentRecords({
+            memPaidLast: null,
+            lastPaidForYear: null,
+            arrearsConti: null
+        })
+    }
     const onchange = (e) => {
         setPaymentData({
             ...paymentData,
-            [e.target.name] : e.target.value
+            [e.target.name] : e.target.value>0 ? e.target.value : 0
         })
     }
     const onchangeSelect = (e) => {
@@ -117,7 +134,12 @@ function NewMemberPaymentForm() {
                         <div className="row">
                         <div className="form-group col-12">
                             <label htmlFor="membershipNo" className="col-5">Membership No</label> 
-                            <input onChange={onChangeMemNo} value={paymentData.membershipNo} className="form-control col-11 ml-3" type="text" id="membershipNo" name="membershipNo"/>
+                            <div className="row ml-3">
+                                <input onChange={onChangeMemNo} value={paymentData.membershipNo} className="form-control col-10" type="text" id="membershipNo" name="membershipNo"/>
+                                <div className="input-group-append col-2">
+                                    <button onClick={onClick} className="btn btn-outline-danger">X</button>
+                                </div>
+                            </div>
                         </div>
                         <div className="form-group col-12">
                             <label htmlFor="memberName" className="col-5">Member Name</label> 
@@ -145,7 +167,7 @@ function NewMemberPaymentForm() {
                     </div>
 
                     <div className="col-6">
-                        <PaymentRecordsForReceipt paymentRecords={paymentRecords}/>
+                        <PaymentRecordsForReceipt paymentRecords={paymentRecords} membershipNo={paymentData.membershipNo}/>
                     </div>
                 </div>
 

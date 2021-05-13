@@ -5,16 +5,19 @@ function EmailComponent(props) {
     // console.log(props)
     // const [emails, setemails] = useState([])
     // useEffect(async () => {
-    //     if(props.location.data) {
-    //         setemails(props.location.data.emails)
+    //     if(props.emailsList) {
+    //         setemails(props.emailsList)
+    //         console.log("setted emails", emails)
     //     }
         
     // }, []);
-    console.log("Email Props", props)
+    // console.log("Email Props", props)
+    console.log(props)
 
     return (
         <div>
-            Sending Emails to 
+            Sending Emails to HEllo
+            {/* <p>{props.emailsList[0].id}</p> */}
             {/* {props.location.data.emails.map((e) => (
                 <p>{e.original.email}</p>
             ))

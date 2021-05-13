@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import { toast } from "react-toastify";
+import {api} from '../services/api'
 
 function CSVuploader() {
 
@@ -17,7 +18,7 @@ function CSVuploader() {
         formData.append('file', file) 
         console.log(file)
         try{
-            const res = await axios.post('http://localhost:3001/slaas/api/user/upload-members', formData, {
+            const res = await axios.post(`${api}/user/upload-members`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

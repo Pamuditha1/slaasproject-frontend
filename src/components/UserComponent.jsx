@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import {Redirect, Route, Switch, useLocation} from 'react-router-dom'
 import RegisterUserForm from './forms/RegisterUserForm'
 import Dashboard from './Dashboard'
@@ -13,15 +13,25 @@ import NewRegisterForm from '../components/forms/NewRegisterForm'
 import {MemberProfile} from '../components/MemberProfile'
 import NewMemberPaymentForm from './forms/NewMemberPaymentForm'
 import EmailComponent from './EmailComponent'
+import {MemberAllTable} from '../projectTables/memberAllRecords/MemberAllTable'
+import { MemberSearchTable } from '../projectTables/memberSearch/MemberSearchTable';
+import SendMails from './SendMails'
+import OutdatedMemberships from './OutdatedMemberships'
 
 
-class UserComponent extends Component {
+function UserComponent(props) {
+
+    const [emailsList, setemailsList] = useState([])
     
-    render() {
-        const currentLocation = this.props.location.pathname;
-        console.log("location", currentLocation);
-        const link = "/user/register-member"
-        const accountType = "user"
+    function setMails(list){
+        setemailsList(list)
+    }
+
+    const currentLocation = props.location.pathname;
+    console.log("location", currentLocation);
+    const link = "/user/register-member"
+    const accountType = "user"
+
         return (
             <div className="row">
                 { (currentLocation !== "/user/login") &&
@@ -36,16 +46,26 @@ class UserComponent extends Component {
                         <Route path="/user/register-member" component={NewRegisterForm} />                        
                         {/* <Route path="/user/members/send-emails" component={EmailComponent} />   */}
                         <Route path="/user/member/profile/:id" component={MemberProfile}/>
-                        <Route path="/user/members" component={ViewMembers}/>
+                        {/* <Route path="/user/members" component={ViewMembers}/> */}
+                        <Route path="/user/members" render={(props) => 
+                            <ViewMembers emailsList={emailsList} setMails={setMails} {...props}/>} />
+                        <Route path="/user/send-mails" component={SendMails}/>
                         <Route path="/user/payments/view" component={ViewPayments}/>
                         <Route path="/user/login" exact component={UserLogin} />                    
                         <Route path="/user/dashboard" component={ Dashboard }/>
-                        <Route path="/user/receipt" component={NewMemberPaymentForm} />                                      
+                        <Route path="/user/receipt" component={NewMemberPaymentForm} />
+                        <Route path="/user/members/send-emails" render={(props) => 
+                            <EmailComponent emailsList={emailsList} {...props}/>} />
+                        {/* <Route path="/user/members/all" component={MemberAllTable} />
+                        <Route path="/user/members/search" render={(props) => 
+                            <MemberSearchTable members={searchedResults} {...props}/>} />  
+                                                                 */}
+                        <Route path="/user/outdated-list" component={OutdatedMemberships} />
                         <Route path="/user" exact component={Dashboard} />                        
                     </Switch>
                 </div>
             </div>
         )
-    }
+    
 }
 export default UserComponent

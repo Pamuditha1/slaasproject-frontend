@@ -52,7 +52,7 @@ function ProfilePicUpload(props) {
             <div className="col-5 mt-5">
                 <form onSubmit={props.onImageSubmit}>
                     <div className="custom-file">
-                        <input type="file" name="csvFile" class="custom-file-input" id="csvFile" onChange={onChange}/>
+                        <input type="file" name="csvFile" className="custom-file-input" id="csvFile" onChange={onChange}/>
                         <label className="custom-file-label" htmlFor="csvFile">{props.filename}</label>
                     </div>
                     <div className="row mt-2">                        
@@ -62,7 +62,7 @@ function ProfilePicUpload(props) {
                                     {/* <input type="submit" className="btn btn-success" style={{width : "100%"}} value="Upload" /> */}
                                 </div>
                                 <div className="col-6">
-                                    <button type="reset" class="btn btn-danger" style={{width : "100%"}} onClick={resetFile}>Remove</button>
+                                    <button type="reset" className="btn btn-danger" style={{width : "100%"}} onClick={resetFile}>Remove</button>
                                 </div>
                             </>
                         )}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify";
+import {api} from '../services/api'
 
 class FileUploader extends Component {
     constructor(props) {
@@ -25,7 +26,7 @@ class FileUploader extends Component {
         e.preventDefault()
         const data = new FormData() 
         data.append('file', this.state.selectedFile)
-        axios.post('http://localhost:3000/slaas/api/user/upload-members', data, {
+        axios.post(`${api}/user/upload-members`, data, {
         })
         .then(res => {
             console.log(res.data);

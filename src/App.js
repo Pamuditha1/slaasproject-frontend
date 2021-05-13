@@ -15,6 +15,7 @@ import ViewImage from './testingComponents/ViewImage';
 import NewMemberPaymentForm from './components/forms/NewMemberPaymentForm';
 import PaymentRecordsForReceipt from './components/PaymentRecordsForReceipt';
 import { MemberTableT1 } from './testingComponents/MemberTableT1';
+import PaymentsHistory from './components/PaymentsHistory';
 
 class App extends Component{
 
@@ -23,6 +24,7 @@ class App extends Component{
     return (
       <>
         <Main />    
+        {/* <PaymentsHistory /> */}
         {/* <MemberTableT1 /> */}
         {/* <PaymentRecordsForReceipt /> */}
         {/* <NewMemberPaymentForm /> */}

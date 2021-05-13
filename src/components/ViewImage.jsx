@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import { toast } from "react-toastify";
+import {api} from '../services/api'
 
 function ViewImage(props) {
 
@@ -16,7 +17,7 @@ function ViewImage(props) {
             console.log('View Image Props', props)
             axios
             .get(
-                `http://localhost:3001/slaas/api/user/get-profilepic/${props.nic}`,
+                `${api}/user/get-profilepic/${props.nic}`,
                 { responseType: 'arraybuffer' },
             )
             .then(response => {

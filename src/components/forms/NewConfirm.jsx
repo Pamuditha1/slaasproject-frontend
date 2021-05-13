@@ -9,7 +9,7 @@ export const NewConfirm = ({membershipNo, setMembershipNo, proposer, seconder, m
         resAddTwo, resAddThree, resAddFour, resAddFive,perAddrsAvai, perAddOne,perAddTwo,perAddThree,perAddFour,perAddFive,
         mobileNo,landNo,email,designation,division,placeWork,offAddrslineOne,offAddrslineTwo,offAddrslineThree,offAddrslineFour,
         offAddrslineFive, offMobile,offLandNo,offEmail, offFax, profession, fieldOfSpecial,academic,gradeOfMem,section,memBefore,memFrom ,memTo,
-        sendingAddrs,proposer$seconder} = memberData
+        sendingAddrs,proposer$seconder,lastPaidForYear, arrearstoPay} = memberData
   // const {receivedDate,paymentDoneDate,paymentMethod,amount,bank,branch,accountNo} = paymentData
   
   console.log('File Previewing', filePreview)
@@ -126,6 +126,11 @@ export const NewConfirm = ({membershipNo, setMembershipNo, proposer, seconder, m
         <div className="row col-12"><p className="col-3">Address : </p><strong className="col-9">{seconder.address}</strong></div>
         <div className="row col-12"><p className="col-3">Contact No : </p><strong className="col-9">{seconder.contactNo}</strong></div>
       </div>      
+    </div>
+    <div className="row" id="official">
+      <h6 className="col-12" style={{backgroundColor: "yellow"}}>Payment Details</h6>
+      <p className="col-3">Last Membership Payment for Year : </p><strong className="col-9">{lastPaidForYear}</strong>
+      <p className="col-3">Arrears to Pay : </p><strong className="col-9">{arrearstoPay}</strong>
     </div>
 
     

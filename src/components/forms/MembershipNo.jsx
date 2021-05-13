@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import Loader from 'react-loader-spinner'
+import {api} from '../../services/api'
 
 function MembershipNo(props) {
 
@@ -10,7 +11,7 @@ function MembershipNo(props) {
     useEffect(async () => {
         setLoading(true)
         const fetchData = () => {
-            axios(`http://localhost:3001/slaas/api/user/membershipNo`)
+            axios(`${api}/user/membershipNo`)
             .then(function (res) {
                 const memNo = `${res.data}/${props.section}`
                 setMembershipNo(memNo)

@@ -1,6 +1,6 @@
 import React, {useMemo, useState, useEffect} from 'react'
 import {useTable, useSortBy, useGlobalFilter, useFilters, usePagination, useRowSelect} from 'react-table'
-import {COLUMNS, GROUPED_COLUMNS} from './allColumns'
+import {COLUMNS, GROUPED_COLUMNS} from './outdatedColumns'
 import { Table, Button } from 'reactstrap';
 import Pagination from '../common/Pagination'
 import { GlobalFilter } from '../common/GlobalFilter';
@@ -11,37 +11,26 @@ import {Checkbox} from '../common/Checkbox'
 import EmailComponent from '../../components/EmailComponent';
 import { Link, Redirect, Route, Switch} from 'react-router-dom'
 import {useSticky} from 'react-table-sticky'
+import {getOutdatedMembers} from '../../services/getOutdatedList'
 
 import { useExportData } from "react-table-plugins";
 import ExportingButtons from '../common/ExportingButtons';
 import getExportFileBlob from '../common/exportFunction'
 
-import {api} from '../../services/api'
 
-export const MemberAllTable = (props) => {
-    const [allMembers, setallMembers] = useState([]);
+export const OutdatedTable = (props) => {
+    const [members, setmembers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(async () => {
+    useEffect(async () => { 
         setIsLoading(true)
-        const fetchData = () => {
-            axios(`${api}/user/view/members/all`)
-            .then(function (res) {
-                console.log(res.data)
-                setallMembers(res.data)
-            })      
-            .then(function () {
-                console.log(allMembers)
-            })      
-            
-        };    
-        await fetchData();
+        setmembers(await getOutdatedMembers()) ;
         setIsLoading(false)
     }, []);
 
     const columns = useMemo(() => COLUMNS, [])
     // const data = useMemo(() => memberPrsonal, [])
-    const data = allMembers
+    const data = members
 
 
     const {
@@ -139,7 +128,7 @@ export const MemberAllTable = (props) => {
                             
                         }
                     </div>
-                    <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
+                    {/* <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/> */}
                     
                     {/* <EmailComponent mails={selectedFlatRows}/> */}
                     {selectedFlatRows != 0 ?

@@ -9,6 +9,7 @@ import { MemberOfficialTable } from '../projectTables/memberOfficial/MemberOffic
 import {MemberAllTable} from '../projectTables/memberAllRecords/MemberAllTable'
 import { searchMember} from '../services/searchMemberService'
 import { MemberSearchTable } from '../projectTables/memberSearch/MemberSearchTable';
+import EmailComponent from './EmailComponent'
 
 function ViewMembers(props) {
 
@@ -16,6 +17,7 @@ function ViewMembers(props) {
     const [members, setMembers] = useState('')
     const [searchedResults, setsearchedResults] = useState([])
     const [allSelected, setallSelected] = useState(false)
+    // const [emailsList, setemailsList] = useState([])
 
     const handleSubmit = async () => {
             
@@ -58,9 +60,14 @@ function ViewMembers(props) {
             
             <div className="mt-5">
                 <Switch >                    
-                    <Route path="/user/members/all" component={MemberAllTable} />
+                    {/* <Route path="/user/members/all" component={MemberAllTable} /> */}
+                    <Route path="/user/members/all" render={(props) => 
+                        <MemberAllTable emailsList={props.emailsList}  setMails={props.setMails} {...props}/>} />
                     <Route path="/user/members/search" render={(props) => 
-                    <MemberSearchTable members={searchedResults} {...props}/>} />
+                        <MemberSearchTable members={searchedResults} {...props}/>} />
+                    {/* <Route exact path="/user/members/send-emails" component={EmailComponent} /> */}
+                    {/* <Route path="/user/members/send-emails" render={(props) => 
+                        <EmailComponent emailsList={emailsList} {...props}/>} /> */}
                 </Switch>
             </div>
         </div>

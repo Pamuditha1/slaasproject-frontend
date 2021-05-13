@@ -31,8 +31,11 @@ class ReceiptPrint extends React.PureComponent {
     const dateTimeSave = new Date()
     const todayD = new Date().toLocaleDateString()
     const timeD = new Date().toLocaleTimeString()      
-    let totalD = parseInt(this.props.paymentData.admissionFee)  + parseInt(this.props.paymentData.yearlyFee) 
-    + parseInt(this.props.paymentData.arrearsFee) + parseInt(this.props.paymentData.idCardFee)|| 0
+    let totalD =this.props.paymentData.admissionFee ? parseInt(this.props.paymentData.admissionFee) : 0 
+    + this.props.paymentData.yearlyFee ? parseInt(this.props.paymentData.yearlyFee) : 0 
+    + this.props.paymentData.arrearsFee ? parseInt(this.props.paymentData.arrearsFee) : 0
+    + this.props.paymentData.idCardFee ? parseInt(this.props.paymentData.idCardFee) : 0
+    
     if(totalD) {
       var totalWordsD = toWords.convert(totalD.toString(), { currency: true , ignoreDecimal: true});
     }

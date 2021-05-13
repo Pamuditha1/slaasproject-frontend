@@ -4,6 +4,9 @@ import { Button} from 'reactstrap'
 import Loader from 'react-loader-spinner'
 import axios from 'axios'
 import ViewImage from './ViewImage';
+import {api} from '../services/api'
+import {terminateMember} from '../services/terminateMemberService'
+import PaymentsHistory from './PaymentsHistory';
 
 export const MemberProfile = (props) => {
 
@@ -13,16 +16,18 @@ export const MemberProfile = (props) => {
     const [proposer, setProposer] = useState({})
     const [seconder, setSeconder] = useState({})
     const [isLoading, setIsLoading] = useState(true);
+    const [memberIDR, setmemberIDR] = useState('')
 
     console.log(props.match.params.id)
     useEffect(async () => {
         setIsLoading(true)
         const fetchData = () => {
-            axios(`http://localhost:3001/slaas/api/user/member/profile/${props.match.params.id}`)
+            axios(`${api}/user/member/profile/${props.match.params.id}`)
             .then(function (res) {
                 console.log("Response data", res.data)
                 console.log(typeof res.data)
                 setMemberData(res.data.member)
+                setmemberIDR(res.data.member.memberID)
                 setAcademicData(res.data.academic)
                 setProposer(res.data.proposer)
                 setSeconder(res.data.seconder)
@@ -34,10 +39,10 @@ export const MemberProfile = (props) => {
         };    
         await fetchData();
         setIsLoading(false)
-    }, []);
+    }, [props.match.params.id]);
 
     const {
-        membershipNo, gradeOfMembership, section, status, enrollDate, appliedDate, councilPosition, memberFolioNo,
+        memberID, membershipNo, gradeOfMembership, section, status, dot, enrollDate, appliedDate, councilPosition, memberFolioNo,
         title, nameWinitials, fullName, memPaidLast, lastPaidForYear, arrearsConti, commonFirst, commomLast, gender, dob, nic,
         mobileNo, fixedNo, email, resAddrs, perAddrs, sendingAddrs, designation, department, placeOfWork, offMobile,
         offLand, offFax, offEmail, offAddrs, memberBefore, memberFrom, memberTo, profession, specialization1, specialization2, specialization3, specialization4, 
@@ -46,6 +51,12 @@ export const MemberProfile = (props) => {
     } = memberData   
     // const enrolledDate = Date(`${enrollDate}`).toLocaleDateString()
     const displayMembershipNo = `${membershipNo}/${section}`
+
+    async function terminateOnClick(membershipNo){
+      console.log(membershipNo)
+      await terminateMember(membershipNo)
+      return
+    }
 
     return (
     
@@ -64,17 +75,27 @@ export const MemberProfile = (props) => {
           <ViewImage nic={props.match.params.id}/>
         </div>
         <div className="col-5" id="personalData">
-          <p className="row">Name with Initials : </p><strong className="row">{title} {nameWinitials}</strong>
-          <p className="row">NIC : </p><strong className="row">{nic}</strong>
-          <p className="row">Email : </p><strong className="row">{email}</strong>
-          <p className="row">Mobile No : </p><strong className="row">{mobileNo}</strong>
-          <p className="row">Preffered Address : </p><strong className="row">{sendingAddrs}</strong>
+          <p className="row">Name with Initials : <strong className="row ml-5">{title} {nameWinitials}</strong></p>
+          <p className="row">NIC : <strong className="row ml-5">{nic}</strong></p>
+          <p className="row">Email : <strong className="row ml-5">{email}</strong></p>
+          <p className="row">Mobile No : <strong className="row ml-5">{mobileNo}</strong></p>
+          <p className="row">Preffered Address : <strong className="row ml-5">{sendingAddrs} Address</strong></p>
         </div>
         <div className="col-4" id="membershipData">
-          <p className="row">Membership No: </p><strong className="row">{displayMembershipNo}</strong>
-          <p className="row">Grade of Membership : </p><strong className="row">{gradeOfMembership}</strong>
-          <p className="row">Section: </p><strong className="row">{section}</strong>
-          <p className="row">Date of Enrolment: </p><strong className="row">{enrollDate}</strong>
+          <p className="row">Membership No: <strong className="row ml-5">{displayMembershipNo}</strong></p>
+          <p className="row">Member Status: 
+          {
+            ((status == "Terminated") ? 
+              (<div>
+                <strong className="ml-5" style={{color: "red"}}>{status} </strong>
+                <p className="row">DOT : <strong className="ml-2">{dot}</strong></p>
+              </div>) 
+            : (<strong className="ml-5">{status} </strong>))
+          }
+          </p>       
+          <p className="row">Grade of Membership : <strong className="row ml-3">{gradeOfMembership}</strong></p>
+          <p className="row">Section: <strong className="row ml-5">{section}</strong></p>
+          <p className="row">Date of Enrolment: <strong className="row ml-5">{enrollDate}</strong></p>
         </div>
     </div>    
 
@@ -153,7 +174,7 @@ export const MemberProfile = (props) => {
         <div className="row col-12"><p className="col-3">Address : </p><strong className="col-9">{proposer.address}</strong></div>
         <div className="row col-12"><p className="col-3">Contact No : </p><strong className="col-9">{proposer.contactNo}</strong></div>
       </div>
-      <div className="col-6">
+      <div className="col-6" id="1234">
         <p className="col-12 ml-5">- Seconder -</p>
         <div className="row col-12"><p className="col-3">Name : </p><strong className="col-9">{seconder.name}</strong></div>
         <div className="row col-12"><p className="col-3">Membership No : </p><strong className="col-9">{seconder.memNo}</strong></div>
@@ -162,32 +183,14 @@ export const MemberProfile = (props) => {
       </div>      
     </div>
 
-    {/* <div className="row" id="payment">
-      <h3 className="col-12" style={{backgroundColor: "yellow"}}>Payment Details</h3>
-      <p className="col-3">Payment done Date : </p><strong className="col-9">{paymentDoneDate}</strong>
-      <p className="col-3">Payment Method: </p><strong className="col-9">{paymentMethod}</strong>
-      <p className="col-3">Amount : </p><strong className="col-9">{amount}</strong>
-      <p className="col-3">Bank: </p><strong className="col-9">{bank}</strong>
-      <p className="col-3">Branch : </p><strong className="col-9">{branch}</strong>
-      <p className="col-3">Account No: </p><strong className="col-9">{accountNo}</strong>
-    </div>       */}
+    <div className="row" id="paymentRecords">
+      <PaymentsHistory memberID={memberID} memNo={props.match.params.id} />
+    </div>  
 
     
-    {/* <Button color="primary" className="float-right m-1" onClick={() => submit()}>Confirm & Continue
-        <span>
-        { loading && 
-            <Loader
-              type="ThreeDots"
-              color="white"
-              height={30}
-              width={30}
-          />}
-          
-        
-
-        </span>
-    </Button>
-    <Button color="secondary" className="float-right m-1" onClick={() => prevStep()}>Back</Button> */}
+    <div className="col-12">
+          <button onClick={() => terminateOnClick(membershipNo)} className="btn btn-danger">Terminate Member</button>
+    </div>
     
     <div className="mb-5">
 
