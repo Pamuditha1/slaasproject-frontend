@@ -16,6 +16,7 @@ import NewMemberPaymentForm from './components/forms/NewMemberPaymentForm';
 import PaymentRecordsForReceipt from './components/PaymentRecordsForReceipt';
 import { MemberTableT1 } from './testingComponents/MemberTableT1';
 import PaymentsHistory from './components/PaymentsHistory';
+import DayPicker from './testingComponents/DayPicker';
 
 class App extends Component{
 
@@ -23,7 +24,8 @@ class App extends Component{
   render() {
     return (
       <>
-        <Main />    
+        <Main /> 
+        {/* <DayPicker />    */}
         {/* <PaymentsHistory /> */}
         {/* <MemberTableT1 /> */}
         {/* <PaymentRecordsForReceipt /> */}

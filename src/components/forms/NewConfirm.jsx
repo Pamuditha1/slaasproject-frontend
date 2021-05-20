@@ -4,12 +4,12 @@ import { Button} from 'reactstrap'
 import Loader from 'react-loader-spinner'
 import MembershipNo from './MembershipNo'
 
-export const NewConfirm = ({membershipNo, setMembershipNo, proposer, seconder, memberData, prevStep, nextStep, loading, submit , filePreview, file}) => {
+export const NewConfirm = ({dateOfBirth, membershipNo, setMembershipNo, proposer, seconder, memberData, prevStep, nextStep, loading, submit , filePreview, file}) => {
   const {title,nameWinitials,nameInFull,firstName,lastName,gender,nic,dob,resAddOne,
         resAddTwo, resAddThree, resAddFour, resAddFive,perAddrsAvai, perAddOne,perAddTwo,perAddThree,perAddFour,perAddFive,
         mobileNo,landNo,email,designation,division,placeWork,offAddrslineOne,offAddrslineTwo,offAddrslineThree,offAddrslineFour,
         offAddrslineFive, offMobile,offLandNo,offEmail, offFax, profession, fieldOfSpecial,academic,gradeOfMem,section,memBefore,memFrom ,memTo,
-        sendingAddrs,proposer$seconder,lastPaidForYear, arrearstoPay} = memberData
+        sendingAddrs,proposer$seconder,lastPaidForYear, arrearstoPay, enrollDate, council} = memberData
   // const {receivedDate,paymentDoneDate,paymentMethod,amount,bank,branch,accountNo} = paymentData
   
   console.log('File Previewing', filePreview)
@@ -26,7 +26,7 @@ export const NewConfirm = ({membershipNo, setMembershipNo, proposer, seconder, m
       <p className="col-3 ">Name in Common Use : </p><strong className="col-9">{firstName} {lastName} </strong>
       <p className="col-3">Gender : </p><strong className="col-9">{gender}</strong>
       <p className="col-3">NIC : </p><strong className="col-9">{nic}</strong>
-      <p className="col-3">Date of Birth : </p><strong className="col-9">{dob}</strong>
+      <p className="col-3">Date of Birth : </p><strong className="col-9">{new Date(dob).toLocaleDateString()}</strong>
       <p className="col-3">Residence Address : 
       </p><strong className="col-9">
           {resAddOne ? `${resAddOne}` : null}  
@@ -103,12 +103,14 @@ export const NewConfirm = ({membershipNo, setMembershipNo, proposer, seconder, m
       </div>      
       <p className="col-3">Grade of Membership : </p><strong className="col-9">{gradeOfMem}</strong>
       <p className="col-3">Section: </p><strong className="col-9">{section}</strong>
+      <p className="col-3">Enrolled Date: </p><strong className="col-9">{new Date(enrollDate).toLocaleDateString()}</strong>
+      <p className="col-3">Council Position: </p><strong className="col-9">{council}</strong>
       {
         memBefore &&
         <>
           <p className="col-3">Member Before </p>
-          <p className="col-2">From : </p><strong className="col-2">{memFrom}</strong>
-          <p className="col-2">To : </p><strong className="col-2">{memTo}</strong>
+          <p className="col-2">From : </p><strong className="col-2">{new Date(memFrom).toLocaleDateString()}</strong>
+          <p className="col-2">To : </p><strong className="col-2">{new Date(memTo).toLocaleDateString()}</strong>
         </>
       }
       <p className="col-5 ">Address to which correspondences should be : </p><strong className="col-7">{sendingAddrs} {(sendingAddrs) ? "Address" : null} </strong>

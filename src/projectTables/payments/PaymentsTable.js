@@ -7,11 +7,32 @@ import { GlobalFilter } from '../common/GlobalFilter';
 import Loader from 'react-loader-spinner'
 import { Spinner } from 'reactstrap';
 import axios from 'axios'
+import DayPicker from '../../components/DayPicker'
+// import { useSticky } from 'react-table-sticky';
+// import "react-table/react-table.css";
+
+import {api} from '../../services/api'
+import {filterPayments} from '../../services/filterPayments'
 
 export const PaymentsTable = () => {
     const [payments, setPayments] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [dateRange, setdateRange] = useState({
+        from: undefined,
+        to: undefined,
+        show: false
+    })
+    const [filterNum, setfilterNum] = useState('')
 
+    const filterRecords = async () => {
+        console.log(dateRange)
+        
+        let filteredPayments = await filterPayments(dateRange.from, dateRange.to)
+        console.log(filteredPayments)
+        setPayments(filteredPayments)
+        setfilterNum(filteredPayments.length)
+        
+    }
     // useEffect(() => {
     //     setIsLoading(true)
     //     const result
@@ -28,7 +49,7 @@ export const PaymentsTable = () => {
     useEffect(async () => {
         setIsLoading(true)
         const fetchData = () => {
-            axios('http://localhost:3001/slaas/api/user/payment/view')
+            axios(`${api}/user/payment/view`)
             .then(function (res) {
                 console.log(res.data)
                 setPayments(res.data)
@@ -82,7 +103,8 @@ export const PaymentsTable = () => {
     useFilters,
     useGlobalFilter,
     useSortBy,
-    usePagination)
+    usePagination
+    )
 
     const {globalFilter, pageIndex, pageSize} = state
 
@@ -97,7 +119,7 @@ export const PaymentsTable = () => {
                     width={300}
                 /> :
                 <div>
-                    <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
+                    
                     <div className="row">
                         <div className="col-12">
                             <input type="checkbox" {...getToggleHideAllColumnsProps()} />All Columns
@@ -114,7 +136,20 @@ export const PaymentsTable = () => {
                             
                         }
                     </div>
-                    <Table size="sm" dark hover {...getTableProps()} responsive style={{height: "200px"}}>
+
+                    
+                    <DayPicker dateRange={dateRange} setdateRange={setdateRange} filterRecords={filterRecords}/>
+                    {filterNum && (
+                        filterNum>0 ?
+                            <h6>{filterNum} records found.</h6>
+                            : <h6>No records found.</h6>
+                    )
+                    }
+                    <div className="mb-3">
+                        <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
+                    </div>                   
+
+                    <Table size="sm"  dark hover {...getTableProps()} responsive style={{height: "200px"}}>
                         <thead> 
                             {headerGroups.map((headerGroups) => (
                                 <tr {...headerGroups.getHeaderGroupProps()}>

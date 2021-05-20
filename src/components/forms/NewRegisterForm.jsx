@@ -13,6 +13,9 @@ import Proposer from './Proposer';
 import Seconder from './Seconder';
 import MembershipNo from './MembershipNo';
 import validationSchema from '../validationObjects/registerFormValidationSchema'
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import 'react-day-picker/lib/style.css';
+import { DatePicker } from 'react-rainbow-components';
 
 import {api} from '../../services/api'
 
@@ -36,7 +39,7 @@ function NewRegisterForm () {
     const [loading, setLoading] = useState(false)
     const [isConfirmed, setIsConfirmed] = useState(false)
     
-    var datetime = new Date();
+    // var datetime = new Date();
 
     const [memberData, setMemberData] = useState({
         title: "",
@@ -46,7 +49,7 @@ function NewRegisterForm () {
         lastName: "",
         gender: "",
         nic : "",
-        dob : null,
+        dob : '',
         resAddOne : "", resAddTwo : "", resAddThree : "", resAddFour : "", resAddFive : "",
         perAddrsAvai : false,
         perAddOne : "", perAddTwo : "", perAddThree : "", perAddFour : "", perAddFive : "",
@@ -76,12 +79,16 @@ function NewRegisterForm () {
         memFrom : "", memTo: "",
         sendingAddrs: "",
         status: "Member",
-        enrollDate: datetime,
+
+        enrollDate: new Date(),
 
         lastPaidForYear: '',
-        arrearstoPay: 0
+        arrearstoPay: 0,
+
+        council: '',
     
     })
+    const [dateOfBirth, setdateOfBirth] = useState(new Date())
     const [proposer, setProposer] = useState({name: "", memNo: "", address: "", contactNo: ""})
     const [seconder, setSeconder] = useState({name: "", memNo: "", address: "", contactNo: ""})
     const [membershipNo, setMembershipNo] = useState('')
@@ -121,6 +128,8 @@ function NewRegisterForm () {
         setLoading(true)
         setNameOfImage(memberData.nic)
         console.log(nameOfImage)
+        // setMemberData({...memberData, dob: dateOfBirth})
+        // memberData.dob = dateOfBirth
         const member = {
             memberData : memberData,
             proposer: proposer,
@@ -149,7 +158,10 @@ function NewRegisterForm () {
         // validationSchema= {validationSchema}
         onSubmit={values => {
             setNameOfImage(`${values.nic}`)
-            setMemberData(values)     
+            setMemberData(values) 
+            console.log("Date of birth", dateOfBirth) 
+            console.log("type of dob", typeof dateOfBirth)  
+            // setMemberData({...memberData, dob: dateOfBirth})
             // setIsConfirmed(true)
             nextStep()
         }}
@@ -211,9 +223,9 @@ function NewRegisterForm () {
                                 <ErrorMessage name="firstName" component={ValidationError}/>
                             </div>
                             <div className="form-group col-4">
-                            <label htmlFor="lastName">Last Name</label> 
-                            <Field className={ `${handleStyle('lastName')}`} type="text" id="lastName" name="lastName"/>
-                            <ErrorMessage name="lastName" component={ValidationError}/>
+                                <label htmlFor="lastName">Last Name</label> 
+                                <Field className={ `${handleStyle('lastName')}`} type="text" id="lastName" name="lastName"/>
+                                <ErrorMessage name="lastName" component={ValidationError}/>
                             </div>
                         </div>                        
                         <div className="row">
@@ -241,14 +253,25 @@ function NewRegisterForm () {
                                 </div> 
                                 <div className="form-group col-4">
                                     <label htmlFor="dob" className="form-check">Date of Birth</label> 
+                                    {/* <DatePicker id="dob"
+                                        formatStyle="medium"
+                                        value={dateOfBirth}
+                                        onChange={(value) => setdateOfBirth(value.toISOString())}
+                                    
+                                    /> */}
                                     <Field className={ `${handleStyle('dob')}`} name="dob">
                                     {
                                             ({form,field}) => {
                                                 const {setFieldValue} = form
                                                 const {value} = field
-                                                return <DateView className="form-control" id="dob" {...field} selected={value}
-                                                dateFormat="dd/MM/yyyy" maxDate={new Date()} showYearDropdown scrollableMonthYearDropdown
-                                                onChange={val => setFieldValue("dob", val)}
+                                                // return <DateView className="form-control" id="dob" {...field} selected={value}
+                                                //  maxDate={new Date()} showYearDropdown scrollableMonthYearDropdown
+                                                // onChange={val => setFieldValue("dob", val)}
+                                                return <DatePicker id="dob" {...field}
+                                                    formatStyle="medium"
+                                                    value={value}
+                                                    onChange={(value) => setFieldValue("dob", value.toISOString())}
+                                                
                                                 // onChange={val => console.log("DOB", val)}
                                                 />
                                             }
@@ -555,6 +578,35 @@ function NewRegisterForm () {
                                     <ErrorMessage name="section" component={ValidationError}/> 
                             </div>
                         </div>
+                        <div className="row border border-danger" >
+                            <p style={{color: "red"}} className="col-12">Membership Details for Registering Current Members</p>
+                            <div className="form-group form-check-inline col-6">
+                            <label htmlFor="enrollDate" className="form-check">Enrolled Date</label> 
+                                <Field className={ `${handleStyle('enrollDate')}`} name="enrollDate" >
+                                {
+                                        ({form,field}) => {
+                                            const {setFieldValue} = form
+                                            const {value} = field
+                                            // return <DateView className="form-control form-check ml-3" id="memTo" {...field} selected={value}
+                                            // dateFormat="dd/MM/yyyy" maxDate={new Date()} showYearDropdown scrollableMonthYearDropdown
+                                            // onChange={val => setFieldValue("memTo", val)}/>
+                                            return <DatePicker id="enrollDate" {...field} className="ml-3"
+                                            formatStyle="medium"
+                                            value={value}
+                                            onChange={(value) => setFieldValue("enrollDate", value.toISOString())}
+                                        
+                                        />
+                                        }
+                                }
+                                </Field>
+                                <ErrorMessage name="enrollDate" component={ValidationError}/>
+                            </div> 
+                            <div className="form-group col-5">
+                                <label htmlFor="council">Council Position</label> 
+                                <Field className={ `${handleStyle('council')}`} type="text" id="council" name="council"/>
+                                <ErrorMessage name="council" component={ValidationError}/>
+                            </div>
+                        </div> 
                         <div className="form-group row">
                             <div className="form-check-inline">
                                 <label className="form-check-label col-12" htmlFor="memBefore">Have you ever been a member before</label> 
@@ -570,23 +622,35 @@ function NewRegisterForm () {
                                             ({form,field}) => {
                                                 const {setFieldValue} = form
                                                 const {value} = field
-                                                return <DateView className="form-control form-check ml-3" id="memFrom" {...field} selected={value}
-                                                dateFormat="dd/MM/yyyy" maxDate={new Date()} showYearDropdown scrollableMonthYearDropdown
-                                                onChange={val => setFieldValue("memFrom", val)}/>
+                                                // return <DateView className="form-control form-check ml-3" id="memFrom" {...field} selected={value}
+                                                // dateFormat="dd/MM/yyyy" maxDate={new Date()} showYearDropdown scrollableMonthYearDropdown
+                                                // onChange={val => setFieldValue("memFrom", val)}/>
+                                                return <DatePicker id="memFrom" {...field} className="ml-3"
+                                                    formatStyle="medium"
+                                                    value={value}
+                                                    onChange={(value) => setFieldValue("memFrom", value.toISOString())}
+                                                
+                                                />
                                             }
                                     }
                                     </Field>                               
                                 </div>                            
-                                <div className="form-group form-check-inline col-6">
+                                <div className="form-group form-check-inline col-4">
                                     <label htmlFor="memTo" className="form-check">To</label> 
                                         <Field className={ `${handleStyle('memTo')}`} name="memTo" >
                                         {
                                                 ({form,field}) => {
                                                     const {setFieldValue} = form
                                                     const {value} = field
-                                                    return <DateView className="form-control form-check ml-3" id="memTo" {...field} selected={value}
-                                                    dateFormat="dd/MM/yyyy" maxDate={new Date()} showYearDropdown scrollableMonthYearDropdown
-                                                    onChange={val => setFieldValue("memTo", val)}/>
+                                                    // return <DateView className="form-control form-check ml-3" id="memTo" {...field} selected={value}
+                                                    // dateFormat="dd/MM/yyyy" maxDate={new Date()} showYearDropdown scrollableMonthYearDropdown
+                                                    // onChange={val => setFieldValue("memTo", val)}/>
+                                                    return <DatePicker id="memTo" {...field} className="ml-3"
+                                                    formatStyle="medium"
+                                                    value={value}
+                                                    onChange={(value) => setFieldValue("memTo", value.toISOString())}
+                                                
+                                                />
                                                 }
                                         }
                                         </Field>
@@ -633,7 +697,7 @@ function NewRegisterForm () {
                         </div>
                         <h6 style={{backgroundColor: "#e95045"}} className="pl-5 pt-1 pb-1">Payment Details</h6>
                         <p style={{color: "red"}}>Payment History for Registering Current Members</p>
-                        <div className="row">
+                        <div className="row border border-danger">
                             <div className="form-group col-6">
                                 <label htmlFor="lastPaidForYear">Last Membership Payment for Year : </label> 
                                 <Field className={ `${handleStyle('lastPaidForYear')}`} type="text" id="lastPaidForYear" name="lastPaidForYear"/>
@@ -650,7 +714,7 @@ function NewRegisterForm () {
                     <button type="submit" className={isConfirmed ? "btn btn-success float-right m-2 is-valid" :"btn btn-primary float-right m-2"}>
                         { isConfirmed ? "Confirmed" : "Confirm" }
                     </button>
-                    <button type="reset" className="btn btn-warning" onClick={() => formik.resetForm()}>Reset</button>
+                    <button type="reset" className="btn btn-warning  m-2" onClick={() => formik.resetForm()}>Reset</button>
 
                     </Form> 
                     </>
@@ -664,7 +728,7 @@ function NewRegisterForm () {
 
     case 2 : return(
         <div className="container">
-            <NewConfirm membershipNo={membershipNo} section={memberData.section} setMembershipNo={setMembershipNo} 
+            <NewConfirm dateOfBirth={dateOfBirth} membershipNo={membershipNo} section={memberData.section} setMembershipNo={setMembershipNo} 
             proposer={proposer} seconder={seconder} 
             memberData={memberData} file={file} filePrevie={filePreview} 
             nextStep={nextStep} prevStep={prevStep} 
