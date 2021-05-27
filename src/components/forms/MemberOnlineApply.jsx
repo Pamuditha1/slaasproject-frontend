@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import MemPersonalForm from './MemPersonalForm'
-import MemberOfficeForm from './MemberOfficeForm'
-import MemberProfessionalForm from './MemberProfessionalForm'
-import MemberMembershipForm from './MemberMembershipForm'
-import MemberPaymentForm from './MemberPaymentForm'
+// import MemPersonalForm from './MemPersonalForm'
+// import MemberOfficeForm from './MemberOfficeForm'
+// import MemberProfessionalForm from './MemberProfessionalForm'
+// import MemberMembershipForm from './MemberMembershipForm'
+// import MemberPaymentForm from './MemberPaymentForm'
 import { Confirm } from './Confirm'
 import {registerMember} from '../../services/registerMemberService'
 import { ConfirmApplicant } from './ConfirmApplicant'
@@ -103,24 +103,24 @@ function MemberOnlineApply() {
 
 
     switch(step) {
-        case 1 : return (
-            <MemPersonalForm personalData={personalData} setPersonalData={setPersonalData} nextStep={nextStep} genderOptions={genderOptions} titleOptions={titleOptions}/>
-        )
-        case 2 : return (
-            <MemberOfficeForm officialData={officialData} setOfficialData={setOfficialData} nextStep={nextStep} prevStep={prevStep}/>
-        )
-        case 3 : return(
-            <MemberProfessionalForm professionalData={professionalData} setProfessionalData={setProfessionalData} nextStep={nextStep} prevStep={prevStep}/>
-        )
-        case 4 : return (
-            <MemberMembershipForm membershipData={membershipData} setMembershipData={setMembershipData} nextStep={nextStep} prevStep={prevStep} 
-            addressOptions={addressOptions} membershipGrades={membershipGrades} sections={sections}/>
-        )
-        case 5 : return (
-            <ConfirmApplicant personalData={personalData} officialData={officialData} professionalData={professionalData}
-            membershipData={membershipData} nextStep={nextStep} prevStep={prevStep} submit={submit}/>
-        )
-        default: return <MemPersonalForm />
+        // case 1 : return (
+        //     <MemPersonalForm personalData={personalData} setPersonalData={setPersonalData} nextStep={nextStep} genderOptions={genderOptions} titleOptions={titleOptions}/>
+        // )
+        // case 2 : return (
+        //     <MemberOfficeForm officialData={officialData} setOfficialData={setOfficialData} nextStep={nextStep} prevStep={prevStep}/>
+        // )
+        // case 3 : return(
+        //     <MemberProfessionalForm professionalData={professionalData} setProfessionalData={setProfessionalData} nextStep={nextStep} prevStep={prevStep}/>
+        // )
+        // case 4 : return (
+        //     <MemberMembershipForm membershipData={membershipData} setMembershipData={setMembershipData} nextStep={nextStep} prevStep={prevStep} 
+        //     addressOptions={addressOptions} membershipGrades={membershipGrades} sections={sections}/>
+        // )
+        // case 5 : return (
+        //     <ConfirmApplicant personalData={personalData} officialData={officialData} professionalData={professionalData}
+        //     membershipData={membershipData} nextStep={nextStep} prevStep={prevStep} submit={submit}/>
+        // )
+        // default: return <MemPersonalForm />
         
         
     }

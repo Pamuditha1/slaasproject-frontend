@@ -18,6 +18,8 @@ function PaymentRecordsForReceipt({paymentRecords, membershipNo}) {
             : <p className="col-12"><strong>No Record</strong></p>}            
             {paymentRecords.lastPaidForYear ? <p className="col-12">Last payment for membership year - <strong>{paymentRecords.lastPaidForYear}</strong></p> 
             : <p className="col-12"><strong>No Record</strong></p>}
+            {paymentRecords.lastMembershipPaid ? <p className="col-12">Last membership payment date - <strong>{new Date(paymentRecords.lastMembershipPaid).toLocaleDateString()}</strong></p> 
+            : <p className="col-12"><strong>No Record</strong></p>}
             {paymentRecords.memPaidLast ? <p className="col-12">Last payment date- <strong>{paymentRecords.memPaidLast}</strong></p> 
             : <p className="col-12"><strong>No Record</strong></p>}
             <center>

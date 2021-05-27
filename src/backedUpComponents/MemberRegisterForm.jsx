@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
-import MemPersonalForm from './MemPersonalForm'
-import MemberOfficeForm from './MemberOfficeForm'
-import MemberProfessionalForm from './MemberProfessionalForm'
-import MemberMembershipForm from './MemberMembershipForm'
-import MemberPaymentForm from './MemberPaymentForm'
-import { Confirm } from './Confirm'
-import {registerMember} from '../../services/registerMemberService'
+// import React, { useState } from 'react'
+// import MemPersonalForm from './MemPersonalForm'
+// import MemberOfficeForm from './MemberOfficeForm'
+// import MemberProfessionalForm from './MemberProfessionalForm'
+// import MemberMembershipForm from './MemberMembershipForm'
+// import MemberPaymentForm from './MemberPaymentForm'
+// import { Confirm } from './Confirm'
+// import {registerMember} from '../../services/registerMemberService'
 
 function MemberRegisterForm() {
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {Redirect, Route, Switch} from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
+
 import MemberLogin from './forms/MemberLogin'
 
 class MemberComponent extends Component {

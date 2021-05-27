@@ -63,6 +63,16 @@ export const COLUMNS = [
         Filter: ColumnFilter
     },
     {
+        Header: 'Last Membership Payment Date',
+        accessor: 'lastMembershipPaid',
+        Filter: ColumnFilter
+    },
+    {
+        Header: 'DOT',
+        accessor: 'dot',
+        Filter: ColumnFilter
+    },
+    {
         Header: 'Arrears',
         accessor: 'arrearsConti',
         Filter: ColumnFilter

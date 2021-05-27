@@ -44,7 +44,7 @@ function Proposer(props) {
 
             <div className="row form-group">
                 <label className="col-4">Membership No</label>                
-                <input onChange={onChangeMemNo} className="col-6 form-control" value={viewData.memNo} name="memNo"/>
+                <input onChange={onChangeMemNo} className="col-6 form-control" value={viewData.memNo} name="memNo" readOnly={props.readOnly}/>
                 <span className="col-2">
                     { loading && 
                         <Loader
@@ -58,15 +58,15 @@ function Proposer(props) {
             </div>
             <div className="row form-group">
                 <label className="col-4">Name</label>
-                <input className="col-8 form-control" value={viewData.name} name="name" />
+                <input className="col-8 form-control" value={viewData.name} name="name" readOnly={props.readOnly}/>
             </div>
             <div className="row form-group">
                 <label className="col-4">Address</label>
-                <input className="col-8 form-control" value={viewData.address} name="address" />
+                <input className="col-8 form-control" value={viewData.address} name="address" readOnly={props.readOnly}/>
             </div>
             <div className="row form-group">
                 <label className="col-4">Contact No</label>
-                <input className="col-8 form-control" value={viewData.contactNo} name="contactNo"/>
+                <input className="col-8 form-control" value={viewData.contactNo} name="contactNo" readOnly={props.readOnly}/>
             </div>
         </div>
         

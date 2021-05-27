@@ -1,16 +1,21 @@
 import React from 'react'
 import { Link} from 'react-router-dom'
-import { faHome, faRegistered, faIdBadge, faIdCard, faFileInvoiceDollar, faMoneyCheckAlt, faEnvelope, faExclamationCircle} from "@fortawesome/free-solid-svg-icons";
+import { faHome, faRegistered, faIdBadge, faIdCard, faFileInvoiceDollar, 
+    faMoneyCheckAlt, faEnvelope, faExclamationCircle, faCog, faCalculator} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Nav, NavItem, NavLink } from 'reactstrap';
 import '../css/sideBar.css'
 
-function Sidebar() {
+function Sidebar({arrearsCalculating}) {
 
 
     return (
         <div className="sidenav">
             <Link to="/user">
+                {/* <div className="row m-3">
+                    <span className="col-2"><FontAwesomeIcon icon={faHome} size="2x" /></span>
+                    <p className="col-10">Main</p>
+                </div> */}
                 <p><span style={{marginRight: 10}}><FontAwesomeIcon icon={faHome} size="2x"/></span>Main</p>
             </Link>
             <Link to="/user/register-member">
@@ -33,6 +38,13 @@ function Sidebar() {
             </Link>
             <Link to="/user/register-user">
                 <p><span style={{marginRight: 10}}><FontAwesomeIcon icon={faRegistered} size="2x"/></span>Register User</p>
+            </Link>
+            <Link to="/user/arrears-calculator">
+                <p><span style={{marginRight: 10}}><FontAwesomeIcon icon={faCalculator} size="2x"/></span>
+                {arrearsCalculating ? 'Calculating...' : 'Update Arrears'}</p>
+            </Link>
+            <Link to="/user/settings">
+                <p><span style={{marginRight: 10}}><FontAwesomeIcon icon={faCog} size="2x"/></span>Settings</p>
             </Link>
         </div>
         // <div>

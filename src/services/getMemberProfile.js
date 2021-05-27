@@ -2,14 +2,13 @@ import http from "./httpService"
 import { toast } from "react-toastify";
 import {api} from './api'
 
-const apiEndPoint = `${api}/user/payment/filter/`;
+const apiEndPoint = `${api}/user/member/profile/`;
 
-export function filterPayments(from, to) {
+export function getMemberProfile(memID) {
 
-    return http.get(`${apiEndPoint}${from}/${to}`)
+    return http.get(`${apiEndPoint}${memID}`)
     .then(function (response) {
-        // console.log(response.data);
-        // toast.success(`${response.data}`);
+        console.log(response.data);
         return response.data
     })
     .catch(function (error) {

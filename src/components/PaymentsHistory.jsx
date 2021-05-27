@@ -19,18 +19,23 @@ function PaymentsHistory({memNo, memberID}) {
     }, [memberID]);
 
     return (
-        <div className="container">
-            <div className="row" id="payment">
+        <div className="container-fulid">
+            <div className="row ml-2" id="payment">
                 <h5 className="col-12" style={{backgroundColor: "#e95045"}}>Payment Details</h5>
                 {paymentsSummery.arrearsConti ? <p className="col-12" style={{color: 'red'}}>Arrears to pay - <strong>Rs. {paymentsSummery.arrearsConti}</strong></p> 
                 : <p className="col-12"><strong>No Record</strong></p>}            
                 {paymentsSummery.lastPaidForYear ? <p className="col-6">Last payment for membership year - <strong>{paymentsSummery.lastPaidForYear}</strong></p> 
                 : <p className="col-12"><strong>No Record</strong></p>}
+                {paymentsSummery.lastMembershipPaid ? <p className="col-6">Last Membership payment date- <strong>{new Date(paymentsSummery.lastMembershipPaid).toLocaleDateString()}</strong></p> 
+                : <p className="col-12"><strong>No Record</strong></p>}
                 {paymentsSummery.memPaidLast ? <p className="col-6">Last payment date- <strong>{paymentsSummery.memPaidLast}</strong></p> 
                 : <p className="col-12"><strong>No Record</strong></p>}
             </div>
-            <h6 className="col-6 mt-3 mb-3" style={{backgroundColor: "#e95045"}}>Payment Records</h6>
-            <PaymentsHistoryTable records={paymentsHistory}/>
+            <div className="row ml-1" >
+                <h6 className="col-6 mt-3 mb-3" style={{backgroundColor: "#e95045"}}>Payment Records</h6>
+                <PaymentsHistoryTable records={paymentsHistory}/>
+            </div>
+            
         </div>
     )
 }

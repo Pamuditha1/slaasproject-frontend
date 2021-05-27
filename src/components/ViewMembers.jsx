@@ -1,15 +1,15 @@
 import React , {useState}from 'react'
 import {Button} from 'reactstrap'
-import {Redirect, Route, Switch, useLocation} from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
 import { Link} from 'react-router-dom'
 import { faSearch} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { MemberPersonalTable } from '../projectTables/memberPersonal/MemberPersonalTable'
-import { MemberOfficialTable } from '../projectTables/memberOfficial/MemberOfficialTable'
+
 import {MemberAllTable} from '../projectTables/memberAllRecords/MemberAllTable'
-import { searchMember} from '../services/searchMemberService'
 import { MemberSearchTable } from '../projectTables/memberSearch/MemberSearchTable';
 import EmailComponent from './EmailComponent'
+
+import { searchMember} from '../services/searchMemberService'
 
 function ViewMembers(props) {
 
@@ -33,6 +33,7 @@ function ViewMembers(props) {
 
     return (
         <div className="container">
+            <h6 style={{backgroundColor: "#e95045"}} className="pl-5 pt-1 pb-1 mb-5">Member Records</h6>
             <div className="col-12">
                 <Link to="/user/members/all">
                     <Button onClick={() => setallSelected(true)} color="success mb-3 col-12">{allSelected ? "All Member Records" : "Get All Records"}</Button>

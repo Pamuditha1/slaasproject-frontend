@@ -60,6 +60,7 @@ function NewMemberPaymentForm() {
                 const paymentRecords = {
                     memPaidLast: res.data.memPaidLast,
                     lastPaidForYear: res.data.lastPaidForYear,
+                    lastMembershipPaid: res.data.lastMembershipPaid,
                     arrearsConti: res.data.arrearsConti
                 }
                 setPaymentData({

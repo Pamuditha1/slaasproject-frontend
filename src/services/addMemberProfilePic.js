@@ -2,15 +2,19 @@ import http from "./httpService"
 import { toast } from "react-toastify";
 import {api} from './api'
 
-const apiEndPoint = `${api}/user/payment/filter/`;
+const apiEndPoint = `${api}/user/add-profilepic`;
 
-export function filterPayments(from, to) {
+export function addProfilePic(formData, nameOfImage) {
 
-    return http.get(`${apiEndPoint}${from}/${to}`)
+    return http.post(apiEndPoint, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'NameOfImage' : nameOfImage
+        }
+    })
     .then(function (response) {
-        // console.log(response.data);
-        // toast.success(`${response.data}`);
-        return response.data
+        console.log(response);
+        toast.success(`${response.data}`);
     })
     .catch(function (error) {
         if(error.response.data) {

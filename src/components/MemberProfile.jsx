@@ -1,15 +1,15 @@
-import React, {useMemo, useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types';
-import { Button} from 'reactstrap'
 import Loader from 'react-loader-spinner'
-import axios from 'axios'
+import {Link} from 'react-router-dom'
+
 import ViewImage from './ViewImage';
-import {api} from '../services/api'
 import {terminateMember} from '../services/terminateMemberService'
 import PaymentsHistory from './PaymentsHistory';
 
-export const MemberProfile = (props) => {
+import {getMemberProfile} from '../services/getMemberProfile'
 
+export const MemberProfile = (props) => {
     
     const [memberData, setMemberData] = useState({});
     const [academicData, setAcademicData] = useState([])
@@ -21,24 +21,16 @@ export const MemberProfile = (props) => {
     console.log(props.match.params.id)
     useEffect(async () => {
         setIsLoading(true)
-        const fetchData = () => {
-            axios(`${api}/user/member/profile/${props.match.params.id}`)
-            .then(function (res) {
-                console.log("Response data", res.data)
-                console.log(typeof res.data)
-                setMemberData(res.data.member)
-                setmemberIDR(res.data.member.memberID)
-                setAcademicData(res.data.academic)
-                setProposer(res.data.proposer)
-                setSeconder(res.data.seconder)
-            })      
-            .then(function () {
-                console.log("Member data", memberData)
-            })      
-            
-        };    
-        await fetchData();
+
+        const profileData = await getMemberProfile(props.match.params.id)
+        console.log(typeof profileData)
+        setMemberData(profileData.member)
+        setmemberIDR(profileData.member.memberID)
+        setAcademicData(profileData.academic)
+        setProposer(profileData.proposer)
+        setSeconder(profileData.seconder)
         setIsLoading(false)
+        
     }, [props.match.params.id]);
 
     const {
@@ -88,7 +80,7 @@ export const MemberProfile = (props) => {
             ((status == "Terminated") ? 
               (<div>
                 <strong className="ml-5" style={{color: "red"}}>{status} </strong>
-                <p className="row">DOT : <strong className="ml-2">{dot}</strong></p>
+                <p className="row">DOT : <strong className="ml-2">{new Date(dot).toLocaleDateString()}</strong></p>
               </div>) 
             : (<strong className="ml-5">{status} </strong>))
           }
@@ -188,8 +180,16 @@ export const MemberProfile = (props) => {
     </div>  
 
     
-    <div className="col-12">
-          <button onClick={() => terminateOnClick(membershipNo)} className="btn btn-danger">Terminate Member</button>
+    <div className="row p-3 mt-3">
+      <div className="col-3">
+        <button onClick={() => terminateOnClick(membershipNo)} className="btn btn-danger">Terminate Member</button>
+      </div>
+      <div className="col-3">
+        <Link to={`/user/member/profile/update/${membershipNo}`}>
+          <button className="btn btn-warning">Update Member</button>
+        </Link>        
+      </div>
+      
     </div>
     
     <div className="mb-5">

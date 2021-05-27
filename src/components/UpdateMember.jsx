@@ -1,63 +1,42 @@
 import React, { useState, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik'
 import { DatePicker } from 'react-rainbow-components';
+import Loader from 'react-loader-spinner'
 
-import { NewConfirm } from './NewConfirm'
-import ValidationError from '../../validationError'
-import Proposer from './Proposer';
-import Seconder from './Seconder';
-import validationSchema from '../validationObjects/registerFormValidationSchema'
-import ProfilePicUpload from '../ProfilePicUpload';
+import { NewConfirm } from './forms/NewConfirm'
+import ValidationError from '../validationError'
+import Proposer from './forms/Proposer';
+import Seconder from './forms/Seconder';
+import validationSchema from './validationObjects/registerFormValidationSchema'
+import ProfilePicUpload from './ProfilePicUpload';
 
-import {registerMember} from '../../services/registerMemberService'
-import {addProfilePic} from '../../services/addMemberProfilePic'
-import {getGrades} from '../../services/getGrades'
-import {getSections} from '../../services/getSections'
+import {registerMember} from '../services/registerMemberService'
+import {addProfilePic} from '../services/addMemberProfilePic'
+import {getMemberProfile} from '../services/getMemberProfile'
 
-function NewRegisterForm () {
+function UpdateMember (props) {
 
-    useEffect(async () => {
-
-        const gradeRecords = await getGrades()
-        let grades = []
-        gradeRecords.forEach(g => {
-            grades.push(g.grade)
-        });
-        console.log(grades)
-        setmembershipGrades(grades)
-
-        const sectionRecords = await getSections()
-        let sections = []
-        sectionRecords.forEach(s => {
-            sections.push({
-                key: `Section ${s.keyName} - ${s.section}`,
-                value: s.keyName
-            })
-        })
-        console.log('Sec', sectionRecords)
-        setsections(sections)
-
-    }, [])
+    console.log("Update ID", props.match.params.id)
 
     const genderOptions = [{key: "Male", value: "Male"},{key: "Female", value: "Female"}]
     const titleOptions = ["Rev.","Prof.","Dr.","Mr.","Mrs.","Miss."]
     const addressOptions = ["Residence", "Permanent", "Official"]
-    const [membershipGrades, setmembershipGrades] = useState([])
-    const [sections, setsections] = useState([])
-    // const membershipGrades = ["Life Member","Annual Member","Associate Member","Corporate Member","Student Member"]
-    // const sections = [{key: "Section A  -  Medical, Dental and Veterinary Sciences", value: "A"},
-    //                 {key: "Section B  - Agricultural Sciences and Forestry", value: "B"},
-    //                 {key: "Section C  -  Engineering, Architecture and Surveying", value: "C"},
-    //                 {key: "Section D  -  Life & Earth Sciences (Botany, Zoology, Fisheries, Geology and Mineralogy)", value: "D"},
-    //                 {key: "Section E1 -  Physical Sciences (Physics, Mathematics, Statistics)", value: "E1"},
-    //                 {key: "Section E2 -  Chemical Sciences (Chemistry, Bio-Chemistry, Agricultural Chemistry, Chemical Technology, Food Chemistry and Polymer Chemistry)", value: "E2"},
-    //                 {key: "Section E3 -  Computer Science", value: "E3"},
-    //                 {key: "Section F  -  Social Sciences (Anthropology, Archaeology, Demography, Education, Economics, Geography, Psychology and Sociology)", value: "F"},
-    // ]    
+    const membershipGrades = ["Life Member","Annual Member","Associate Member","Corporate Member","Student Member"]
+    const sections = [{key: "Section A  -  Medical, Dental and Veterinary Sciences", value: "A"},
+                    {key: "Section B  - Agricultural Sciences and Forestry", value: "B"},
+                    {key: "Section C  -  Engineering, Architecture and Surveying", value: "C"},
+                    {key: "Section D  -  Life & Earth Sciences (Botany, Zoology, Fisheries, Geology and Mineralogy)", value: "D"},
+                    {key: "Section E1 -  Physical Sciences (Physics, Mathematics, Statistics)", value: "E1"},
+                    {key: "Section E2 -  Chemical Sciences (Chemistry, Bio-Chemistry, Agricultural Chemistry, Chemical Technology, Food Chemistry and Polymer Chemistry)", value: "E2"},
+                    {key: "Section E3 -  Computer Science", value: "E3"},
+                    {key: "Section F  -  Social Sciences (Anthropology, Archaeology, Demography, Education, Economics, Geography, Psychology and Sociology)", value: "F"},
+    ]    
     const paymentMethods = ["Cash","Bank Draft","Cheque","Online"]
     const [step, setStep] = useState(1)
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
     const [isConfirmed, setIsConfirmed] = useState(false)
+
+    const [receivedData, setreceivedData] = useState({})
     
     // var datetime = new Date();
 
@@ -108,6 +87,70 @@ function NewRegisterForm () {
         council: '',
     
     })
+
+    useEffect(async () => {
+
+        console.log("useeffect rendered")
+        // setLoading(true)
+        const profileData = await getMemberProfile(props.match.params.id)
+        setreceivedData(profileData)
+        console.log(receivedData)
+        const dobR = new Date(profileData.member.dob).toLocaleDateString()
+        const resAddrsArrsy = profileData.member.resAddrs.split(',')
+        const perAddrsArray = profileData.member.perAddrs.split(',')
+
+        setMemberData({
+            ...memberData,
+            title: 'profileData.member.title',
+            nameWinitials: profileData.member.nameWinitials,
+            nameInFull: profileData.member.fullName,
+            firstName: profileData.member.commonFirst,
+            lastName: profileData.member.commomLast,
+            gender: profileData.member.gender,
+            nic : profileData.member.nic,
+            dob : profileData.member.dob,
+            resAddOne : resAddrsArrsy[0], resAddTwo : resAddrsArrsy[1], resAddThree : resAddrsArrsy[2], resAddFour : resAddrsArrsy[3], resAddFive : resAddrsArrsy[4],
+            perAddOne : perAddrsArray[0], perAddTwo : perAddrsArray[1], perAddThree : perAddrsArray[2], perAddFour : perAddrsArray[3], perAddFive : perAddrsArray[4],
+            mobileNo : profileData.member.mobileNo,
+            landNo : profileData.member.fixedNo,
+            email: profileData.member.email, 
+            designation: profileData.member.designation,
+            division: profileData.member.department,
+            placeWork: profileData.member.placeOfWork,    
+            // offAddrslineOne : "",
+            // offAddrslineTwo : "",
+            // offAddrslineThree : "",
+            // offAddrslineFour : "",
+            // offAddrslineFive : " ",   
+            // offMobile : "",
+            // offLandNo : "",
+            // offEmail: "", 
+            // offFax: "",
+            // profession: "",
+            // fieldOfSpecial: [''],
+            // academic: [{
+            //     year: '', degree: '', disciplines: '', uni: ''
+            // }],
+            // gradeOfMem : "",
+            // section: "",
+            // memBefore: false,
+            // memFrom : "", memTo: "",
+            // sendingAddrs: "",
+            // status: "Member",
+
+            // enrollDate: new Date(),
+
+            // lastPaidForYear: '',
+            // arrearstoPay: 0,
+
+            // council: '',
+        })
+        console.log('Update data', memberData)
+        
+        // setLoading(false)
+
+    }, [])
+
     const [dateOfBirth, setdateOfBirth] = useState(new Date())
     const [proposer, setProposer] = useState({name: "", memNo: "", address: "", contactNo: ""})
     const [seconder, setSeconder] = useState({name: "", memNo: "", address: "", contactNo: ""})
@@ -141,7 +184,7 @@ function NewRegisterForm () {
             membershipNo: membershipNo.split('/')[0]
         }
         console.log("Member before save", member)
-        let result = registerMember(member)
+        let result = await registerMember(member)
         onImageSubmit()
         setLoading(false)
         if(result) setTimeout(function(){ reload() }, 3000);        
@@ -151,13 +194,18 @@ function NewRegisterForm () {
         window.location.reload(false);
     }
 
-    switch(step) {
+    console.log("function rendered")
+
+    switch(step) {        
 
     case 1 : return(
         <>
+        {console.log("return rendered")}
         <h6 style={{backgroundColor: "#e95045"}} className="pl-5 pt-1 pb-1">Personal Details</h6>
+
         <Formik className="container mt-5 mb-5"
         initialValues={memberData}
+        enableReinitialize={true}
         // validationSchema= {validationSchema}
         onSubmit={values => {
             setNameOfImage(`${values.nic}`)
@@ -190,7 +238,7 @@ function NewRegisterForm () {
                         nameOfImage={nameOfImage}
                     />
                     <Form style={{marginBottom : 50}}   autoComplete="off">
-                        <div className="row">                            
+                        <div className="row">                     
                             <div className="form-group col-12">
                                 <label htmlFor="nameWinitials" className="form-group"> Name with Initials</label>
                                 <div className="row col-12">
@@ -205,7 +253,7 @@ function NewRegisterForm () {
                                             })
                                         }
                                     </Field>
-                                    <Field className={ `${handleStyle('nameWinitials')} col-10`} type="text" id="nameWinitials" name="nameWinitials"/> 
+                                    <Field className={ `${handleStyle('nameWinitials')} col-10`} type="text" id="nameWinitials" name="nameWinitials" disabled={true}/> 
                                 </div>                                                              
                                 <ErrorMessage name="nameWinitials" component={ValidationError}/>
                             </div>
@@ -213,7 +261,7 @@ function NewRegisterForm () {
                         <div className="row">
                             <div className="form-group col-12">
                                 <label htmlFor="nameInFull">Name in Full</label> 
-                                <Field className={ `${handleStyle('nameInFull')}`} type="text" id="nameInFull" name="nameInFull"/>
+                                <Field className={ `${handleStyle('nameInFull')}`} type="text" id="nameInFull" name="nameInFull" />
                                 <ErrorMessage name="nameInFull" component={ValidationError}/>
                             </div>
                         </div>                        
@@ -575,8 +623,8 @@ function NewRegisterForm () {
                                     <ErrorMessage name="section" component={ValidationError}/> 
                             </div>
                         </div>
-                        <div className="row border border-danger" >
-                            <p style={{color: "red"}} className="col-12">Membership Details for Registering Current Members</p>
+                        <div className="row" >
+                            {/* <p style={{color: "red"}} className="col-12">Membership Details for Registering Current Members</p> */}
                             <div className="form-group form-check-inline col-6">
                             <label htmlFor="enrollDate" className="form-check">Enrolled Date</label> 
                                 <Field className={ `${handleStyle('enrollDate')}`} name="enrollDate" >
@@ -680,14 +728,14 @@ function NewRegisterForm () {
                             <div className="row">                                
                                 <hr></hr>
                                 <div className="col-6">
-                                    <Proposer proposer={proposer} setProposer={setProposer} />
+                                    <Proposer proposer={proposer} setProposer={setProposer} readOnly={true}/>
                                 </div>
                                 <div className="col-6">
-                                    <Seconder seconder={seconder} setSeconder={setSeconder} />
+                                    <Seconder seconder={seconder} setSeconder={setSeconder} readOnly={true}/>
                                 </div>
                             </div>
                         </div>
-                        <h6 style={{backgroundColor: "#e95045"}} className="pl-5 pt-1 pb-1">Payment Details</h6>
+                        {/* <h6 style={{backgroundColor: "#e95045"}} className="pl-5 pt-1 pb-1">Payment Details</h6>
                         <p style={{color: "red"}}>Payment History for Registering Current Members</p>
                         <div className="row border border-danger">
                             <div className="form-group col-6">
@@ -700,7 +748,7 @@ function NewRegisterForm () {
                                 <Field className={ `${handleStyle('arrearstoPay')}`} type="number" id="arrearstoPay" name="arrearstoPay"/>
                                 <ErrorMessage name="arrearstoPay" component={ValidationError}/>
                             </div>
-                        </div>
+                        </div> */}
 
                         
                     <button type="submit" className={isConfirmed ? "btn btn-success float-right m-2 is-valid" :"btn btn-primary float-right m-2"}>
@@ -731,4 +779,4 @@ function NewRegisterForm () {
     }
 }
 
-export default NewRegisterForm
+export default UpdateMember

@@ -1,16 +1,17 @@
 import React, {useMemo, useState, useEffect} from 'react'
 import {useTable, useSortBy, useGlobalFilter, useFilters, usePagination, useRowSelect} from 'react-table'
-import {COLUMNS, GROUPED_COLUMNS} from './outdatedColumns'
 import { Table, Button } from 'reactstrap';
-import Pagination from '../common/Pagination'
-import { GlobalFilter } from '../common/GlobalFilter';
 import Loader from 'react-loader-spinner'
-import { Spinner } from 'reactstrap';
-import axios from 'axios'
-import {Checkbox} from '../common/Checkbox'
-import EmailComponent from '../../components/EmailComponent';
 import { Link, Redirect, Route, Switch} from 'react-router-dom'
 import {useSticky} from 'react-table-sticky'
+
+import EmailComponent from '../../components/EmailComponent';
+
+import Pagination from '../common/Pagination'
+import { GlobalFilter } from '../common/GlobalFilter';
+import {Checkbox} from '../common/Checkbox'
+import {COLUMNS} from './outdatedColumns'
+
 import {getOutdatedMembers} from '../../services/getOutdatedList'
 
 import { useExportData } from "react-table-plugins";
@@ -29,7 +30,6 @@ export const OutdatedTable = (props) => {
     }, []);
 
     const columns = useMemo(() => COLUMNS, [])
-    // const data = useMemo(() => memberPrsonal, [])
     const data = members
 
 
@@ -113,6 +113,7 @@ export const OutdatedTable = (props) => {
                 <div>
                     
                     <div className="row">
+                        <p className="alert alert-info ml-2"> {data.length} records.</p>
                         <div className="col-12">
                             <input type="checkbox" {...getToggleHideAllColumnsProps()} />All Columns
                         </div>
@@ -128,7 +129,7 @@ export const OutdatedTable = (props) => {
                             
                         }
                     </div>
-                    {/* <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/> */}
+                    <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
                     
                     {/* <EmailComponent mails={selectedFlatRows}/> */}
                     {selectedFlatRows != 0 ?
@@ -223,18 +224,6 @@ export const OutdatedTable = (props) => {
                         <button onClick={() => nextPage()} disabled={!canNextPage}>Next</button>
                         <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>{'>>'}</button>
                     </div>
-                    {/* <pre>
-                        <h1>{selectedFlatRows.length}</h1>
-                        <code>
-                            {JSON.stringify(
-                                {
-                                    selectedFlatRows: selectedFlatRows.map((row) => row.original.email)
-                                },
-                                null,
-                                2
-                            )}
-                        </code>
-                    </pre> */}
                 </div>
                 
             }

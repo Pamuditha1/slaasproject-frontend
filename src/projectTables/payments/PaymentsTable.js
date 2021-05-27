@@ -1,17 +1,15 @@
 import React, {useMemo, useState, useEffect} from 'react'
 import {useTable, useSortBy, useGlobalFilter, useFilters, usePagination} from 'react-table'
-import {COLUMNS, GROUPED_COLUMNS} from './paymentColumns'
 import { Table, Button } from 'reactstrap';
+import Loader from 'react-loader-spinner'
+
+import DayPicker from '../../components/DayPicker'
+
+import {COLUMNS, GROUPED_COLUMNS} from './paymentColumns'
 import Pagination from '../common/Pagination'
 import { GlobalFilter } from '../common/GlobalFilter';
-import Loader from 'react-loader-spinner'
-import { Spinner } from 'reactstrap';
-import axios from 'axios'
-import DayPicker from '../../components/DayPicker'
-// import { useSticky } from 'react-table-sticky';
-// import "react-table/react-table.css";
 
-import {api} from '../../services/api'
+import {getAllPayments} from '../../services/getAllPayments'
 import {filterPayments} from '../../services/filterPayments'
 
 export const PaymentsTable = () => {
@@ -26,57 +24,21 @@ export const PaymentsTable = () => {
 
     const filterRecords = async () => {
         console.log(dateRange)
-        
         let filteredPayments = await filterPayments(dateRange.from, dateRange.to)
         console.log(filteredPayments)
         setPayments(filteredPayments)
         setfilterNum(filteredPayments.length)
-        
     }
-    // useEffect(() => {
-    //     setIsLoading(true)
-    //     const result
-    //     async function fetchData() {
-    //         result = await axios(
-    //             'http://localhost:3000/slaas/api/user/view/members/official'
-    //         );
-    //     }
-    //     fetchData();
-    //     setallMembers(result.data);
-    //     setIsLoading(false)
-    // }, []);
 
     useEffect(async () => {
         setIsLoading(true)
-        const fetchData = () => {
-            axios(`${api}/user/payment/view`)
-            .then(function (res) {
-                console.log(res.data)
-                setPayments(res.data)
-            })      
-            .then(function () {
-                console.log(payments)
-            })      
-            
-        };    
-        await fetchData();
+        const records = await getAllPayments()
+        setPayments(records)
         setIsLoading(false)
     }, []);
-
-    // useEffect(() => {
-    //     async function fetchData() {
-    //       // You can await here
-    //       const response = await MyAPI.getData(someId);
-    //       // ...
-    //     }
-    //     fetchData();
-    //   }, [someId]);
         
-
     const columns = useMemo(() => COLUMNS, [])
-    // const data = useMemo(() => memberPrsonal, [])
     const data = payments
-
 
     const {
         getTableProps,
@@ -120,6 +82,8 @@ export const PaymentsTable = () => {
                 /> :
                 <div>
                     
+
+                    <p className="alert alert-info"> {data.length} records.</p>
                     <div className="row">
                         <div className="col-12">
                             <input type="checkbox" {...getToggleHideAllColumnsProps()} />All Columns
@@ -133,7 +97,6 @@ export const PaymentsTable = () => {
                                     </label>
                                 </div>
                             ))
-                            
                         }
                     </div>
 
@@ -161,9 +124,7 @@ export const PaymentsTable = () => {
                                                     {column.isSorted ? (column.isSortedDesc ? '(D)': '(A)') : ''}
                                                 </span>
                                                 <div placeholder="Search">{column.canFilter ? column.render('Filter') : null}</div>
-                                                
                                             </th>
-                                                
                                         ))
                                     }
                                 </tr>
@@ -215,8 +176,6 @@ export const PaymentsTable = () => {
                     </div>
                 </div>
             }
-        
-        
         {/* <Pagination /> */}
         </div>
     )

@@ -1,15 +1,15 @@
 import React, {useMemo, useState, useEffect} from 'react'
 import {useTable, useSortBy, useGlobalFilter, useFilters, usePagination, useRowSelect} from 'react-table'
-import {COLUMNS, GROUPED_COLUMNS} from './searchedColumns'
 import { Table, Button } from 'reactstrap';
-import Pagination from '../common/Pagination'
-import { GlobalFilter } from '../common/GlobalFilter';
 import Loader from 'react-loader-spinner'
-import { Spinner } from 'reactstrap';
-import axios from 'axios'
 import {Checkbox} from '../common/Checkbox'
+import { Link} from 'react-router-dom'
+
 import EmailComponent from '../../components/EmailComponent';
-import { Link, Redirect} from 'react-router-dom'
+
+import { GlobalFilter } from '../common/GlobalFilter';
+import Pagination from '../common/Pagination'
+import {COLUMNS, GROUPED_COLUMNS} from './searchedColumns'
 
 import { useExportData } from "react-table-plugins";
 import ExportingButtons from '../common/ExportingButtons';
@@ -19,16 +19,9 @@ export const MemberSearchTable = (props) => {
     const [searchedMembers, setsearchedMembers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    // useEffect(() => {
-    //     setsearchedMembers(props.members)
-    //     setIsLoading(false)
-    //     console.log("Received data", setsearchedMembers)
-    // }, []);
-
     const columns = useMemo(() => COLUMNS, [])
-    // const data = useMemo(() => memberPrsonal, [])
-    const data = props.members
 
+    const data = props.members
 
     const {
         getTableProps,
@@ -100,16 +93,14 @@ export const MemberSearchTable = (props) => {
                         <div className="col-12">
                             <input type="checkbox" {...getToggleHideAllColumnsProps()} />All Columns
                         </div>
-                        {
-                            allColumns.map(column => (
+                        {   allColumns.map(column => (
                                 <div key={column.id} className="col-3" style={{float: "left"}}>
                                     <label>
                                         <input type="checkbox" {...column.getToggleHiddenProps()}/>
                                         {column.Header}
                                     </label>
                                 </div>
-                            ))
-                            
+                            ))                            
                         }
                     </div>
                     <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
@@ -153,10 +144,8 @@ export const MemberSearchTable = (props) => {
                                                 <span>
                                                     {column.isSorted ? (column.isSortedDesc ? '(D)': '(A)') : ''}
                                                 </span>
-                                                <div placeholder="Search">{column.canFilter ? column.render('Filter') : null}</div>
-                                                
-                                            </th>
-                                                
+                                                <div placeholder="Search">{column.canFilter ? column.render('Filter') : null}</div>                                                
+                                            </th>                                                
                                         ))
                                     }
                                 </tr>
@@ -164,15 +153,13 @@ export const MemberSearchTable = (props) => {
                             
                         </thead>
                         <tbody {...getTableBodyProps()}>
-                            {
-                                page.map( row => {
+                            {page.map( row => {
                                     prepareRow(row)
                                     return (
                                         <tr {...row.getRowProps()}>
                                             {row.cells.map((cell) => {
                                                 return <td {...cell.getCellProps()} >{cell.render('Cell')}</td>
-                                            })}
-                                            
+                                            })}                                            
                                         </tr>
                                     )
                                 })
@@ -206,22 +193,8 @@ export const MemberSearchTable = (props) => {
                         <button onClick={() => nextPage()} disabled={!canNextPage}>Next</button>
                         <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>{'>>'}</button>
                     </div>
-                    {/* <pre>
-                        <h1>{selectedFlatRows.length}</h1>
-                        <code>
-                            {JSON.stringify(
-                                {
-                                    selectedFlatRows: selectedFlatRows.map((row) => row.original.email)
-                                },
-                                null,
-                                2
-                            )}
-                        </code>
-                    </pre> */}
                 </div>
             }
-        
-        
         {/* <Pagination /> */}
         </div>
     )

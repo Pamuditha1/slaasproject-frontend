@@ -1,28 +1,33 @@
 import React, { useState } from 'react'
-import {Redirect, Route, Switch, useLocation} from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
+
 import RegisterUserForm from './forms/RegisterUserForm'
 import Dashboard from './Dashboard'
-import NotFound from './NotFound'
-import MemberRegisterForm from './forms/MemberRegisterForm'
 import UserLogin from './forms/UserLogin'
 import Sidebar from './Sidebar'
 import ViewMembers from './ViewMembers'
 import ViewPayments from './ViewPayments'
-import MemberPaymentForm from './forms/MemberPaymentForm'
 import NewRegisterForm from '../components/forms/NewRegisterForm'
 import {MemberProfile} from '../components/MemberProfile'
 import NewMemberPaymentForm from './forms/NewMemberPaymentForm'
 import EmailComponent from './EmailComponent'
-import {MemberAllTable} from '../projectTables/memberAllRecords/MemberAllTable'
-import { MemberSearchTable } from '../projectTables/memberSearch/MemberSearchTable';
 import SendMails from './SendMails'
 import OutdatedMemberships from './OutdatedMemberships'
+import UpdateMember from './UpdateMember'
+import Settings from './Settings'
+import Grades from './Grades'
+import Sections from './Sections'
+import Arrears from './Arrears'
 
 
 function UserComponent(props) {
 
     const [emailsList, setemailsList] = useState([])
+    const [arrearsCalculating, setarrearsCalculating] = useState(false)
     
+    function setArr(b) {
+        setarrearsCalculating(b)
+    }
     function setMails(list){
         setemailsList(list)
     }
@@ -34,19 +39,18 @@ function UserComponent(props) {
 
         return (
             <div className="row">
-                { (currentLocation !== "/user/login") &&
-                    <div className="col-2">
-                    {/* <Sidebar active={link}/> */}
-                    <Sidebar />
-                    </div> 
-                }                               
+                <div className="col-2">
+                { (currentLocation !== "/user/login") && <Sidebar arrearsCalculating={arrearsCalculating} />
+                    
+                }  
+                 </div>                             
                 <div className="col-10"> 
                     <Switch>                    
                         <Route path="/user/register-user" component={()=><RegisterUserForm accountType={accountType}/>} />
                         <Route path="/user/register-member" component={NewRegisterForm} />                        
                         {/* <Route path="/user/members/send-emails" component={EmailComponent} />   */}
-                        <Route path="/user/member/profile/:id" component={MemberProfile}/>
-                        {/* <Route path="/user/members" component={ViewMembers}/> */}
+                        <Route exact path="/user/member/profile/:id" component={MemberProfile}/>
+                        <Route path="/user/member/profile/update/:id" component={UpdateMember}/>
                         <Route path="/user/members" render={(props) => 
                             <ViewMembers emailsList={emailsList} setMails={setMails} {...props}/>} />
                         <Route path="/user/send-mails" component={SendMails}/>
@@ -61,8 +65,16 @@ function UserComponent(props) {
                             <MemberSearchTable members={searchedResults} {...props}/>} />  
                                                                  */}
                         <Route path="/user/outdated-list" component={OutdatedMemberships} />
+                        {/* <Route exact path="/user/arrears-calculator" component={Arrears} />  */}
+                        <Route path="/user/arrears-calculator" render={(props) => 
+                            <Arrears setArr={setArr} {...props}/>} />                                
+                        <Route exact path="/user/settings" component={Settings} />
+                        <Route path="/user/settings/grades" component={Grades} />
+                        <Route path="/user/settings/sections" component={Sections} />
                         <Route path="/user" exact component={Dashboard} />                        
                     </Switch>
+
+                    
                 </div>
             </div>
         )

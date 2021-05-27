@@ -1,16 +1,17 @@
 import http from "./httpService"
+import axios from 'axios'
 import { toast } from "react-toastify";
 import {api} from './api'
 
-const apiEndPoint = `${api}/user/payment/filter/`;
+const apiEndPoint = `${api}/user/sections`;
 
-export function filterPayments(from, to) {
+export function addSection(section) {
 
-    return http.get(`${apiEndPoint}${from}/${to}`)
+    return http.post(apiEndPoint, section)
     .then(function (response) {
-        // console.log(response.data);
-        // toast.success(`${response.data}`);
-        return response.data
+        console.log(response.msg);
+        toast.success(`${response.data.msg}`);
+        // return response.data.data
     })
     .catch(function (error) {
         if(error.response.data) {

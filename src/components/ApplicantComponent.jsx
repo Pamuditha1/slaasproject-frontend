@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Redirect, Route, Switch} from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
 import MemberOnlineApply from './forms/MemberOnlineApply'
 import NotFound from './NotFound'
 import RegisterUserForm from './forms/RegisterUserForm'
@@ -16,8 +16,7 @@ class ApplicantComponent extends Component {
                     <Route path="/applicant/membership-apply" component={MemberOnlineApply}/>
                     <Route path="/applicant/login" component={ApplicantLogin}/>
                     <Route path="/applicant" component={ApplicantLogin}/>           
-                </Switch>
-                
+                </Switch>                
             </div>
         )
     }

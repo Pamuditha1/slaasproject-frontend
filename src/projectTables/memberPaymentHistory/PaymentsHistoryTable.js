@@ -1,61 +1,18 @@
 import React, {useMemo, useState, useEffect} from 'react'
 import {useTable, useSortBy, useGlobalFilter, useFilters, usePagination} from 'react-table'
-import {COLUMNS, GROUPED_COLUMNS} from './paymentHistoryColumns'
-import { Table, Button } from 'reactstrap';
+import { Table} from 'reactstrap';
+import Loader from 'react-loader-spinner'
+
+import {COLUMNS} from './paymentHistoryColumns'
 import Pagination from '../common/Pagination'
 import { GlobalFilter } from '../common/GlobalFilter';
-import Loader from 'react-loader-spinner'
-import { Spinner } from 'reactstrap';
-import axios from 'axios'
 
 export const PaymentsHistoryTable = ({records}) => {
     const [payments, setPayments] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-
-    // useEffect(() => {
-    //     setIsLoading(true)
-    //     const result
-    //     async function fetchData() {
-    //         result = await axios(
-    //             'http://localhost:3000/slaas/api/user/view/members/official'
-    //         );
-    //     }
-    //     fetchData();
-    //     setallMembers(result.data);
-    //     setIsLoading(false)
-    // }, []);
-
-    // useEffect(async () => {
-    //     setIsLoading(true)
-    //     const fetchData = () => {
-    //         axios('http://localhost:3001/slaas/api/user/payment/view')
-    //         .then(function (res) {
-    //             console.log(res.data)
-    //             setPayments(res.data)
-    //         })      
-    //         .then(function () {
-    //             console.log(payments)
-    //         })      
-            
-    //     };    
-    //     await fetchData();
-    //     setIsLoading(false)
-    // }, []);
-
-    // useEffect(() => {
-    //     async function fetchData() {
-    //       // You can await here
-    //       const response = await MyAPI.getData(someId);
-    //       // ...
-    //     }
-    //     fetchData();
-    //   }, [someId]);
-        
+    const [isLoading, setIsLoading] = useState(false);        
 
     const columns = useMemo(() => COLUMNS, [])
-    // const data = useMemo(() => memberPrsonal, [])
     const data = records
-
 
     const {
         getTableProps,
@@ -99,6 +56,7 @@ export const PaymentsHistoryTable = ({records}) => {
                 <div>
                     {/* <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/> */}
                     <div className="row">
+                        <p className="ml-2"> {data.length} records.</p>
                         <div className="col-12">
                             <input type="checkbox" {...getToggleHideAllColumnsProps()} />All Columns
                         </div>
@@ -180,8 +138,7 @@ export const PaymentsHistoryTable = ({records}) => {
                     </div>
                 </div>
             }
-        
-        
+
         {/* <Pagination /> */}
         </div>
     )

@@ -9,7 +9,7 @@ export function getPaymentsSummery(memNo) {
 
     return http.get(`${apiEndPoint}${memNo}`)
     .then(function (response) {
-        console.log(response.data);
+        console.log("payment summery", response.data);
         return response.data
     })
     .catch(function (error) {

@@ -46,9 +46,6 @@ export const COLUMNS = [
         accessor: 'section',
         Filter: ColumnFilter
     },
-
-    
-    
     {
         Header: 'Grade of Membership',
         accessor: 'gradeOfMembership',

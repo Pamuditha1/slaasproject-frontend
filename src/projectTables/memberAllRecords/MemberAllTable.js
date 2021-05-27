@@ -1,22 +1,22 @@
 import React, {useMemo, useState, useEffect} from 'react'
 import {useTable, useSortBy, useGlobalFilter, useFilters, usePagination, useRowSelect} from 'react-table'
-import {COLUMNS, GROUPED_COLUMNS} from './allColumns'
-import { Table, Button } from 'reactstrap';
-import Pagination from '../common/Pagination'
-import { GlobalFilter } from '../common/GlobalFilter';
 import Loader from 'react-loader-spinner'
-import { Spinner } from 'reactstrap';
-import axios from 'axios'
-import {Checkbox} from '../common/Checkbox'
-import EmailComponent from '../../components/EmailComponent';
+import { Table, Button } from 'reactstrap';
 import { Link, Redirect, Route, Switch} from 'react-router-dom'
 import {useSticky} from 'react-table-sticky'
+
+import {COLUMNS} from './allColumns'
+import Pagination from '../common/Pagination'
+import { GlobalFilter } from '../common/GlobalFilter';
+import {Checkbox} from '../common/Checkbox'
+
+import EmailComponent from '../../components/EmailComponent';
 
 import { useExportData } from "react-table-plugins";
 import ExportingButtons from '../common/ExportingButtons';
 import getExportFileBlob from '../common/exportFunction'
 
-import {api} from '../../services/api'
+import {getAllMembers} from '../../services/getAllMemberRecords'
 
 export const MemberAllTable = (props) => {
     const [allMembers, setallMembers] = useState([]);
@@ -24,23 +24,12 @@ export const MemberAllTable = (props) => {
 
     useEffect(async () => {
         setIsLoading(true)
-        const fetchData = () => {
-            axios(`${api}/user/view/members/all`)
-            .then(function (res) {
-                console.log(res.data)
-                setallMembers(res.data)
-            })      
-            .then(function () {
-                console.log(allMembers)
-            })      
-            
-        };    
-        await fetchData();
+        const records = await getAllMembers()
+        setallMembers(records)
         setIsLoading(false)
     }, []);
 
     const columns = useMemo(() => COLUMNS, [])
-    // const data = useMemo(() => memberPrsonal, [])
     const data = allMembers
 
 
@@ -103,26 +92,31 @@ export const MemberAllTable = (props) => {
         //     pathname: ('/user/members/send-emails', selectedFlatRows)
         // });
         setselectedMails(selectedFlatRows)
-        props.history.push({
-            pathname: '/user/members/send-emails',
-            state: {
-                emailsList: selectedMails
-            }
-        })
+        // props.history.push({
+        //     pathname: '/user/members/send-emails',
+        //     state: {
+        //         emailsList: selectedMails
+        //     }
+        // })
         // props.history.push("/user/members/send-emails")
     }
     return (
         <div>
             {
                 isLoading ? 
-                <Loader style={{marginLeft : "35%"}}
-                    type="ThreeDots"
-                    color="#00BFFF"
-                    height={300}
-                    width={300}
-                /> :
+                <>
+                    <Loader style={{marginLeft : "35%"}}
+                        type="ThreeDots"
+                        color="#00BFFF"
+                        height={300}
+                        width={300}
+                    /> 
+                    <canter><h2>Loading member records. This may take a while...</h2></canter>
+                </>:
+                
                 <div>
                     
+                    <p className="alert alert-info"> {data.length} records.</p>
                     <div className="row">
                         <div className="col-12">
                             <input type="checkbox" {...getToggleHideAllColumnsProps()} />All Columns
@@ -160,9 +154,9 @@ export const MemberAllTable = (props) => {
                     }
                     <div className="row">
                         <div className="col-5">
-                            {/* <Link to="/user/members/send-emails">  */}
+                            <Link to="/user/members/send-emails"> 
                                 <Button onClick={saveMails} color="primary">Send Emails</Button>
-                            {/* </Link> */}
+                            </Link>
                         </div>
                         <div className="col-7 mb-2">
                             <ExportingButtons exportData={exportData}/>
@@ -183,8 +177,7 @@ export const MemberAllTable = (props) => {
                                                 </span>
                                                 <div placeholder="Search">{column.canFilter ? column.render('Filter') : null}</div>
                                                 
-                                            </th>
-                                                
+                                            </th>       
                                         ))
                                     }
                                 </tr>
@@ -249,10 +242,11 @@ export const MemberAllTable = (props) => {
                 </div>
                 
             }
-        {/* <Switch>
-            <Route path="/user/members/send-emails" render={(props) => 
-                <EmailComponent emails={selectedMails} flat={selectedFlatRows} {...props}/>} />
-        </Switch> */}
+        <Switch>
+            {/* <Route path="/user/members/send-emails" render={(props) => 
+                <EmailComponent emails={selectedMails} flat={selectedFlatRows} {...props}/>} /> */}
+                <Route path="/user/members/send-emails" component={EmailComponent} />
+        </Switch>
         
         {/* <Pagination /> */}
         </div>
