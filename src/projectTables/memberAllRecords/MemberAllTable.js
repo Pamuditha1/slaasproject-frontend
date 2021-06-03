@@ -22,11 +22,14 @@ export const MemberAllTable = (props) => {
     const [allMembers, setallMembers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(async () => {
-        setIsLoading(true)
-        const records = await getAllMembers()
-        setallMembers(records)
-        setIsLoading(false)
+    useEffect(() => {
+        async function fetchMembers() {
+            setIsLoading(true)
+            const records = await getAllMembers()
+            setallMembers(records)
+            setIsLoading(false)
+        }
+        fetchMembers()
     }, []);
 
     const columns = useMemo(() => COLUMNS, [])
@@ -92,6 +95,12 @@ export const MemberAllTable = (props) => {
         //     pathname: ('/user/members/send-emails', selectedFlatRows)
         // });
         setselectedMails(selectedFlatRows)
+        let list = []
+        selectedFlatRows.forEach(r => {
+            list.push(r.original.email)
+        });
+        console.log(selectedFlatRows[0].original)
+        props.setList(list)
         // props.history.push({
         //     pathname: '/user/members/send-emails',
         //     state: {
@@ -111,7 +120,7 @@ export const MemberAllTable = (props) => {
                         height={300}
                         width={300}
                     /> 
-                    <canter><h2>Loading member records. This may take a while...</h2></canter>
+                    <h2>Loading member records. This may take a while...</h2>
                 </>:
                 
                 <div>
@@ -121,17 +130,17 @@ export const MemberAllTable = (props) => {
                         <div className="col-12">
                             <input type="checkbox" {...getToggleHideAllColumnsProps()} />All Columns
                         </div>
-                        {
+                        <>{
                             allColumns.map(column => (
                                 <div key={column.id} className="col-3" style={{float: "left"}}>
-                                    <label>
+                                    <label key={column.id}>
                                         <input type="checkbox" {...column.getToggleHiddenProps()}/>
-                                        {column.Header}
+                                        <>{column.Header}</>
                                     </label>
                                 </div>
                             ))
                             
-                        }
+                        }</>
                     </div>
                     <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
                     
@@ -153,11 +162,21 @@ export const MemberAllTable = (props) => {
                     
                     }
                     <div className="row">
-                        <div className="col-5">
+                        {/* <div className="col-5">
                             <Link to="/user/members/send-emails"> 
                                 <Button onClick={saveMails} color="primary">Send Emails</Button>
                             </Link>
-                        </div>
+                        </div> */}
+                        <Link to="/user/members/send-emails"
+                        // to={{
+                        //     pathname: '/user/members-table/send-emails',
+                        //     data: {
+                        //         emails: selectedFlatRows
+                        //     }
+                        // }}
+                        >
+                            <Button onClick={saveMails} color="primary">Send Emails</Button>
+                        </Link> 
                         <div className="col-7 mb-2">
                             <ExportingButtons exportData={exportData}/>
                         </div>
@@ -242,11 +261,12 @@ export const MemberAllTable = (props) => {
                 </div>
                 
             }
-        <Switch>
+        {/* <Switch> */}
             {/* <Route path="/user/members/send-emails" render={(props) => 
                 <EmailComponent emails={selectedMails} flat={selectedFlatRows} {...props}/>} /> */}
-                <Route path="/user/members/send-emails" component={EmailComponent} />
-        </Switch>
+                {/* <Route path="/user/members-table/send-emails" selectedMails={selectedMails} selectedFlatRows={selectedFlatRows} 
+                component={EmailComponent} /> */}
+        {/* </Switch> */}
         
         {/* <Pagination /> */}
         </div>

@@ -8,7 +8,7 @@ export const COLUMNS = [
         Cell : props => {
             const memberID = props.row.original.membershipNo ? props.row.original.membershipNo : props.row.original.nic
             return (
-                <Link to={`/user/member/profile/${memberID}`}>            
+                <Link to={`/user/member/profile/${memberID}`} target="_blank">            
                 <button className="btn btn-outline-primary" onClick={() => {console.log('view button clicked', memberID )}}>View</button>
                 </Link>
             )

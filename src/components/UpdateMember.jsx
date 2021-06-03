@@ -9,6 +9,7 @@ import Proposer from './forms/Proposer';
 import Seconder from './forms/Seconder';
 import validationSchema from './validationObjects/registerFormValidationSchema'
 import ProfilePicUpload from './ProfilePicUpload';
+import ViewImage from './ViewImage';
 
 import {registerMember} from '../services/registerMemberService'
 import {addProfilePic} from '../services/addMemberProfilePic'
@@ -88,64 +89,74 @@ function UpdateMember (props) {
     
     })
 
-    useEffect(async () => {
+    useEffect(() => {
 
-        console.log("useeffect rendered")
-        // setLoading(true)
-        const profileData = await getMemberProfile(props.match.params.id)
-        setreceivedData(profileData)
-        console.log(receivedData)
-        const dobR = new Date(profileData.member.dob).toLocaleDateString()
-        const resAddrsArrsy = profileData.member.resAddrs.split(',')
-        const perAddrsArray = profileData.member.perAddrs.split(',')
+        async function fetchMember() {
+            // setLoading(true)
+            const profileData = await getMemberProfile(props.match.params.id)
+            setreceivedData(profileData)
+            console.log(receivedData)
+            const dobR = new Date(profileData.member.dob).toLocaleDateString()
+            const resAddrsArrsy = profileData.member.resAddrs.split(',')
+            const perAddrsArray = profileData.member.perAddrs.split(',')
+            const offAddrsArray = profileData.member.offAddrs.split(',')
 
-        setMemberData({
-            ...memberData,
-            title: 'profileData.member.title',
-            nameWinitials: profileData.member.nameWinitials,
-            nameInFull: profileData.member.fullName,
-            firstName: profileData.member.commonFirst,
-            lastName: profileData.member.commomLast,
-            gender: profileData.member.gender,
-            nic : profileData.member.nic,
-            dob : profileData.member.dob,
-            resAddOne : resAddrsArrsy[0], resAddTwo : resAddrsArrsy[1], resAddThree : resAddrsArrsy[2], resAddFour : resAddrsArrsy[3], resAddFive : resAddrsArrsy[4],
-            perAddOne : perAddrsArray[0], perAddTwo : perAddrsArray[1], perAddThree : perAddrsArray[2], perAddFour : perAddrsArray[3], perAddFive : perAddrsArray[4],
-            mobileNo : profileData.member.mobileNo,
-            landNo : profileData.member.fixedNo,
-            email: profileData.member.email, 
-            designation: profileData.member.designation,
-            division: profileData.member.department,
-            placeWork: profileData.member.placeOfWork,    
-            // offAddrslineOne : "",
-            // offAddrslineTwo : "",
-            // offAddrslineThree : "",
-            // offAddrslineFour : "",
-            // offAddrslineFive : " ",   
-            // offMobile : "",
-            // offLandNo : "",
-            // offEmail: "", 
-            // offFax: "",
-            // profession: "",
-            // fieldOfSpecial: [''],
-            // academic: [{
-            //     year: '', degree: '', disciplines: '', uni: ''
-            // }],
-            // gradeOfMem : "",
-            // section: "",
-            // memBefore: false,
-            // memFrom : "", memTo: "",
-            // sendingAddrs: "",
-            // status: "Member",
+            setMemberData({
+                ...memberData,
+                title: 'profileData.member.title',
+                nameWinitials: profileData.member.nameWinitials,
+                nameInFull: profileData.member.fullName,
+                firstName: profileData.member.commonFirst,
+                lastName: profileData.member.commomLast,
+                gender: profileData.member.gender,
+                nic : profileData.member.nic,
+                dob : profileData.member.dob,
+                resAddOne : resAddrsArrsy[0], resAddTwo : resAddrsArrsy[1], resAddThree : resAddrsArrsy[2], resAddFour : resAddrsArrsy[3], resAddFive : resAddrsArrsy[4],
+                perAddOne : perAddrsArray[0], perAddTwo : perAddrsArray[1], perAddThree : perAddrsArray[2], perAddFour : perAddrsArray[3], perAddFive : perAddrsArray[4],
+                mobileNo : profileData.member.mobileNo,
+                landNo : profileData.member.fixedNo,
+                email: profileData.member.email, 
+                designation: profileData.member.designation,
+                division: profileData.member.department,
+                placeWork: profileData.member.placeOfWork,    
+                offAddrslineOne : offAddrsArray[0], offAddrslineTwo : offAddrsArray[1], offAddrslineThree : offAddrsArray[2], offAddrslineFour : offAddrsArray[3], offAddrslineFive : offAddrsArray[4],   
+                offMobile : profileData.member.offMobile,
+                offLandNo : profileData.member.offLand,
+                offEmail: profileData.member.offEmail, 
+                offFax: profileData.member.offFax,
+                profession: profileData.member.profession,
+                fieldOfSpecial: [profileData.member.specialization1, profileData.member.specialization2, profileData.member.specialization3, profileData.member.specialization4, profileData.member.specialization5],
+                academic: profileData.academic,
+                gradeOfMem : profileData.member.gradeOfMembership,
+                section: profileData.member.section,
+                memBefore: profileData.member.memberBefore,
+                memFrom : profileData.member.memberFrom, memTo: profileData.member.memberTo,
+                sendingAddrs: profileData.member.sendingAddrs,
+                status: profileData.member.status,
 
-            // enrollDate: new Date(),
+                enrollDate: profileData.member.enrollDate,
 
-            // lastPaidForYear: '',
-            // arrearstoPay: 0,
+                lastPaidForYear: profileData.member.lastPaidForYear,
+                arrearstoPay: profileData.member.arrearsConti,
 
-            // council: '',
-        })
-        console.log('Update data', memberData)
+                council: profileData.member.councilPosition,
+            })
+
+            setProposer({
+                name : profileData.proposer.name,
+                memNo : profileData.proposer.membershipNo,
+                address : profileData.proposer.address,
+                contactNo : profileData.proposer.contactNo
+            })
+            setSeconder({
+                name : profileData.proposer.name,
+                memNo : profileData.proposer.membershipNo,
+                address : profileData.proposer.address,
+                contactNo : profileData.proposer.contactNo
+            })
+            console.log('Update data', memberData)
+        }
+        fetchMember()
         
         // setLoading(false)
 
@@ -228,6 +239,9 @@ function UpdateMember (props) {
                     return(
                     
                     <>
+                    <div className="col-2 mr-5">
+                        <ViewImage nic={memberData.nic}/>
+                    </div>
                     <ProfilePicUpload onImageSubmit={onImageSubmit} 
                         file={file} 
                         setFile={setFile} 
@@ -261,7 +275,7 @@ function UpdateMember (props) {
                         <div className="row">
                             <div className="form-group col-12">
                                 <label htmlFor="nameInFull">Name in Full</label> 
-                                <Field className={ `${handleStyle('nameInFull')}`} type="text" id="nameInFull" name="nameInFull" />
+                                <Field className={ `${handleStyle('nameInFull')}`} type="text" id="nameInFull" name="nameInFull" disabled={true}/>
                                 <ErrorMessage name="nameInFull" component={ValidationError}/>
                             </div>
                         </div>                        
@@ -269,19 +283,19 @@ function UpdateMember (props) {
                             <label className="form-group col-4">Name in Common Use</label>
                             <div className="form-group col-4">
                                 <label htmlFor="firstName">First Name</label> 
-                                <Field className={ `${handleStyle('firstName')}`} type="text" id="firstName" name="firstName"/>
+                                <Field className={ `${handleStyle('firstName')}`} type="text" id="firstName" name="firstName" />
                                 <ErrorMessage name="firstName" component={ValidationError}/>
                             </div>
                             <div className="form-group col-4">
                                 <label htmlFor="lastName">Last Name</label> 
-                                <Field className={ `${handleStyle('lastName')}`} type="text" id="lastName" name="lastName"/>
+                                <Field className={ `${handleStyle('lastName')}`} type="text" id="lastName" name="lastName" />
                                 <ErrorMessage name="lastName" component={ValidationError}/>
                             </div>
                         </div>                        
                         <div className="row">
                             <div className="form-group col-4">
                                     <label htmlFor="gender" className="form-check-inline">Gender</label> 
-                                    <Field className={ `${handleStyle('gender')} col-4`} id="gender" name="gender" options={genderOptions}> 
+                                    <Field className={ `${handleStyle('gender')} col-4`} id="gender" name="gender" disabled={true} options={genderOptions}> 
                                         {
                                             ({field}) => {
                                                 return genderOptions.map( option => {
@@ -306,7 +320,7 @@ function UpdateMember (props) {
                                         onChange={(value) => setdateOfBirth(value.toISOString())}
                                     
                                     /> */}
-                                    <Field className={ `${handleStyle('dob')}`} name="dob">
+                                    <Field className={ `${handleStyle('dob')}`} name="dob" disabled={true}>  
                                     {
                                             ({form,field}) => {
                                                 const {setFieldValue} = form
@@ -328,7 +342,7 @@ function UpdateMember (props) {
                                 </div>
                                 <div className="form-group col-4">
                                     <label htmlFor="nic">NIC</label> 
-                                    <Field className={ `${handleStyle('nic')}`} type="text" id="nic" name="nic"/>
+                                    <Field className={ `${handleStyle('nic')}`} type="text" id="nic" name="nic" disabled={true}/>
                                     <ErrorMessage name="nic" component={ValidationError}/>
                                 </div>
                         </div>                 
@@ -651,7 +665,7 @@ function UpdateMember (props) {
                                 <ErrorMessage name="council" component={ValidationError}/>
                             </div>
                         </div> 
-                        <div className="form-group row">
+                        {/* <div className="form-group row">
                             <div className="form-check-inline">
                                 <label className="form-check-label col-12" htmlFor="memBefore">Have you ever been a member before</label> 
                                 <Field className="form-check" type="checkbox" id="memBefore" name="memBefore"/>
@@ -700,7 +714,7 @@ function UpdateMember (props) {
                                         <ErrorMessage name="dob" component={ValidationError}/>
                                 </div>  
                             </div>                          
-                        }
+                        } */}
                         <div className="row">
                             <div className="form-group col-12">
                                 <label htmlFor="sendingAddrs" className="form-check-inline col-4">Address to which correspondences should be </label> 
@@ -709,8 +723,8 @@ function UpdateMember (props) {
                                             ({field}) => {
                                                 return addressOptions.map( option => {
                                                     return(
-                                                        <React.Fragment key={Option.key}>
-                                                            <input key={Option.key} className="form-check-inline" type="radio" id={option.id} {...field} 
+                                                        <React.Fragment key={option}>
+                                                            <input key={option} className="form-check-inline" type="radio" id={option.id} {...field} 
                                                             value={option} checked={field.value === option}/>
                                                             <label htmlFor={option} className="mr-3">{option}</label>
                                                         </React.Fragment>
@@ -723,7 +737,7 @@ function UpdateMember (props) {
                             </div>
 
                         </div>
-                        <div className="form-group">
+                        {/* <div className="form-group">
                             <label>Proposer & Seconder </label>
                             <div className="row">                                
                                 <hr></hr>
@@ -734,7 +748,7 @@ function UpdateMember (props) {
                                     <Seconder seconder={seconder} setSeconder={setSeconder} readOnly={true}/>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         {/* <h6 style={{backgroundColor: "#e95045"}} className="pl-5 pt-1 pb-1">Payment Details</h6>
                         <p style={{color: "red"}}>Payment History for Registering Current Members</p>
                         <div className="row border border-danger">

@@ -16,26 +16,41 @@ import {getSections} from '../../services/getSections'
 
 function NewRegisterForm () {
 
-    useEffect(async () => {
+    useEffect(() => {
+        async function fetchGrades() {
+            const gradeRecords = await getGrades()
+            let grades = []
+            gradeRecords.forEach(g => {
+                grades.push(g.grade)
+            });
+            console.log(grades)
+            setmembershipGrades(grades)
 
-        const gradeRecords = await getGrades()
-        let grades = []
-        gradeRecords.forEach(g => {
-            grades.push(g.grade)
-        });
-        console.log(grades)
-        setmembershipGrades(grades)
-
-        const sectionRecords = await getSections()
-        let sections = []
-        sectionRecords.forEach(s => {
-            sections.push({
-                key: `Section ${s.keyName} - ${s.section}`,
-                value: s.keyName
+            let gradeswF = [{grade: "Choose Grade", fee: ''}]
+            gradeRecords.forEach(g => {
+                gradeswF.push({
+                    grade: g.grade,
+                    fee: g.membershipFee
+                })          
+                
+            });
+            setgradesWfees(gradeswF)
+        }
+        fetchGrades()
+        
+        async function fetchSections() {
+            const sectionRecords = await getSections()
+            let sections = [{key: 'Choose Section', value: ''}]
+            sectionRecords.forEach(s => {
+                sections.push({
+                    key: `Section ${s.keyName} - ${s.section}`,
+                    value: s.keyName
+                })
             })
-        })
-        console.log('Sec', sectionRecords)
-        setsections(sections)
+            console.log('Sec', sectionRecords)
+            setsections(sections)
+        }
+        fetchSections()
 
     }, [])
 
@@ -43,6 +58,7 @@ function NewRegisterForm () {
     const titleOptions = ["Rev.","Prof.","Dr.","Mr.","Mrs.","Miss."]
     const addressOptions = ["Residence", "Permanent", "Official"]
     const [membershipGrades, setmembershipGrades] = useState([])
+    const [gradesWfees, setgradesWfees] = useState([])
     const [sections, setsections] = useState([])
     // const membershipGrades = ["Life Member","Annual Member","Associate Member","Corporate Member","Student Member"]
     // const sections = [{key: "Section A  -  Medical, Dental and Veterinary Sciences", value: "A"},
@@ -141,10 +157,10 @@ function NewRegisterForm () {
             membershipNo: membershipNo.split('/')[0]
         }
         console.log("Member before save", member)
-        let result = registerMember(member)
+        let result = await registerMember(member)
         onImageSubmit()
         setLoading(false)
-        if(result) setTimeout(function(){ reload() }, 3000);        
+        // if(result) setTimeout(function(){ reload() }, 3000);        
         
     }
     const reload = () => {
@@ -543,13 +559,14 @@ function NewRegisterForm () {
                         </div> */}
                         <div className="form-group row">
                             <label htmlFor="gradeOfMem" className="col-4">Grade of Membership</label> 
-                            <div className="row col-5">
+                            <div className="row col-7">
                                     <Field className="form-control col-8" as="select" id="gradeOfMem" name="gradeOfMem"> 
                                         {
-                                            membershipGrades.map(option => {
+                                            // membershipGrades.map(option => {
+                                            gradesWfees.map(option => {
                                                 return(
-                                                    <option key={option} value={option} style={{textAlign: "center"}}>
-                                                        {option}
+                                                    <option key={option.grade} value={option.grade} style={{textAlign: "center"}}>
+                                                        {option.grade}  {option.fee && ` ( MF - Rs. ${option.fee} )`}   
                                                     </option>
                                                 )
                                             })
@@ -661,8 +678,8 @@ function NewRegisterForm () {
                                             ({field}) => {
                                                 return addressOptions.map( option => {
                                                     return(
-                                                        <React.Fragment key={Option.key}>
-                                                            <input key={Option.key} className="form-check-inline" type="radio" id={option.id} {...field} 
+                                                        <React.Fragment key={option}>
+                                                            <input key={option} className="form-check-inline" type="radio" id={option.id} {...field} 
                                                             value={option} checked={field.value === option}/>
                                                             <label htmlFor={option} className="mr-3">{option}</label>
                                                         </React.Fragment>
@@ -680,10 +697,10 @@ function NewRegisterForm () {
                             <div className="row">                                
                                 <hr></hr>
                                 <div className="col-6">
-                                    <Proposer proposer={proposer} setProposer={setProposer} />
+                                    <Proposer proposer={proposer} setProposer={setProposer}  readOnly={true}/>
                                 </div>
                                 <div className="col-6">
-                                    <Seconder seconder={seconder} setSeconder={setSeconder} />
+                                    <Seconder seconder={seconder} setSeconder={setSeconder} readOnly={true}/>
                                 </div>
                             </div>
                         </div>

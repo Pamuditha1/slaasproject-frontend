@@ -4,10 +4,11 @@ import Loader from 'react-loader-spinner'
 import {Link} from 'react-router-dom'
 
 import ViewImage from './ViewImage';
-import {terminateMember} from '../services/terminateMemberService'
 import PaymentsHistory from './PaymentsHistory';
 
+import {terminateMember} from '../services/terminateMemberService'
 import {getMemberProfile} from '../services/getMemberProfile'
+import {getMembershipBack} from '../services/getBackTermination'
 
 export const MemberProfile = (props) => {
     
@@ -19,9 +20,10 @@ export const MemberProfile = (props) => {
     const [memberIDR, setmemberIDR] = useState('')
 
     console.log(props.match.params.id)
-    useEffect(async () => {
+    useEffect(() => {
+        
+      async function fetchProfile() {
         setIsLoading(true)
-
         const profileData = await getMemberProfile(props.match.params.id)
         console.log(typeof profileData)
         setMemberData(profileData.member)
@@ -30,6 +32,8 @@ export const MemberProfile = (props) => {
         setProposer(profileData.proposer)
         setSeconder(profileData.seconder)
         setIsLoading(false)
+      }
+      fetchProfile()
         
     }, [props.match.params.id]);
 
@@ -49,6 +53,11 @@ export const MemberProfile = (props) => {
       await terminateMember(membershipNo)
       return
     }
+    async function getBackOnClick(memberID){
+      console.log(memberID)
+      await getMembershipBack(memberID)
+      return
+  }
 
     return (
     
@@ -64,7 +73,7 @@ export const MemberProfile = (props) => {
     <div className="row" id="main">
         <h3 className="col-12 text-center mb-5" style={{color: "#e95045"}}>Member Profile</h3>
         <div className="col-2 mr-5">
-          <ViewImage nic={props.match.params.id}/>
+          <ViewImage nic={nic}/>
         </div>
         <div className="col-5" id="personalData">
           <p className="row">Name with Initials : <strong className="row ml-5">{title} {nameWinitials}</strong></p>
@@ -136,8 +145,8 @@ export const MemberProfile = (props) => {
         {
             academicData.map( field => { 
                 return (
-                    <div  className="col-12">
-                    <strong>{field.year} -  {field.degree} -  {field.disciplines} -  {field.uni}</strong>
+                    <div  className="col-12" key={field.year}>
+                      <strong>{field.year} -  {field.degree} -  {field.disciplines} -  {field.uni}</strong>
                     </div>
                 )
             })
@@ -181,9 +190,15 @@ export const MemberProfile = (props) => {
 
     
     <div className="row p-3 mt-3">
-      <div className="col-3">
-        <button onClick={() => terminateOnClick(membershipNo)} className="btn btn-danger">Terminate Member</button>
+      {
+        (status == "Member") ?
+        <div className="col-3">
+          <button onClick={() => terminateOnClick(membershipNo)} className="btn btn-danger">Terminate Member</button>
+        </div> :
+        <div className="col-3">
+        <button onClick={() => getBackOnClick(membershipNo)} className="btn btn-success">Continue Membership</button>
       </div>
+      }      
       <div className="col-3">
         <Link to={`/user/member/profile/update/${membershipNo}`}>
           <button className="btn btn-warning">Update Member</button>

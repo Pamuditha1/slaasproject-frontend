@@ -9,10 +9,13 @@ function Sections() {
     const [key, setkey] = useState('')
     const [sections, setsections] = useState([])
 
-    useEffect(async () => {
+    useEffect(() => {
         // setIsLoading(true)
-        const records = await getSections()
-        setsections(records)
+        async function fetchSections() {
+            const records = await getSections()
+            setsections(records)
+        }
+        fetchSections()
         // setIsLoading(false)
 
     }, [])

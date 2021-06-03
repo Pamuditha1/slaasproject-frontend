@@ -2,6 +2,8 @@ import React from 'react'
 import { Link} from 'react-router-dom'
 import { ColumnFilter } from '../common/ColumnFilter'
 import {terminateMember} from '../../services/terminateMemberService'
+import {getMembershipBack} from '../../services/getBackTermination'
+import TerminateModal from '../../components/modals/TerminateModal'
 
 
 
@@ -11,8 +13,8 @@ export const COLUMNS = [
         Cell : props => {
             const memberID = props.row.original.membershipNo ? props.row.original.membershipNo : props.row.original.nic
             return (
-                <Link to={`/user/member/profile/${memberID}`}>            
-                <button className="btn btn-outline-primary" onClick={() => {console.log('view button clicked', memberID )}}>View</button>
+                <Link to={`/user/member/profile/${memberID}`} target="_blank">            
+                    <button className="btn btn-outline-primary" onClick={() => {console.log('view button clicked', memberID )}}>View</button>
                 </Link>
             )
         }
@@ -21,17 +23,29 @@ export const COLUMNS = [
         Header: 'Termination',
         Cell : props => {
             const memberID = props.row.original.membershipNo
-            const status = props.row.original.status
+            let status = props.row.original.status
 
             async function terminateOnClick(memberID){
                 console.log(memberID)
                 await terminateMember(memberID)
                 return
             }
+            async function getBackOnClick(memberID){
+                console.log(memberID)
+                await getMembershipBack(memberID)
+                return
+            }
 
-            return (          
-                <button className="btn btn-outline-danger" disabled={(status == "Terminated") ? true : false} 
-                onClick={() => terminateOnClick(memberID)}>{(status == "Terminated") ? 'Terminated' : 'Terminate'}</button>
+
+            return (  
+                (status != "Terminated") ? 
+                    <button className="btn btn-outline-danger" 
+                    onClick={() => terminateOnClick(memberID)}>Terminate</button>
+                    
+                :
+                    <button className="btn btn-outline-success"
+                    onClick={() => getBackOnClick(memberID)}>Continue Membership</button>      
+                
             )
         }
     },

@@ -78,7 +78,7 @@ export const NewConfirm = ({dateOfBirth, membershipNo, setMembershipNo, proposer
         <div  className="col-9">
         {
           fieldOfSpecial.map( field => { 
-            return <div  className="col-12"><strong>{field}</strong></div> 
+            return <div key={field}  className="col-12"><strong>{field}</strong></div> 
           })
         }
         </div>
@@ -87,7 +87,7 @@ export const NewConfirm = ({dateOfBirth, membershipNo, setMembershipNo, proposer
         {
           academic.map( field => { 
             return (
-              <div  className="col-12">
+              <div  className="col-12" key={field.degree}>
                 <strong>{field.year} -  {field.degree} -  {field.disciplines} -  {field.uni}</strong>
               </div>
             )

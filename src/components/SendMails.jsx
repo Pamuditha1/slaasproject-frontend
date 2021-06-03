@@ -5,11 +5,11 @@ import validation from './validationObjects/emailFormValidationSchema'
 import {sendMails} from '../services/sendEmailsService'
 import Loader from 'react-loader-spinner'
 
-function SendMails() {
+function SendMails(props) {
 
     const sections = ["Section A", "Section B ", "Section C" ,"Section D" ,"Section E1" ,"Section E2" ,"Section E3" ,"Section F"];
     const membershipGrades = ["Life Member","Annual Member","Associate Member","Corporate Member","Student Member"]
-    const [selectedTo, setselectedTo] = useState([])
+    const [selectedTo, setselectedTo] = useState(props.emailList ? props.emailList : [])
     const [extraTo, setextraTo] = useState('')
     const [emailerror, setemailerror] = useState('')
     const emailRegex = new RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
@@ -88,7 +88,7 @@ function SendMails() {
                                             
                             <div className="form-group col-12">
                                 <div>
-                                    <label htmlFor="to" className="col-1">To :</label> 
+                                    <label htmlFor="to" className="col-12">To : <span className="ml-3">{selectedTo && selectedTo.length} emails/collections selected.</span></label> 
                                     <div className="col-11 mb-1">
                                         <SelectedToEmailBadges selectedTo={selectedTo} removeselected={removeselected}/>
                                     </div>
@@ -110,7 +110,7 @@ function SendMails() {
                             </div>
                             <div className="form-group col-12">
                                 <label htmlFor="body" className="col-5">Body : </label> 
-                                <textarea value={emailForm.body} onChange={onChange} className="form-control col-11 ml-3" type="textarea" rows="8" id="body" name="body"/>
+                                <textarea value={emailForm.body} onChange={onChange} className="form-control col-11 ml-3" type="textarea" rows="15" id="body" name="body"/>
                             </div>
                             {/* <button type="submit" className="btn btn-primary float-right m-1">Submit</button> */}
                             {/* <div className="form-group col-6">

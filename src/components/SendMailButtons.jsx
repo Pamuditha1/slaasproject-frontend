@@ -19,7 +19,7 @@ function SendMailButtons({array, title, setselected}) {
                 </DropdownToggle>
                 <DropdownMenu>
                     {array.map( s => (
-                        <DropdownItem onClick={() => clickHandle(s)}>{s}</DropdownItem>
+                        <DropdownItem key={s} onClick={() => clickHandle(s)}>{s}</DropdownItem>
                                                 
                     ))} 
                 </DropdownMenu>

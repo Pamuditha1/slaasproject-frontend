@@ -8,7 +8,7 @@ function MembershipNo(props) {
     const [membershipNo, setMembershipNo] = useState('')
     const [loading, setLoading] = useState(false)
 
-    useEffect(async () => {
+    useEffect( () => {
         setLoading(true)
         const fetchData = () => {
             axios(`${api}/user/membershipNo`)
@@ -19,7 +19,7 @@ function MembershipNo(props) {
             })   
             
         };    
-        await fetchData();
+        fetchData();
         setLoading(false)
     }, []);
 

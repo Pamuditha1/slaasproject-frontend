@@ -30,11 +30,14 @@ export const PaymentsTable = () => {
         setfilterNum(filteredPayments.length)
     }
 
-    useEffect(async () => {
-        setIsLoading(true)
-        const records = await getAllPayments()
-        setPayments(records)
-        setIsLoading(false)
+    useEffect(() => {
+        async function fetchPayments() {
+            setIsLoading(true)
+            const records = await getAllPayments()
+            setPayments(records)
+            setIsLoading(false)
+        }
+        fetchPayments()
     }, []);
         
     const columns = useMemo(() => COLUMNS, [])

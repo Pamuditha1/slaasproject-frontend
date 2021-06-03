@@ -17,16 +17,23 @@ import {getOutdatedMembers} from '../../services/getOutdatedList'
 import { useExportData } from "react-table-plugins";
 import ExportingButtons from '../common/ExportingButtons';
 import getExportFileBlob from '../common/exportFunction'
+import TerminateModal from '../../components/modals/TerminateModal';
 
 
 export const OutdatedTable = (props) => {
     const [members, setmembers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(async () => { 
-        setIsLoading(true)
-        setmembers(await getOutdatedMembers()) ;
-        setIsLoading(false)
+    const [isModalOpen, setisModalOpen] = useState(false)
+    const toggle = () => setisModalOpen(!isModalOpen);
+
+    useEffect(() => { 
+        async function fetchOutdated() {
+            setIsLoading(true)
+            setmembers(await getOutdatedMembers()) ;
+            setIsLoading(false)
+        }
+        fetchOutdated()
     }, []);
 
     const columns = useMemo(() => COLUMNS, [])
@@ -86,20 +93,15 @@ export const OutdatedTable = (props) => {
     
     const [selectedMails, setselectedMails] = useState([])
     const saveMails = () => {
-        // setselectedMails(selectedFlatRows)
-        // props.setMails(selectedFlatRows)
-        // props.history.push({
-        //     pathname: ('/user/members/send-emails', selectedFlatRows)
-        // });
         setselectedMails(selectedFlatRows)
-        props.history.push({
-            pathname: '/user/members/send-emails',
-            state: {
-                emailsList: selectedMails
-            }
-        })
-        // props.history.push("/user/members/send-emails")
+        let list = []
+        selectedFlatRows.forEach(r => {
+            list.push(r.original.email)
+        });
+        // console.log(selectedFlatRows[0].original)
+        props.setList(list)
     }
+
     return (
         <div>
             {
@@ -120,8 +122,8 @@ export const OutdatedTable = (props) => {
                         {
                             allColumns.map(column => (
                                 <div key={column.id} className="col-3" style={{float: "left"}}>
-                                    <label>
-                                        <input type="checkbox" {...column.getToggleHiddenProps()}/>
+                                    <label key={column.id}>
+                                        <input type="checkbox" key={column.id} {...column.getToggleHiddenProps()}/>
                                         {column.Header}
                                     </label>
                                 </div>
@@ -148,20 +150,24 @@ export const OutdatedTable = (props) => {
                         
                     
                     }
-                    <div className="row">
+                    {/* <div className="row">
                         <div className="col-5">
-                            {/* <Link to="/user/members/send-emails">  */}
+                            <Link to="/user/members/send-emails"> 
                                 <Button onClick={saveMails} color="primary">Send Emails</Button>
-                            {/* </Link> */}
+                            </Link>
                         </div>
                         <div className="col-7 mb-2">
                             <ExportingButtons exportData={exportData}/>
                         </div>
-                    </div>
+                    </div> */}
+
+                        <Link to="/user/outdated-list/send-emails">
+                            <Button onClick={saveMails} color="primary">Send Emails</Button>
+                        </Link> 
                     
                     
                     <Table size="sm" dark hover {...getTableProps()} responsive style={{height: "200px"}}>
-                        <thead> 
+                        <thead style={{textAlign: 'center'}}> 
                             {headerGroups.map((headerGroups) => (
                                 <tr {...headerGroups.getHeaderGroupProps()}>
                                     {
@@ -181,14 +187,14 @@ export const OutdatedTable = (props) => {
                             ))}
                             
                         </thead>
-                        <tbody {...getTableBodyProps()}>
+                        <tbody {...getTableBodyProps()} style={{textAlign: 'center'}}>
                             {
                                 page.map( row => {
                                     prepareRow(row)
                                     return (
                                         <tr {...row.getRowProps()}>
                                             {row.cells.map((cell) => {
-                                                return <td {...cell.getCellProps()} >{cell.render('Cell')}</td>
+                                                return <td {...cell.getCellProps()} style={{color: (cell.value == "Terminated") && 'red'}} >{cell.render('Cell')}</td>
                                             })}
                                             
                                         </tr>
@@ -227,6 +233,7 @@ export const OutdatedTable = (props) => {
                 </div>
                 
             }
+            <TerminateModal isModalOpen={isModalOpen} setisModalOpen={setisModalOpen}/>
         {/* <Switch>
             <Route path="/user/members/send-emails" render={(props) => 
                 <EmailComponent emails={selectedMails} flat={selectedFlatRows} {...props}/>} />

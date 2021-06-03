@@ -30,7 +30,7 @@ function DashboardItem(props) {
     
     return (
         <div className="col-sm-12 col-lg-6" style={{marginBottom: 15}}>
-            <Link to={props.link}>
+            <Link to={`${props.link}`}>
                 <Button style={itemstyle} className="button">
                     {icon}
                     <div>{props.name}</div>

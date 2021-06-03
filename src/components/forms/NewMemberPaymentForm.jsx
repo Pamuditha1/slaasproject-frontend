@@ -42,14 +42,15 @@ function NewMemberPaymentForm() {
     // })
 
     const [invoiceNum, setInvoiceNum] = useState('')
-    useEffect(async () => {
-        
-        const invoice = await getInvoice()
-        setInvoiceNum(invoice)
-        
+    useEffect(() => {
+        async function fetchInvoice() {
+            const invoice = await getInvoice()
+            setInvoiceNum(invoice)
+        }
+        fetchInvoice()
     }, []);
 
-    const onChangeMemNo = async (e) => {
+    const onChangeMemNo = (e) => {
         setLoading(true)
         console.log(e.target.value)
         setPaymentData({membershipNo: e.target.value})
@@ -79,7 +80,7 @@ function NewMemberPaymentForm() {
             })    
             
         };    
-        await fetchData();
+        fetchData();
         console.log("Payment Records", paymentRecords)
         console.log("Payment Data", paymentData)
         // console.log("Viewing Data", viewData)

@@ -1,6 +1,9 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import Loader from 'react-loader-spinner'
+import { faSearch} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
 import {api} from '../../services/api'
 
 function Proposer(props) {
@@ -8,23 +11,62 @@ function Proposer(props) {
     const [viewData, setViewData] = useState({
         name: "", memNo: "", address: "", contactNo: ""
     })
+    const [searchWord, setSearchWord] = useState('')
+    const [searchedResults, setsearchedResults] = useState([])
 
-    const onChangeMemNo = async (e) => {
+    // const onChangeMemNo = async (e) => {
+    //     setLoading(true)
+    //     console.log('On Change Called')
+    //     const fetchData = () => {
+    //         axios(`${api}/user/refrees/proposer/${e.target.value}`)
+    //         .then(function (res) {
+    //             console.log("Proposer Data", res.data)
+    //             console.log(typeof res.data)
+    //             const receivedData = {
+    //                 name: res.data.nameWinitials,
+    //                 address: res.data.resAddrs,
+    //                 contactNo: res.data.mobileNo,
+    //                 memNo: res.data.membershipNo
+    //             }
+    //             setViewData(receivedData)
+    //             props.setProposer(receivedData)
+    //         })      
+    //         .then(function () {
+    //             console.log("Added Proposer Data", props.proposer)
+    //         })      
+            
+    //     };    
+    //     await fetchData();
+    //     console.log("Added Proposer Data", props.proposer)
+    //     setLoading(false)
+    // }
+
+    const onSearch = async () => {
+
         setLoading(true)
         console.log('On Change Called')
+        setViewData({
+            name: "", memNo: "", address: "", contactNo: ""
+        })
+        props.setProposer({
+            name: "", memNo: "", address: "", contactNo: ""
+        }) 
+
         const fetchData = () => {
-            axios(`${api}/user/refrees/proposer/${e.target.value}`)
+            axios(`${api}/user/refrees/${searchWord}`)
             .then(function (res) {
+
                 console.log("Proposer Data", res.data)
                 console.log(typeof res.data)
                 const receivedData = {
                     name: res.data.nameWinitials,
-                    address: res.data.sendingAddrs,
+                    address: res.data.resAddrs,
                     contactNo: res.data.mobileNo,
                     memNo: res.data.membershipNo
                 }
                 setViewData(receivedData)
-                props.setProposer(receivedData)
+                setsearchedResults(res.data ? res.data : [])
+                props.setProposer(receivedData)                
             })      
             .then(function () {
                 console.log("Added Proposer Data", props.proposer)
@@ -36,16 +78,30 @@ function Proposer(props) {
         setLoading(false)
     }
 
+    const onChange = (e) => {
+
+        setViewData({...viewData, [e.target.name] : e.target.value})
+
+        props.setProposer({...viewData, [e.target.name] : e.target.value})
+
+        console.log(props.proposer)
+    }
 
     return (
         
         <div>
             <label className="ml-5">Proposer</label>
 
-            <div className="row form-group">
-                <label className="col-4">Membership No</label>                
-                <input onChange={onChangeMemNo} className="col-6 form-control" value={viewData.memNo} name="memNo" readOnly={props.readOnly}/>
-                <span className="col-2">
+            <div id="search" className="row">
+                <div className="input-group col-12">
+                    <div className="form-outline col-8">
+                        <input type="search" id="searchMember" 
+                        onChange={e => setSearchWord(e.target.value)} value={searchWord} className="form-control" placeholder="Search ..."/>
+                    </div>
+                    <button type="button" onClick={onSearch} className="btn btn-primary col-1">
+                        <FontAwesomeIcon icon={faSearch} size="1x"/>
+                    </button>
+                    <span className="col-2">
                     { loading && 
                         <Loader
                         type="TailSpin"
@@ -53,20 +109,26 @@ function Proposer(props) {
                         height={30}
                         width={30}/>
                     }    
-                </span>
-                
+                    </span>           
+                </div>
+                <h6 className="ml-5 mt-3">{searchedResults.length == 0 ? "No member found." : "" }</h6>
+            </div>
+
+            <div className="row form-group">
+                <label className="col-4">Membership No</label>                
+                <input className="col-7 form-control" onChange={onChange} value={viewData.memNo} name="memNo"/>
             </div>
             <div className="row form-group">
                 <label className="col-4">Name</label>
-                <input className="col-8 form-control" value={viewData.name} name="name" readOnly={props.readOnly}/>
+                <input className="col-7 form-control" onChange={onChange} value={viewData.name} name="name"/>
             </div>
             <div className="row form-group">
                 <label className="col-4">Address</label>
-                <input className="col-8 form-control" value={viewData.address} name="address" readOnly={props.readOnly}/>
+                <input className="col-7 form-control" onChange={onChange} value={viewData.address} name="address"/>
             </div>
             <div className="row form-group">
                 <label className="col-4">Contact No</label>
-                <input className="col-8 form-control" value={viewData.contactNo} name="contactNo" readOnly={props.readOnly}/>
+                <input className="col-7 form-control" onChange={onChange} value={viewData.contactNo} name="contactNo"/>
             </div>
         </div>
         

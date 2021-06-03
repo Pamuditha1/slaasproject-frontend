@@ -58,8 +58,8 @@ function UserComponent(props) {
                         <Route path="/user/login" exact component={UserLogin} />                    
                         <Route path="/user/dashboard" component={ Dashboard }/>
                         <Route path="/user/receipt" component={NewMemberPaymentForm} />
-                        <Route path="/user/members/send-emails" render={(props) => 
-                            <EmailComponent emailsList={emailsList} {...props}/>} />
+                        {/* <Route path="/user/members/send-emails" render={(props) => 
+                            <EmailComponent emailsList={emailsList} {...props}/>} /> */}
                         {/* <Route path="/user/members/all" component={MemberAllTable} />
                         <Route path="/user/members/search" render={(props) => 
                             <MemberSearchTable members={searchedResults} {...props}/>} />  

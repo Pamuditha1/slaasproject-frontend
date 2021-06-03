@@ -71,12 +71,22 @@ export const MemberSearchTable = (props) => {
     )
 
     const {globalFilter, pageIndex, pageSize} = state
-    console.log(selectedFlatRows[0] && selectedFlatRows[0].original)
+    // console.log(selectedFlatRows[0] && selectedFlatRows[0].original)
     
     // const [selectedMails, setselectedMails] = useState([])
     // const saveMails = () => {
     //     setselectedMails(selectedFlatRows)
     // }
+    const [selectedMails, setselectedMails] = useState([])
+    const saveMails = () => {;
+        setselectedMails(selectedFlatRows)
+        let list = []
+        selectedFlatRows.forEach(r => {
+            list.push(r.original.email)
+        });
+        console.log(selectedFlatRows[0].original)
+        props.setList(list)
+    }
     return (
         <div>
             {
@@ -122,7 +132,7 @@ export const MemberSearchTable = (props) => {
                     <h6 style={{color: 'green'}}>{selectedFlatRows.length} records selected</h6>
                     : <p></p>}
 
-                    <div className="row">
+                    {/* <div className="row">
                         <div className="col-5">
                             <Link to="/user/members/send-emails"> 
                                 <Button color="primary">Send Emails</Button>
@@ -131,7 +141,10 @@ export const MemberSearchTable = (props) => {
                         <div className="col-7 mb-2">
                             <ExportingButtons exportData={exportData}/>
                         </div>
-                    </div>
+                    </div> */}
+                    <Link to="/user/members/send-emails">
+                            <Button onClick={saveMails} color="primary">Send Emails</Button>
+                        </Link> 
                     
                     <Table size="sm" dark hover {...getTableProps()} responsive style={{height: "200px"}}>
                         <thead> 
