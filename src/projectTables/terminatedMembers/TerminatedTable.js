@@ -1,39 +1,45 @@
 import React, {useMemo, useState, useEffect} from 'react'
 import {useTable, useSortBy, useGlobalFilter, useFilters, usePagination, useRowSelect} from 'react-table'
-import Loader from 'react-loader-spinner'
 import { Table, Button } from 'reactstrap';
+import Loader from 'react-loader-spinner'
 import { Link, Redirect, Route, Switch} from 'react-router-dom'
 import {useSticky} from 'react-table-sticky'
 
-import {COLUMNS} from './allColumns'
+import EmailComponent from '../../components/EmailComponent';
+
 import Pagination from '../common/Pagination'
 import { GlobalFilter } from '../common/GlobalFilter';
 import {Checkbox} from '../common/Checkbox'
+import {COLUMNS} from './terminatedColumns'
 
-import EmailComponent from '../../components/EmailComponent';
+import {getOutdatedMembers} from '../../services/getOutdatedList'
 
 import { useExportData } from "react-table-plugins";
 import ExportingButtons from '../common/ExportingButtons';
 import getExportFileBlob from '../common/exportFunction'
+import TerminateModal from '../../components/modals/TerminateModal';
 
-import {getAllMembers} from '../../services/getAllMemberRecords'
 
-export const MemberAllTable = (props) => {
-    const [allMembers, setallMembers] = useState([]);
+export const TerminatedTable = (props) => {
+    const [members, setmembers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        async function fetchMembers() {
+    const [isModalOpen, setisModalOpen] = useState(false)
+    const toggle = () => setisModalOpen(!isModalOpen);
+
+    useEffect(() => { 
+        async function fetchOutdated() {
             setIsLoading(true)
-            const records = await getAllMembers()
-            setallMembers(records)
+            let members = await getOutdatedMembers()
+            let terminated = members.filter(m => {if(m.status == 'Terminated') return true})
+            setmembers(terminated)
             setIsLoading(false)
         }
-        fetchMembers()
+        fetchOutdated()
     }, []);
 
     const columns = useMemo(() => COLUMNS, [])
-    const data = allMembers
+    const data = members
 
 
     const {
@@ -89,58 +95,43 @@ export const MemberAllTable = (props) => {
     
     const [selectedMails, setselectedMails] = useState([])
     const saveMails = () => {
-        // setselectedMails(selectedFlatRows)
-        // props.setMails(selectedFlatRows)
-        // props.history.push({
-        //     pathname: ('/user/members/send-emails', selectedFlatRows)
-        // });
         setselectedMails(selectedFlatRows)
         let list = []
         selectedFlatRows.forEach(r => {
             list.push(r.original.email)
         });
-        console.log(selectedFlatRows[0].original)
+        // console.log(selectedFlatRows[0].original)
         props.setList(list)
-        // props.history.push({
-        //     pathname: '/user/members/send-emails',
-        //     state: {
-        //         emailsList: selectedMails
-        //     }
-        // })
-        // props.history.push("/user/members/send-emails")
     }
+
     return (
         <div>
             {
                 isLoading ? 
-                <>
-                    <Loader style={{marginLeft : "35%"}}
-                        type="ThreeDots"
-                        color="#00BFFF"
-                        height={300}
-                        width={300}
-                    /> 
-                    <h2>Loading member records. This may take a while...</h2>
-                </>:
-                
+                <Loader style={{marginLeft : "35%"}}
+                    type="ThreeDots"
+                    color="#00BFFF"
+                    height={300}
+                    width={300}
+                /> :
                 <div>
                     
-                    <p className="alert alert-info"> {data.length} records.</p>
                     <div className="row">
+                        <p className="alert alert-info ml-2"> {data.length} records.</p>
                         <div className="col-12">
                             <input type="checkbox" {...getToggleHideAllColumnsProps()} />All Columns
                         </div>
-                        <>{
+                        {
                             allColumns.map(column => (
                                 <div key={column.id} className="col-3" style={{float: "left"}}>
                                     <label key={column.id}>
-                                        <input type="checkbox" {...column.getToggleHiddenProps()}/>
-                                        <>{column.Header}</>
+                                        <input type="checkbox" key={column.id} {...column.getToggleHiddenProps()}/>
+                                        {column.Header}
                                     </label>
                                 </div>
                             ))
                             
-                        }</>
+                        }
                     </div>
                     {/* <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/> */}
                     
@@ -161,30 +152,24 @@ export const MemberAllTable = (props) => {
                         
                     
                     }
-                    <div className="row ml-3">
-                        {/* <div className="col-5">
+                    {/* <div className="row">
+                        <div className="col-5">
                             <Link to="/user/members/send-emails"> 
                                 <Button onClick={saveMails} color="primary">Send Emails</Button>
                             </Link>
-                        </div> */}
-                        <Link to="/user/members/send-emails"
-                        // to={{
-                        //     pathname: '/user/members-table/send-emails',
-                        //     data: {
-                        //         emails: selectedFlatRows
-                        //     }
-                        // }}
-                        >
-                            <Button onClick={saveMails} color="primary">Send Emails</Button>
-                        </Link> 
+                        </div>
                         <div className="col-7 mb-2">
                             <ExportingButtons exportData={exportData}/>
                         </div>
-                    </div>
+                    </div> */}
+
+                        <Link to="/user/terminated-list/send-emails">
+                            <Button onClick={saveMails} color="primary">Send Emails</Button>
+                        </Link> 
                     
                     
                     <Table size="sm" dark hover {...getTableProps()} responsive style={{height: "200px"}}>
-                        <thead> 
+                        <thead style={{textAlign: 'center'}}> 
                             {headerGroups.map((headerGroups) => (
                                 <tr {...headerGroups.getHeaderGroupProps()}>
                                     {
@@ -196,23 +181,22 @@ export const MemberAllTable = (props) => {
                                                 </span>
                                                 <div placeholder="Search">{column.canFilter ? column.render('Filter') : null}</div>
                                                 
-                                            </th>       
+                                            </th>
+                                                
                                         ))
                                     }
                                 </tr>
                             ))}
                             
                         </thead>
-                        <tbody {...getTableBodyProps()}>
+                        <tbody {...getTableBodyProps()} style={{textAlign: 'center'}}>
                             {
                                 page.map( row => {
                                     prepareRow(row)
                                     return (
                                         <tr {...row.getRowProps()}>
                                             {row.cells.map((cell) => {
-                                                return <td {...cell.getCellProps()} {...cell.getCellProps()} style={{color: (cell.value == "Terminated") && 'red'}} >
-                                                    {(cell.column.Header == "Date of Birth" || cell.column.Header == "Enrolled Date") ? new Date(cell.value).toLocaleDateString() 
-                                                    : cell.render('Cell')}</td>
+                                                return <td {...cell.getCellProps()} style={{color: (cell.value == "Terminated") && 'red'}} >{cell.render('Cell')}</td>
                                             })}
                                             
                                         </tr>
@@ -248,27 +232,14 @@ export const MemberAllTable = (props) => {
                         <button onClick={() => nextPage()} disabled={!canNextPage}>Next</button>
                         <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>{'>>'}</button>
                     </div>
-                    {/* <pre>
-                        <h1>{selectedFlatRows.length}</h1>
-                        <code>
-                            {JSON.stringify(
-                                {
-                                    selectedFlatRows: selectedFlatRows.map((row) => row.original.email)
-                                },
-                                null,
-                                2
-                            )}
-                        </code>
-                    </pre> */}
                 </div>
                 
             }
-        {/* <Switch> */}
-            {/* <Route path="/user/members/send-emails" render={(props) => 
-                <EmailComponent emails={selectedMails} flat={selectedFlatRows} {...props}/>} /> */}
-                {/* <Route path="/user/members-table/send-emails" selectedMails={selectedMails} selectedFlatRows={selectedFlatRows} 
-                component={EmailComponent} /> */}
-        {/* </Switch> */}
+            <TerminateModal isModalOpen={isModalOpen} setisModalOpen={setisModalOpen}/>
+        {/* <Switch>
+            <Route path="/user/members/send-emails" render={(props) => 
+                <EmailComponent emails={selectedMails} flat={selectedFlatRows} {...props}/>} />
+        </Switch> */}
         
         {/* <Pagination /> */}
         </div>

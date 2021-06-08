@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import {Link} from 'react-router-dom'
 
 import {getGrades} from '../services/getGrades'
 import {addGrade} from '../services/addGrade'
@@ -16,10 +17,13 @@ function Grades() {
     const [modalGrade, setmodalGrade] = useState({})
 
     
-    useEffect(async () => {
+    useEffect(() => {
         // setIsLoading(true)
-        const records = await getGrades()
-        setgrades(records)
+        async function fetchGrades() {
+            const records = await getGrades()
+            setgrades(records)
+        }
+        fetchGrades()        
         // setIsLoading(false)
 
     }, [])
@@ -90,7 +94,14 @@ function Grades() {
     // }
 
     return (
+        <>
+        <div className="row">
+            <Link to="/user/settings">
+                <button className="btn btn-outline-dark">Back</button>
+            </Link>
+        </div>
         <div className="mt-5">
+            
             <div className="row ml-3">
                 <div className="mr-3">Add New Grade</div>                
                 <input onChange={addChange} value={grade} name="grade" className="form-control col-4" type="text" />
@@ -144,6 +155,7 @@ function Grades() {
             
             
         </div>
+        </>
     )
 }
 

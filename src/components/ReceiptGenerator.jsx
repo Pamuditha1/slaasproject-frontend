@@ -30,7 +30,7 @@ class ReceiptGenerator extends React.PureComponent {
         <div className='container'>
             <ReceiptPrint ref={el => (this.componentRef = el)} 
             paymentData={this.props.paymentData} paymentRecords={this.props.paymentRecords} 
-            invoiceNum={this.props.invoiceNum} setInvoiceNum={this.props.setInvoiceNum} />
+            invoiceNum={this.props.invoiceNum} setInvoiceNum={this.props.setInvoiceNum} type={this.props.type}/>
             
             <ReactToPrint
                 trigger={() => {

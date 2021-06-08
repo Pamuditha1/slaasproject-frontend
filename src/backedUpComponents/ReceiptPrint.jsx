@@ -116,8 +116,8 @@ class ReceiptPrint extends React.PureComponent {
         height: '561px',
         width: '792px',
         border: '3px solid black',
-        margin: '3% 10% 10px 5%',
-        padding: '20px'
+        margin: '10px 10% 10px 5%',
+        padding: '10px'
       }
       const logoStyle = {
         height: '50px',
@@ -129,13 +129,12 @@ class ReceiptPrint extends React.PureComponent {
         <>
         <div className='container' style={backgroundStyle}>
           <div className="row" id="payment">
-            
-            <h5 className="col-12" style={{textAlign: 'center'}}>
+            <h6 className="col-12" style={{textAlign: 'center'}}>
               <img src={logo} style={logoStyle}/>
-            Sri Lanka Association for the Advancement of Science</h5>
-            <h6 className="col-12" style={{textAlign: 'center'}}>Membership Payment Receipt</h6>
+            Sri Lanka Association for the Advancement of Science</h6>
+            <p className="col-12" style={{textAlign: 'center'}}>Membership Payment Receipt</p>
 
-            <div className="col-12 mb-3" style={{marginTop: '5%'}}>
+            <div className="col-12" style={{marginTop: '5%'}}>
               <div className="row">
                 {/* <p className="col-9">Invoice No - <strong>{this.state.invoiceNo}</strong></p> */}
                 <div className="col-9">
@@ -149,36 +148,25 @@ class ReceiptPrint extends React.PureComponent {
                 <p className="col-3">Time : <strong>{this.state.time}</strong></p>
               </div>              
             </div>
+            <p className="col-3">Member Name : </p><strong className="col-9">{this.props.paymentData.memberName}</strong>
+            <p className="col-3">Membership No: </p><strong className="col-9">{this.props.paymentData.membershipNo}</strong>
+            <p className="col-3">NIC : </p><strong className="col-9">{this.props.paymentData.nic}</strong>
+
             
-            <div className="col-7">
-              <div className="row">
-                <p className="col-5">Member Name : </p><strong className="col-7">{this.props.paymentData.memberName}</strong>
-                {this.props.type == 'member' &&  
-                    <><p className="col-5">Membership No: </p><strong className="col-7">{this.props.paymentData.membershipNo}</strong></>
-                }
-                <p className="col-5">NIC : </p><strong className="col-7">{this.props.paymentData.nic}</strong>            
-                <p className="col-5">Payment Method : </p><strong className="col-7">{this.props.paymentData.paymentMethod}</strong>
-              </div>              
-            </div>
-            <div className="col-5">
-              {/* <p className="col-12">Payment</p> */}
-              <div className="row">
-                <p className="col-7">Admission Fee : </p><strong className="col-4">Rs. {this.props.paymentData.admissionFee ? this.props.paymentData.admissionFee : 0}</strong>
-                <p className="col-7">Membership Fee <strong>{this.props.paymentData.yearOfPayment ? this.props.paymentData.yearOfPayment : ''}</strong>: </p><strong className="col-4">Rs. {this.props.paymentData.yearlyFee ? this.props.paymentData.yearlyFee : 0}</strong>
-                <p className="col-7">Arrears Fee : </p><strong className="col-4">Rs. {this.props.paymentData.arrearsFee ? this.props.paymentData.arrearsFee : 0}</strong>
-                <p className="col-7">ID Card Fee : </p><strong className="col-4">Rs. {this.props.paymentData.idCardFee ? this.props.paymentData.idCardFee: 0}</strong>
-                <p className="col-7" style={{fontSize: 17}}><strong>Total : </strong></p><strong className="col-4 border-top border-dark" style={{fontSize: 17}}>Rs. {this.state.total ? this.state.total : 0}</strong>
-              </div>              
-            </div>
-            
+            <p className="col-3">Payment Method : </p><strong className="col-9">{this.props.paymentData.paymentMethod}</strong>
+            <p className="col-12">Payment</p>
+              
+              <p className="col-2"></p><p className="col-4">Admission Fee : </p><strong className="col-6">Rs. {this.props.paymentData.admissionFee ? this.props.paymentData.admissionFee : 0}</strong>
+              <p className="col-2"></p><p className="col-4">Membership Fee <strong>{this.props.paymentData.yearOfPayment ? this.props.paymentData.yearOfPayment : 0}</strong>: </p><strong className="col-6">Rs. {this.props.paymentData.yearlyFee ? this.props.paymentData.yearlyFee : 0}</strong>
+              <p className="col-2"></p><p className="col-4">Arrears Fee : </p><strong className="col-6">Rs. {this.props.paymentData.arrearsFee ? this.props.paymentData.arrearsFee : 0}</strong>
+              <p className="col-2"></p><p className="col-4">ID Card Fee : </p><strong className="col-6">Rs. {this.props.paymentData.idCardFee ? this.props.paymentData.idCardFee: 0}</strong>
+              <p className="col-2"></p><p className="col-4" style={{fontSize: 17}}><strong>Total : </strong></p><strong className="col-6" style={{fontSize: 17}}>Rs. {this.state.total ? this.state.total : 0}</strong>
             
             <div className="row"></div>
             <p className="col-3">Total Payment : </p><strong className="col-9">{this.state.totalWords}</strong>
             <p className="col-3">Description : </p><strong className="col-9">{this.props.paymentData.description}</strong>
           </div>
-        </div>
-
-
+        </div>        
         <div style={{marginLeft: '10%'}}>   
         {this.props.type == 'member' &&  
          

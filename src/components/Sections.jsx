@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import {Link} from 'react-router-dom'
 
 import {getSections} from '../services/getSections'
 import {addSection} from '../services/addSection'
@@ -46,6 +47,12 @@ function Sections() {
     }
 
     return (
+        <>
+        <div className="row">
+            <Link to="/user/settings">
+                <button className="btn btn-outline-dark">Back</button>
+            </Link>
+        </div>
         <div className="mt-5">
             <div className="row ml-3">
                 <div className="mr-3">Add New Section</div>
@@ -66,6 +73,7 @@ function Sections() {
             </center>
             
         </div>
+        </>
     )
 }
 

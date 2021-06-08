@@ -1,11 +1,21 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
+import SettingItem from "./SettingItem";
 
 function Settings() {
-    return (
-        <div>
-            <div className="row">
-                <div className="col-6">
+  return (
+    <div>
+      <div className="row mr-3">
+        <SettingItem name="Membership Grades" link="/user/settings/grades" />
+        <SettingItem
+          name="Membership Sections"
+          link="/user/settings/sections"
+        />
+        <SettingItem
+          name="Termination Periods"
+          link="/user/settings/terminations"
+        />
+        {/* <div className="col-6">
                     <Link to="/user/settings/grades">
                     <button className="btn btn-primary">
                         Membership Grades
@@ -25,10 +35,10 @@ function Settings() {
                         Membership Payments
                     </button> 
                     </Link>                    
-                </div>
-            </div>
-        </div>
-    )
+                </div> */}
+      </div>
+    </div>
+  );
 }
 
-export default Settings
+export default Settings;

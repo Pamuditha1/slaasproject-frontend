@@ -13,10 +13,13 @@ class RecordPayment extends Component {
     }
 
     render() {
+        let type = this.props.type
         return (
+             (type == 'member') &&
             <div style={{marginRight: "20%"}}>
                 <button type="submit" onClick={this.recordPayment} className="btn btn-primary float-right m-1">Record the Payment</button>
             </div>
+            
         );
     }
 }

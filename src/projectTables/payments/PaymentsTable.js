@@ -111,9 +111,9 @@ export const PaymentsTable = () => {
                             : <h6>No records found.</h6>
                     )
                     }
-                    <div className="mb-3">
+                    {/* <div className="mb-3">
                         <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
-                    </div>                   
+                    </div>                    */}
 
                     <Table size="sm"  dark hover {...getTableProps()} responsive style={{height: "200px"}}>
                         <thead> 

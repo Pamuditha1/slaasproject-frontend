@@ -18,6 +18,10 @@ import Settings from './Settings'
 import Grades from './Grades'
 import Sections from './Sections'
 import Arrears from './Arrears'
+import Receipt from './Receipt'
+import Outdated from './Outdated'
+import TerminatedMembers from './TerminatedMembers'
+import TerminationPeriods from './TerminationPeriods'
 
 
 function UserComponent(props) {
@@ -43,7 +47,8 @@ function UserComponent(props) {
                 { (currentLocation !== "/user/login") && <Sidebar arrearsCalculating={arrearsCalculating} />
                     
                 }  
-                 </div>                             
+                 </div>   
+                                          
                 <div className="col-10"> 
                     <Switch>                    
                         <Route path="/user/register-user" component={()=><RegisterUserForm accountType={accountType}/>} />
@@ -57,20 +62,24 @@ function UserComponent(props) {
                         <Route path="/user/payments/view" component={ViewPayments}/>
                         <Route path="/user/login" exact component={UserLogin} />                    
                         <Route path="/user/dashboard" component={ Dashboard }/>
-                        <Route path="/user/receipt" component={NewMemberPaymentForm} />
+                        <Route path="/user/receipt" component={Receipt} />
+                        
                         {/* <Route path="/user/members/send-emails" render={(props) => 
                             <EmailComponent emailsList={emailsList} {...props}/>} /> */}
                         {/* <Route path="/user/members/all" component={MemberAllTable} />
                         <Route path="/user/members/search" render={(props) => 
                             <MemberSearchTable members={searchedResults} {...props}/>} />  
                                                                  */}
+                        {/* <Route path="/user/outdated" component={Outdated} />                                     */}
                         <Route path="/user/outdated-list" component={OutdatedMemberships} />
+                        <Route path="/user/terminated-list" component={TerminatedMembers} />
                         {/* <Route exact path="/user/arrears-calculator" component={Arrears} />  */}
                         <Route path="/user/arrears-calculator" render={(props) => 
                             <Arrears setArr={setArr} {...props}/>} />                                
                         <Route exact path="/user/settings" component={Settings} />
                         <Route path="/user/settings/grades" component={Grades} />
                         <Route path="/user/settings/sections" component={Sections} />
+                        <Route path="/user/settings/terminations" component={TerminationPeriods} />
                         <Route path="/user" exact component={Dashboard} />                        
                     </Switch>
 

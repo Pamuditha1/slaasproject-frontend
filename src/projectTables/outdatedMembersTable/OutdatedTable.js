@@ -30,7 +30,10 @@ export const OutdatedTable = (props) => {
     useEffect(() => { 
         async function fetchOutdated() {
             setIsLoading(true)
-            setmembers(await getOutdatedMembers()) ;
+            // setmembers(await getOutdatedMembers()) ;
+            let members = await getOutdatedMembers()
+            let notTerminated = members.filter(m => {if(m.status == 'Member') return true})
+            setmembers(notTerminated)
             setIsLoading(false)
         }
         fetchOutdated()
@@ -131,7 +134,7 @@ export const OutdatedTable = (props) => {
                             
                         }
                     </div>
-                    <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
+                    {/* <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/> */}
                     
                     {/* <EmailComponent mails={selectedFlatRows}/> */}
                     {selectedFlatRows != 0 ?

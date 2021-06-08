@@ -113,7 +113,7 @@ export const MemberSearchTable = (props) => {
                             ))                            
                         }
                     </div>
-                    <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
+                    {/* <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/> */}
                     {/* <EmailComponent mails={selectedFlatRows}/> */}
                     {/* {selectedFlatRows &&
                         <Link to={{
@@ -143,7 +143,7 @@ export const MemberSearchTable = (props) => {
                         </div>
                     </div> */}
                     <Link to="/user/members/send-emails">
-                            <Button onClick={saveMails} color="primary">Send Emails</Button>
+                            <Button onClick={saveMails} color="primary" className="ml-3">Send Emails</Button>
                         </Link> 
                     
                     <Table size="sm" dark hover {...getTableProps()} responsive style={{height: "200px"}}>
@@ -171,8 +171,10 @@ export const MemberSearchTable = (props) => {
                                     return (
                                         <tr {...row.getRowProps()}>
                                             {row.cells.map((cell) => {
-                                                return <td {...cell.getCellProps()} >{cell.render('Cell')}</td>
-                                            })}                                            
+                                                return <td {...cell.getCellProps()} {...cell.getCellProps()} style={{color: (cell.value == "Terminated") && 'red'}} >
+                                                    {(cell.column.Header == "Date of Birth" || cell.column.Header == "Enrolled Date") ? new Date(cell.value).toLocaleDateString() 
+                                                    : cell.render('Cell')}</td>
+                                            })}                                           
                                         </tr>
                                     )
                                 })
