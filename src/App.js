@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import 'react-toastify/dist/ReactToastify.css'
+import "rsuite/lib/styles/index.less";
 
 import Main from './components/Main'
 import AutoSuggestNew from './testingComponents/AutoSuggestNew';

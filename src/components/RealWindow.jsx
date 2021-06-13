@@ -3,30 +3,29 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import "react-datepicker/dist/react-datepicker.css";
-import RealWindow from "./RealWindow";
-import ProjectWindow from "./ProjectWindow";
 
-class Main extends Component {
+import NotFound from "./NotFound";
+import UserComponent from "./UserComponent";
+import Header from "./Header";
+import AdminLogin from "./AdminLogin";
+
+class RealWindow extends Component {
   render() {
     return (
       <>
-        {/* <RealWindow /> */}
-        <ProjectWindow />
-        {/* <Header />
+        <Header />
         <div>
           <ToastContainer />
           <Switch>
-            <Route path="/applicant" component={ApplicantComponent} />
             <Route path="/user" component={UserComponent} />
-            <Route path="/member" component={MemberComponent} />
             <Route path="/not-found" component={NotFound} />
-            <Route path="/" component={Logins} />
+            <Route path="/" component={AdminLogin} />
             <Redirect to="/not-found" />
           </Switch>
-        </div> */}
+        </div>
       </>
     );
   }
 }
 
-export default Main;
+export default RealWindow;

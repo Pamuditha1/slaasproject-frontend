@@ -3,31 +3,28 @@ import axios from 'axios'
 import { toast } from "react-toastify";
 import {api} from './api'
 
-const apiEndPoint = `${api}/user/register-member`;
+const apiEndPoint = `${api}/user/committies`;
 
-export function registerMember(member) {
+export function addCommittee(commity) {
 
-    return http.post(apiEndPoint, member)
+    return http.post(apiEndPoint, commity)
     .then(function (response) {
-        console.log(response.data);
-        toast.success(`${response.data}`);
-        return 'applied'
+        console.log(response.msg);
+        toast.success(`${response.data.msg}`);
+        // return response.data.data
     })
     .catch(function (error) {
         if(error.response.data) {
             console.log(error.response.data);
             toast.error(error.response.data);
-            return true
         }
         if(error.response) {
             console.log(error.response);
             toast.error(error.response);
-            return true
         }
         else {
             console.log(error);
             toast.error(error);
-            return true
         }
 
     });

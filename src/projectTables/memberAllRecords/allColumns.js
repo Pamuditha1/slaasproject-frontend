@@ -102,11 +102,11 @@ export const COLUMNS = [
         accessor: 'enrollDate',
         Filter: ColumnFilter
     },
-    {
-        Header: 'Council Position',
-        accessor: 'councilPosition',
-        Filter: ColumnFilter,
-    },
+    // {
+    //     Header: 'Council Position',
+    //     accessor: 'councilPosition',
+    //     Filter: ColumnFilter,
+    // },
     {
         Header: 'Member Folio Number',
         accessor: 'memberFolioNo',

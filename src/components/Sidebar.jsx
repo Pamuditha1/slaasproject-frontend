@@ -166,22 +166,6 @@ function Sidebar({ arrearsCalculating }) {
         </p>
       </Link>
     </div>
-    // <div>
-    //     <Nav vertical>
-    //         <NavItem>
-    //             <Link to="/user"><p><span style={{marginRight: 10}}><FontAwesomeIcon icon={faHome} size="2x"/></span>Main</p></Link>
-    //         </NavItem>
-    //         <NavItem>
-    //         <NavLink href="#">Link</NavLink>
-    //         </NavItem>
-    //         <NavItem>
-    //         <NavLink href="#">Another Link</NavLink>
-    //         </NavItem>
-    //         <NavItem>
-    //         <NavLink disabled href="#">Disabled Link</NavLink>
-    //         </NavItem>
-    //     </Nav>
-    // </div>
   );
 }
 
