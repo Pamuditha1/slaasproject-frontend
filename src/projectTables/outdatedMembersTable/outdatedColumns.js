@@ -81,11 +81,11 @@ export const COLUMNS = [
         accessor: 'lastMembershipPaid',
         Filter: ColumnFilter
     },
-    {
-        Header: 'DOT',
-        accessor: 'dot',
-        Filter: ColumnFilter
-    },
+    // {
+    //     Header: 'DOT',
+    //     accessor: 'dot',
+    //     Filter: ColumnFilter
+    // },
     {
         Header: 'Arrears',
         accessor: 'arrearsConti',

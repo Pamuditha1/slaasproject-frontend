@@ -20,6 +20,7 @@ function Settings() {
           name="Manage Committies"
           link="/user/settings/manage-committees"
         />
+        <SettingItem name="Register User" link="/user/register-user" />
         {/* <div className="col-6">
                     <Link to="/user/settings/grades">
                     <button className="btn btn-primary">

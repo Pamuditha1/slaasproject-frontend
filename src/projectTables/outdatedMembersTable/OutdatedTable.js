@@ -197,7 +197,10 @@ export const OutdatedTable = (props) => {
                                     return (
                                         <tr {...row.getRowProps()}>
                                             {row.cells.map((cell) => {
-                                                return <td {...cell.getCellProps()} style={{color: (cell.value == "Terminated") && 'red'}} >{cell.render('Cell')}</td>
+                                                return <td {...cell.getCellProps()} style={{color: (cell.value == "Terminated") && 'red'}} >
+                                                {(cell.column.Header == "Last Membership Payment Date" || cell.column.Header == "DOT" || cell.column.Header == "Last Payment Date") 
+                                                ? (cell.value ? new Date(cell.value).toLocaleDateString() : '' )
+                                            : cell.render('Cell')}</td>
                                             })}
                                             
                                         </tr>

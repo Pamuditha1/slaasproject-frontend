@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import { DatePicker } from "react-rainbow-components";
+import jwtDecode from "jwt-decode";
 
 import { NewConfirm } from "./NewConfirm";
 import ValidationError from "../../validationError";
@@ -175,19 +176,28 @@ function ApplicantMemRegister(props) {
     setNameOfImage(memberData.nic);
     console.log(nameOfImage);
     console.log("MemId", localStorage.getItem("id"));
+
+    const jwt = localStorage.getItem("token");
+    let username = "";
+    let id = "";
+    if (jwt) username = jwtDecode(jwt).username;
+    if (jwt) id = jwtDecode(jwt).id;
+
     const member = {
       memberData: memberData,
       proposer: proposer,
       seconder: seconder,
       membershipNo: membershipNo.split("/")[0],
       type: "Applicant",
-      memberID: localStorage.getItem("id"),
+      username: username,
+      memberID: id,
     };
     console.log("Member before save", member);
     let result = await registerMember(member);
-    if (result == "applied") {
-      localStorage.removeItem("type");
-      localStorage.setItem("type", "applied");
+    console.log("Req result", result);
+    if (result) {
+      localStorage.removeItem("token");
+      localStorage.setItem("token", result.jwt);
     }
     onImageSubmit();
 

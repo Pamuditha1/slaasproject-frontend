@@ -58,7 +58,7 @@ function Commities() {
             onChange={addChange}
             value={committee}
             name="section"
-            className="form-control col-8"
+            className="form-control col-7"
             type="text"
           />
           <div className="input-group-append col-2 mb-3">

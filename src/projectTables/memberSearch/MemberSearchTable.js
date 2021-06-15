@@ -172,7 +172,8 @@ export const MemberSearchTable = (props) => {
                                         <tr {...row.getRowProps()}>
                                             {row.cells.map((cell) => {
                                                 return <td {...cell.getCellProps()} {...cell.getCellProps()} style={{color: (cell.value == "Terminated") && 'red'}} >
-                                                    {(cell.column.Header == "Date of Birth" || cell.column.Header == "Enrolled Date") ? new Date(cell.value).toLocaleDateString() 
+                                                    {(cell.column.Header == "Date of Birth" || cell.column.Header == "Enrolled Date") 
+                                                    ? (cell.value ? new Date(cell.value).toLocaleDateString() : '' ) 
                                                     : cell.render('Cell')}</td>
                                             })}                                           
                                         </tr>

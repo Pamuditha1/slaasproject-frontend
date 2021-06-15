@@ -5,6 +5,7 @@ import "rsuite/lib/styles/index.less";
 import Main from './components/Main'
 import AutoSuggestNew from './testingComponents/AutoSuggestNew';
 import Search from './testingComponents/searchAutoComplete/AutoComplete'
+import{ MemberProfileWUpdate} from './components/MemberProfileWUpdate'
 class App extends Component{
 
   render() {
@@ -13,6 +14,7 @@ class App extends Component{
     return (
       <>
         <Main /> 
+        {/* <MemberProfileWUpdate /> */}
         {/* <AutoSuggestNew /> */}
         {/* <Autosuggest
           datalist={[ 'Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Rev.', 'Prof.' ]}

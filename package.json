@@ -16,6 +16,7 @@
     "formik": "^2.2.1",
     "joi-browser": "^13.4.0",
     "jspdf": "^2.3.1",
+    "jwt-decode": "^3.1.2",
     "material-table": "^1.69.2",
     "papaparse": "^5.3.0",
     "prop-types": "^15.7.2",

@@ -1,6 +1,8 @@
 import React from "react";
 import { Progress } from "rsuite";
 import "rsuite/dist/styles/rsuite-default.css";
+import jwtDecode from "jwt-decode";
+
 const { Circle } = Progress;
 const style = {
   width: 120,
@@ -10,6 +12,11 @@ const style = {
 
 function ApplicationProgress() {
   let today = new Date().toLocaleDateString();
+
+  const jwt = localStorage.getItem("token");
+  let token = jwtDecode(jwt);
+  console.log("Token", token);
+
   return (
     <div className="container">
       <div className="row mt-5" style={{ textAlign: "center" }}>

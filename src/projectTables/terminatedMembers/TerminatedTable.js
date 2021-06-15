@@ -12,7 +12,7 @@ import { GlobalFilter } from '../common/GlobalFilter';
 import {Checkbox} from '../common/Checkbox'
 import {COLUMNS} from './terminatedColumns'
 
-import {getOutdatedMembers} from '../../services/getOutdatedList'
+import {getTerminatedMembers} from '../../services/getTerminatedMembers'
 
 import { useExportData } from "react-table-plugins";
 import ExportingButtons from '../common/ExportingButtons';
@@ -28,14 +28,13 @@ export const TerminatedTable = (props) => {
     const toggle = () => setisModalOpen(!isModalOpen);
 
     useEffect(() => { 
-        async function fetchOutdated() {
+        async function fetchTerminatedMembers() {
             setIsLoading(true)
-            let members = await getOutdatedMembers()
-            let terminated = members.filter(m => {if(m.status == 'Terminated') return true})
-            setmembers(terminated)
+            let members = await getTerminatedMembers()
+            setmembers(members)
             setIsLoading(false)
         }
-        fetchOutdated()
+        fetchTerminatedMembers()
     }, []);
 
     const columns = useMemo(() => COLUMNS, [])
@@ -196,7 +195,10 @@ export const TerminatedTable = (props) => {
                                     return (
                                         <tr {...row.getRowProps()}>
                                             {row.cells.map((cell) => {
-                                                return <td {...cell.getCellProps()} style={{color: (cell.value == "Terminated") && 'red'}} >{cell.render('Cell')}</td>
+                                                return <td {...cell.getCellProps()} style={{color: (cell.value == "Terminated") && 'red'}} >
+                                                    {(cell.column.Header == "Last Membership Payment Date" || cell.column.Header == "DOT" || cell.column.Header == "Last Payment Date" ) 
+                                                    ? (cell.value ? new Date(cell.value).toLocaleDateString() : '' )
+                                                : cell.render('Cell')}</td>
                                             })}
                                             
                                         </tr>

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
+import jwtDecode from "jwt-decode";
+
 import MemberOnlineApply from "./forms/MemberOnlineApply";
 import NotFound from "./NotFound";
 import RegisterUserForm from "./forms/RegisterUserForm";
@@ -11,22 +13,40 @@ import ApplicationProgress from "./ApplicationProgress";
 
 class ApplicantComponent extends Component {
   render() {
-    const accountType = "applicant";
+    const jwt = localStorage.getItem("token");
+    let type = "";
+    if (jwt) {
+      type = jwtDecode(jwt).type;
+    } else {
+      type = "";
+    }
+
     return (
       <div className="container">
         <Switch>
           <Route
             path="/applicant/register-applicant"
             // component={() => <RegisterUserForm accountType={accountType} />}
-            component={() => <RegisterApplicant accountType={accountType} />}
+            component={() => <RegisterApplicant accountType={type} />}
           />
-          <Route
-            path="/applicant/membership-apply"
-            // component={MemberOnlineApply}
-            component={ApplicantMemRegister}
-          />
-
-          <Route path="/applicant/progress" component={ApplicationProgress} />
+          {type == "Applicant" ? (
+            <Route
+              path="/applicant/membership-apply"
+              // component={MemberOnlineApply}
+              component={ApplicantMemRegister}
+            />
+          ) : (
+            <Route path="/applicant/progress" component={ApplicationProgress} />
+          )}
+          {type == "Applied" ? (
+            <Route path="/applicant/progress" component={ApplicationProgress} />
+          ) : (
+            <Route
+              path="/applicant/membership-apply"
+              // component={MemberOnlineApply}
+              component={ApplicantMemRegister}
+            />
+          )}
           <Route path="/applicant/login" component={NewApplicantLogin} />
           <Route path="/applicant" component={NewApplicantLogin} />
           {/* <Route path="/applicant/login" component={ApplicantLogin} />

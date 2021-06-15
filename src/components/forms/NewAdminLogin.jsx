@@ -5,13 +5,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from "react-toastify";
 // import Background from "../images/cover.jpg";
 
-import { applicantLogin } from "../../services/applicantLogin";
+import { adminLogin } from "../../services/adminLogin";
 
-function NewApplicantLogin(props) {
+function NewAdminLogin(props) {
   const [loginData, setloginData] = useState({
     email: "",
     password: "",
-    type: "applicant",
   });
   const [invalidLogin, setinvalidLogin] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -30,15 +29,15 @@ function NewApplicantLogin(props) {
   const submit = async (e) => {
     e.preventDefault();
     // setLoading(true);
-    const result = await applicantLogin(loginData);
+    const result = await adminLogin(loginData);
     console.log("Res", result);
     if (result) {
       localStorage.setItem("token", result.jwt);
       console.log(props);
       switch (result.type) {
-        case "Applicant":
+        case "Admin":
           console.log(result.type);
-          props.history.push("/applicant/membership-apply");
+          props.history.push("/user/members");
           break;
 
         // case "Site Supervisor":
@@ -96,7 +95,7 @@ function NewApplicantLogin(props) {
           <FontAwesomeIcon icon={faUserCircle} size="10x" />
         </center>
         <center>
-          <small style={{ textAlign: "center" }}>Applicant</small>
+          <small style={{ textAlign: "center" }}>Administrator</small>
         </center>
 
         <div className="row">
@@ -137,9 +136,6 @@ function NewApplicantLogin(props) {
                   >
                     Login
                   </button>
-                  <Link to="/applicant/register-applicant" style={linkStyle}>
-                    <p className="mt-3">New Applicant? Register</p>
-                  </Link>
                   <Link to="/" style={linkStyle}>
                     <p className="mt-3">Home</p>
                   </Link>
@@ -154,4 +150,4 @@ function NewApplicantLogin(props) {
   );
 }
 
-export default NewApplicantLogin;
+export default NewAdminLogin;
