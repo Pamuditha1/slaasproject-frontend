@@ -28,6 +28,7 @@ import SuiteSidebar from "./SuiteSidebar";
 import { MemberProfileWUpdate } from "./MemberProfileWUpdate";
 import NewAdminLogin from "./forms/NewAdminLogin";
 import NewRegisterUser from "./forms/NewRegisterUser";
+import FormarCommittees from "./FomerCommittees";
 
 function UserComponent(props) {
   const [emailsList, setemailsList] = useState([]);
@@ -113,8 +114,9 @@ function UserComponent(props) {
             component={TerminationPeriods}
           />
           <Route path="/user/settings/committees" component={Commities} />
+          <Route path="/user/committees/history" component={FormarCommittees} />
           <Route
-            path="/user/settings/manage-committees"
+            path="/user/manage-committees"
             component={SetCommitteMembers}
           />
           <Route path="/user" exact component={Dashboard} />

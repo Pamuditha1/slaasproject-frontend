@@ -293,10 +293,10 @@ export const MemberProfileWUpdate = (props) => {
               style={{ display: !enableEdit && "none" }}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
-              Edit
+              {/* Edit */}
             </button>
             <input
-              className="ml-3"
+              className="ml-3 "
               value={dataToUpdate.value}
               onChange={onUpdateChange}
               style={{ display: isModalOpen != "resAddrs" && "none" }}
@@ -322,10 +322,10 @@ export const MemberProfileWUpdate = (props) => {
                   style={{ display: !enableEdit && "none" }}
                 >
                   <FontAwesomeIcon icon={faEdit} size="xs" />
-                  Edit
+                  {/* Edit */}
                 </button>
                 <input
-                  className="ml-3"
+                  className="ml-3 "
                   value={dataToUpdate.value}
                   onChange={onUpdateChange}
                   style={{ display: isModalOpen != "perAddrs" && "none" }}
@@ -351,10 +351,10 @@ export const MemberProfileWUpdate = (props) => {
               style={{ display: !enableEdit && "none" }}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
-              Edit
+              {/* Edit */}
             </button>
             <input
-              className="ml-3"
+              className="ml-3 "
               value={dataToUpdate.value}
               onChange={onUpdateChange}
               style={{ display: isModalOpen != "mobileNo" && "none" }}
@@ -378,10 +378,10 @@ export const MemberProfileWUpdate = (props) => {
               style={{ display: !enableEdit && "none" }}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
-              Edit
+              {/* Edit */}
             </button>
             <input
-              className="ml-3"
+              className="ml-3 "
               value={dataToUpdate.value}
               onChange={onUpdateChange}
               style={{ display: isModalOpen != "fixedNo" && "none" }}
@@ -405,10 +405,10 @@ export const MemberProfileWUpdate = (props) => {
               style={{ display: !enableEdit && "none" }}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
-              Edit
+              {/* Edit */}
             </button>
             <input
-              className="ml-3"
+              className="ml-3 "
               value={dataToUpdate.value}
               onChange={onUpdateChange}
               style={{ display: isModalOpen != "email" && "none" }}
@@ -438,10 +438,10 @@ export const MemberProfileWUpdate = (props) => {
               style={{ display: !enableEdit && "none" }}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
-              Edit
+              {/* Edit */}
             </button>
             <input
-              className="ml-3"
+              className="ml-3 "
               value={dataToUpdate.value}
               onChange={onUpdateChange}
               style={{ display: isModalOpen != "designation" && "none" }}
@@ -465,10 +465,10 @@ export const MemberProfileWUpdate = (props) => {
               style={{ display: !enableEdit && "none" }}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
-              Edit
+              {/* Edit */}
             </button>
             <input
-              className="ml-3"
+              className="ml-3 "
               value={dataToUpdate.value}
               onChange={onUpdateChange}
               style={{ display: isModalOpen != "department" && "none" }}
@@ -492,10 +492,10 @@ export const MemberProfileWUpdate = (props) => {
               style={{ display: !enableEdit && "none" }}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
-              Edit
+              {/* Edit */}
             </button>
             <input
-              className="ml-3"
+              className="ml-3 "
               value={dataToUpdate.value}
               onChange={onUpdateChange}
               style={{ display: isModalOpen != "placeOfWork" && "none" }}
@@ -519,10 +519,10 @@ export const MemberProfileWUpdate = (props) => {
               style={{ display: !enableEdit && "none" }}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
-              Edit
+              {/* Edit */}
             </button>
             <input
-              className="ml-3"
+              className="ml-3 "
               value={dataToUpdate.value}
               onChange={onUpdateChange}
               style={{ display: isModalOpen != "offAddrs" && "none" }}
@@ -546,10 +546,10 @@ export const MemberProfileWUpdate = (props) => {
               style={{ display: !enableEdit && "none" }}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
-              Edit
+              {/* Edit */}
             </button>
             <input
-              className="ml-3"
+              className="ml-3 "
               value={dataToUpdate.value}
               onChange={onUpdateChange}
               style={{ display: isModalOpen != "offMobile" && "none" }}
@@ -573,10 +573,10 @@ export const MemberProfileWUpdate = (props) => {
               style={{ display: !enableEdit && "none" }}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
-              Edit
+              {/* Edit */}
             </button>
             <input
-              className="ml-3"
+              className="ml-3 "
               value={dataToUpdate.value}
               onChange={onUpdateChange}
               style={{ display: isModalOpen != "offLand" && "none" }}
@@ -600,10 +600,10 @@ export const MemberProfileWUpdate = (props) => {
               style={{ display: !enableEdit && "none" }}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
-              Edit
+              {/* Edit */}
             </button>
             <input
-              className="ml-3"
+              className="ml-3 "
               value={dataToUpdate.value}
               onChange={onUpdateChange}
               style={{ display: isModalOpen != "offFax" && "none" }}
@@ -627,10 +627,10 @@ export const MemberProfileWUpdate = (props) => {
               style={{ display: !enableEdit && "none" }}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
-              Edit
+              {/* Edit */}
             </button>
             <input
-              className="ml-3"
+              className="ml-3 "
               value={dataToUpdate.value}
               onChange={onUpdateChange}
               style={{ display: isModalOpen != "offEmail" && "none" }}
@@ -660,7 +660,7 @@ export const MemberProfileWUpdate = (props) => {
               style={{ display: !enableEdit && "none" }}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
-              Edit
+              {/* Edit */}
             </button>
             <input
               className="ml-3"

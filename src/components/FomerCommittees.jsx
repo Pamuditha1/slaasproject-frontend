@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 
+import OneCommityHistory from "./OneCommityHistory";
 import { getCommities } from "../services/getCommitties";
-import OneCommittee from "./OneCommittee";
 
-function SetCommitteMembers() {
+function FomerCommittees() {
   const [committies, setcommitties] = useState([]);
   const [selectedCommity, setselectedCommity] = useState("");
 
@@ -25,6 +24,9 @@ function SetCommitteMembers() {
   return (
     <div>
       <div className="row">
+        <div className="col-12 mt-5">
+          <h5>Former Committees</h5>
+        </div>
         {committies.length > 0 &&
           committies.map((g) => {
             return (
@@ -41,10 +43,10 @@ function SetCommitteMembers() {
           })}
       </div>
       <div className="container">
-        {selectedCommity && <OneCommittee comm={selectedCommity} />}
+        {selectedCommity && <OneCommityHistory comm={selectedCommity} />}
       </div>
     </div>
   );
 }
 
-export default SetCommitteMembers;
+export default FomerCommittees;

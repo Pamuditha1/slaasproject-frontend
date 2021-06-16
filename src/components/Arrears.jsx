@@ -21,16 +21,38 @@ function Arrears({ setArr }) {
     fetchDates();
   }, []);
 
+  const sendMails = () => {
+    console.log("Sending");
+  };
+
   return (
     <div className="row">
-      <div className="col-12 mb-3">
-        Last Arrears Calculate And Updated : <strong>{lastDate}</strong>
+      <div className="col-12">
+        <div className="row">
+          <div className="col-12 mb-3">
+            Last Arrears Calculate And Updated : <strong>{lastDate}</strong>
+          </div>
+          <div className="col-3 ">This may take some time ...</div>
+          <div className="col-2">
+            <Button onClick={toggle} color="primary">
+              Proceed
+            </Button>
+          </div>
+        </div>
       </div>
-      <div className="col-3 ">This may take some time ...</div>
-      <div className="col-2">
-        <Button onClick={toggle} color="primary">
-          Proceed
-        </Button>
+
+      <div className="col-12 mt-5">
+        <div className="row">
+          <div className="col-12 mb-3">
+            Last Reminder Emails Sent : <strong>{lastDate}</strong>
+          </div>
+          <div className="col-3 ">This may take some time ...</div>
+          <div className="col-2">
+            <Button onClick={sendMails} color="primary">
+              Send Mails
+            </Button>
+          </div>
+        </div>
       </div>
 
       <ArrearsCalculateModal

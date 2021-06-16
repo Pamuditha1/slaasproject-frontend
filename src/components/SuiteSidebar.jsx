@@ -190,6 +190,52 @@ function SuiteSidebar() {
                 </Link>
               </Dropdown.Item>
             </Dropdown>
+            <Dropdown
+              eventKey="3"
+              title="Committees"
+              icon={<Icon icon="peoples-map" />}
+            >
+              <Dropdown.Item
+                eventKey="3-1"
+                style={clicked == "comity" ? onClickStyle : s}
+              >
+                <Link
+                  to="/user/manage-committees"
+                  style={clicked == "comity" ? onClickLink : linkColor}
+                >
+                  <span onClick={onClick} id="comity">
+                    <FontAwesomeIcon
+                      icon={faMoneyBill}
+                      size="1x"
+                      className="mr-2"
+                    />
+                    Manage Committees
+                  </span>
+
+                  {/* </p> */}
+                </Link>
+              </Dropdown.Item>
+              <Dropdown.Item
+                eventKey="3-2"
+                style={clicked == "comHis" ? onClickStyle : s}
+              >
+                <Link
+                  to="/user/committees/history"
+                  style={clicked == "comHis" ? onClickLink : linkColor}
+                >
+                  <span onClick={onClick} id="comHis">
+                    <FontAwesomeIcon
+                      icon={faMoneyCheckAlt}
+                      size="1x"
+                      className="mr-2"
+                    />
+                    Committees History
+                  </span>
+
+                  {/* </p> */}
+                </Link>
+              </Dropdown.Item>
+            </Dropdown>
             <Nav.Item
               eventKey="4"
               style={clicked == "mails" ? onClickStyle : s}
@@ -201,6 +247,20 @@ function SuiteSidebar() {
               >
                 <span onClick={onClick} id="mails">
                   Send Mails
+                </span>
+              </Link>
+            </Nav.Item>
+            <Nav.Item
+              eventKey="5"
+              style={clicked == "operations" ? onClickStyle : s}
+              icon={<Icon icon="task" />}
+            >
+              <Link
+                to="/user/arrears-calculator"
+                style={clicked == "operations" ? onClickLink : linkColor}
+              >
+                <span onClick={onClick} id="operations">
+                  Operations
                 </span>
               </Link>
             </Nav.Item>

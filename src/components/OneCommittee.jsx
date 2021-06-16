@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "reactstrap";
 import { DatePicker } from "react-rainbow-components";
+import { Link } from "react-router-dom";
+
 import UpdateCommittee from "./modals/UpdateCommittee";
 
 import { getCommMembers } from "../services/getCommMembers";
@@ -210,7 +212,7 @@ function OneCommittee({ comm }) {
       </div>
 
       <h6 className="pl-5 pt-1 pb-1 mb-3 mt-5">Committee Members</h6>
-      <Table borderless className="mt-5">
+      <Table borderless className="mt-5 text-center">
         <thead>
           <tr>
             <th>Position</th>
@@ -239,6 +241,14 @@ function OneCommittee({ comm }) {
                     >
                       Update
                     </button>
+                    <Link
+                      to={`/user/member/profile/${m.membershipNo}`}
+                      target="_blank"
+                    >
+                      <button className="btn btn-outline-primary ml-3">
+                        Profile
+                      </button>
+                    </Link>
                   </td>
                 </tr>
               );
