@@ -17,15 +17,18 @@ h1{
 }
 
 #appBtn {
-    background-color: green;    
+    background-color: #28272d;   
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
     border-radius: 50px;
 }
 #useBtn {
-    background-color: black;
+    background-color: #191938;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 50px;
 }
 #memBtn {
-    background-color: blue;
+    background-color: #57585a;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 50px;
 }
 .textStyle {

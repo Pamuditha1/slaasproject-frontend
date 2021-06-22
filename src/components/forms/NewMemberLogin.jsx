@@ -6,13 +6,13 @@ import { toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
 // import Background from "../images/cover.jpg";
 
-import { applicantLogin } from "../../services/applicantLogin";
+import { memberLogin } from "../../services/memberLogin";
 
-function NewApplicantLogin(props) {
+function NewMemberLogin(props) {
   const [loginData, setloginData] = useState({
-    email: "",
+    membershipNo: "",
     password: "",
-    type: "applicant",
+    type: "Member",
   });
   const [invalidLogin, setinvalidLogin] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -31,27 +31,18 @@ function NewApplicantLogin(props) {
   const submit = async (e) => {
     e.preventDefault();
     // setLoading(true);
-    const result = await applicantLogin(loginData);
+    console.log("Mem dts", loginData);
+    const result = await memberLogin(loginData);
     console.log("Res", result);
     if (result) {
       localStorage.setItem("token", result.jwt);
-      const jwt = localStorage.getItem("token");
-      let type = jwtDecode(jwt).type;
-
       console.log(props);
-      switch (type) {
-        case "Applicant":
-          console.log(result.type);
-          props.history.push("/applicant/membership-apply");
+      switch (result.type) {
+        case "Member":
+          const jwt = localStorage.getItem("token");
+          let memNo = jwtDecode(jwt).memNo;
+          props.history.push(`/member/profile/${memNo}`);
           break;
-        case "Applied":
-          console.log(result.type);
-          props.history.push("/applicant/progress");
-          break;
-
-        // case "Site Supervisor":
-        //   props.history.push("/site-supervisor");
-        //   break;
       }
     } else {
       setinvalidLogin(true);
@@ -62,6 +53,9 @@ function NewApplicantLogin(props) {
   };
 
   const style = {
+    // backgroundImage: `url(${process.env.PUBLIC_URL + '/image.png'})`
+
+    // backgroundImage: `url(${Background})`,
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
@@ -79,7 +73,7 @@ function NewApplicantLogin(props) {
   let linkStyle = {
     textDecoration: "none",
     color: "white",
-    marginTop: "5px",
+    marginTop: "10px",
   };
 
   return (
@@ -100,26 +94,26 @@ function NewApplicantLogin(props) {
       <div className="col-3"></div>
       <form className="container mt-5 mb-5 col-6" style={formStyle}>
         <center>
-          <FontAwesomeIcon icon={faUserCircle} size="7x" />
+          <FontAwesomeIcon icon={faUserCircle} size="10x" />
         </center>
         <center>
-          <small style={{ textAlign: "center" }}>Applicant</small>
+          <small style={{ textAlign: "center" }}>Member</small>
         </center>
 
         <div className="row">
           <div className="col-12">
             <div className="row">
               <div className="form-group col-12">
-                <label htmlFor="email" className="col-5">
-                  Email
+                <label htmlFor="membershipNo" className="col-5">
+                  Membership No
                 </label>
                 <input
                   onChange={onchange}
-                  value={loginData.email}
+                  value={loginData.membershipNo}
                   className="form-control col-11 ml-3"
                   type="text"
-                  id="email"
-                  name="email"
+                  id="membershipNo"
+                  name="membershipNo"
                 />
               </div>
               <div className="form-group col-12">
@@ -144,8 +138,8 @@ function NewApplicantLogin(props) {
                   >
                     Login
                   </button>
-                  <Link to="/applicant/register-applicant" style={linkStyle}>
-                    <p className="mt-3">New Applicant? Register</p>
+                  <Link to="/member/register" style={linkStyle}>
+                    <p className="mt-3">Haven't Registered yet? Register</p>
                   </Link>
                   <Link to="/" style={linkStyle}>
                     <p className="mt-3">Home</p>
@@ -161,4 +155,4 @@ function NewApplicantLogin(props) {
   );
 }
 
-export default NewApplicantLogin;
+export default NewMemberLogin;

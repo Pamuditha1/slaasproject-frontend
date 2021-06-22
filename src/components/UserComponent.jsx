@@ -17,7 +17,7 @@ import UpdateMember from "./UpdateMember";
 import Settings from "./Settings";
 import Grades from "./Grades";
 import Sections from "./Sections";
-import Arrears from "./Arrears";
+import Operations from "./Operations";
 import Receipt from "./Receipt";
 import Outdated from "./Outdated";
 import TerminatedMembers from "./TerminatedMembers";
@@ -29,6 +29,10 @@ import { MemberProfileWUpdate } from "./MemberProfileWUpdate";
 import NewAdminLogin from "./forms/NewAdminLogin";
 import NewRegisterUser from "./forms/NewRegisterUser";
 import FormarCommittees from "./FomerCommittees";
+import ViewApplications from "./ViewApplications";
+import { ViewOneApplication } from "./ViewOneApplication";
+import EmailSettings from "./EmailSettings";
+import EmailSettingElement from "./EmailSettingElement";
 
 function UserComponent(props) {
   const [emailsList, setemailsList] = useState([]);
@@ -103,8 +107,8 @@ function UserComponent(props) {
           <Route path="/user/terminated-list" component={TerminatedMembers} />
           {/* <Route exact path="/user/arrears-calculator" component={Arrears} />  */}
           <Route
-            path="/user/arrears-calculator"
-            render={(props) => <Arrears setArr={setArr} {...props} />}
+            path="/user/operations"
+            render={(props) => <Operations setArr={setArr} {...props} />}
           />
           <Route exact path="/user/settings" component={Settings} />
           <Route path="/user/settings/grades" component={Grades} />
@@ -119,7 +123,24 @@ function UserComponent(props) {
             path="/user/manage-committees"
             component={SetCommitteMembers}
           />
+          <Route exact path="/user/email-settings" component={EmailSettings} />
+          <Route
+            path="/user/email-settings/edit/:id"
+            component={EmailSettingElement}
+          />
+
           <Route path="/user" exact component={Dashboard} />
+
+          <Route
+            path="/user/view-applications"
+            exact
+            component={ViewApplications}
+          />
+          <Route
+            path="/user/view-application/:nic"
+            exact
+            component={ViewOneApplication}
+          />
         </Switch>
       </div>
     </div>

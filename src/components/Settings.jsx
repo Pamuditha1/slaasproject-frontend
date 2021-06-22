@@ -16,11 +16,13 @@ function Settings() {
           link="/user/settings/terminations"
         />
         <SettingItem name="Add New Committe" link="/user/settings/committees" />
-        <SettingItem
+        {/* <SettingItem
           name="Manage Committies"
           link="/user/settings/manage-committees"
-        />
+        /> */}
+        <SettingItem name="Email Settings" link="/user/email-settings" />
         <SettingItem name="Register User" link="/user/register-user" />
+
         {/* <div className="col-6">
                     <Link to="/user/settings/grades">
                     <button className="btn btn-primary">

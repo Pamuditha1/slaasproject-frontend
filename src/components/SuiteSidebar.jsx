@@ -5,24 +5,17 @@ import "../css/sideBar.css";
 
 import { Link } from "react-router-dom";
 import {
-  faHome,
-  faRegistered,
-  faIdBadge,
   faIdCard,
-  faFileInvoiceDollar,
   faMoneyCheckAlt,
-  faEnvelope,
   faExclamationCircle,
-  faCog,
-  faCalculator,
-  faChartBar,
   faUsers,
   faMoneyBill,
   faBan,
+  faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function SuiteSidebar() {
+function SuiteSidebar(props) {
   const [clicked, setclicked] = useState("");
 
   const onClickStyle = {
@@ -33,6 +26,11 @@ function SuiteSidebar() {
   const onClick = (e) => {
     setclicked(e.target.id);
     console.log(clicked);
+  };
+
+  const logout = (e) => {
+    setclicked(e.target.id);
+    localStorage.removeItem("token");
   };
 
   const style = {
@@ -53,7 +51,7 @@ function SuiteSidebar() {
 
   return (
     <div className="sidenav">
-      <Sidenav defaultOpenKeys={["2", "3"]} activeKey="1">
+      <Sidenav defaultOpenKeys={["2"]} activeKey="1">
         <Sidenav.Body style={style}>
           <Nav>
             {/* <Nav.Item
@@ -65,6 +63,10 @@ function SuiteSidebar() {
             </Nav.Item> */}
             {/* <Nav.Item eventKey="2" icon={<Icon icon="group" />}>
               User Group
+            </Nav.Item> */}
+
+            {/* <Nav.Item eventKey="2" icon={<Icon icon="group" />}>
+              Logout
             </Nav.Item> */}
             <Dropdown eventKey="2" title="Members" icon={<Icon icon="group" />}>
               <Dropdown.Item
@@ -190,13 +192,27 @@ function SuiteSidebar() {
                 </Link>
               </Dropdown.Item>
             </Dropdown>
+            <Nav.Item
+              eventKey="10"
+              style={clicked == "applications" ? onClickStyle : s}
+              icon={<Icon icon="file-text" />}
+            >
+              <Link
+                to="/user/view-applications"
+                style={clicked == "applications" ? onClickLink : linkColor}
+              >
+                <span onClick={onClick} id="applications">
+                  Applications
+                </span>
+              </Link>
+            </Nav.Item>
             <Dropdown
-              eventKey="3"
+              eventKey="5"
               title="Committees"
               icon={<Icon icon="peoples-map" />}
             >
               <Dropdown.Item
-                eventKey="3-1"
+                eventKey="5-1"
                 style={clicked == "comity" ? onClickStyle : s}
               >
                 <Link
@@ -216,7 +232,7 @@ function SuiteSidebar() {
                 </Link>
               </Dropdown.Item>
               <Dropdown.Item
-                eventKey="3-2"
+                eventKey="5-2"
                 style={clicked == "comHis" ? onClickStyle : s}
               >
                 <Link
@@ -237,7 +253,7 @@ function SuiteSidebar() {
               </Dropdown.Item>
             </Dropdown>
             <Nav.Item
-              eventKey="4"
+              eventKey="6"
               style={clicked == "mails" ? onClickStyle : s}
               icon={<Icon icon="envelope" />}
             >
@@ -251,12 +267,12 @@ function SuiteSidebar() {
               </Link>
             </Nav.Item>
             <Nav.Item
-              eventKey="5"
+              eventKey="7"
               style={clicked == "operations" ? onClickStyle : s}
               icon={<Icon icon="task" />}
             >
               <Link
-                to="/user/arrears-calculator"
+                to="/user/operations"
                 style={clicked == "operations" ? onClickLink : linkColor}
               >
                 <span onClick={onClick} id="operations">
@@ -265,7 +281,7 @@ function SuiteSidebar() {
               </Link>
             </Nav.Item>
             <Nav.Item
-              eventKey="5"
+              eventKey="8"
               style={clicked == "reports" ? onClickStyle : s}
               icon={<Icon icon="bar-chart" />}
             >
@@ -279,7 +295,7 @@ function SuiteSidebar() {
               </Link>
             </Nav.Item>
             <Nav.Item
-              eventKey="5"
+              eventKey="9"
               style={clicked == "settings" ? onClickStyle : s}
               icon={<Icon icon="cog" />}
             >
@@ -290,6 +306,28 @@ function SuiteSidebar() {
                 <span onClick={onClick} id="settings">
                   Settings
                 </span>
+              </Link>
+            </Nav.Item>
+            <Nav.Item
+              eventKey="10"
+              style={clicked == "logout" ? onClickStyle : s}
+            >
+              <Link
+                to="/"
+                style={clicked == "logout" ? onClickLink : linkColor}
+              >
+                <button
+                  onClick={logout}
+                  id="logout"
+                  className="btn btn-outline-dark text-light float-center"
+                >
+                  Logout
+                  <FontAwesomeIcon
+                    icon={faSignOutAlt}
+                    size="1x"
+                    className="ml-2"
+                  />
+                </button>
               </Link>
             </Nav.Item>
             {/* <Dropdown.Item eventKey="4-3">Versions</Dropdown.Item>
