@@ -6,7 +6,7 @@ class Header extends Component {
     height: "100px",
     backgroundColor: "#7b1418",
     textAlign: "center",
-    marginBottom: "20px",
+    // marginBottom: "20px",
     color: "white",
     fontSize: "30px",
     fontFamily: "Times New Roman",

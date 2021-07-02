@@ -37,21 +37,34 @@ function ViewMembers(props) {
     props.history.push("/user/members/search");
   };
 
+  const headStyle = {
+    textShadow: "0px 0px 1px #111111",
+  };
+
+  const buttonStyleC = {
+    boxShadow: "0px 5px 10px grey",
+    fontWeight: "bold",
+    backgroundColor: "#002263",
+    borderRadius: "40px",
+  };
+  const bstyle = {
+    borderRadius: "30px",
+    boxShadow: "0px 5px 10px grey",
+  };
+
   return (
     <div>
       {props.location.pathname != "/user/members/send-emails" && (
         <>
-          <h6
-            style={{ backgroundColor: "#e95045" }}
-            className="pl-5 pt-1 pb-1 mb-5"
-          >
+          <h4 className="mt-5 mb-5 text-center" style={headStyle}>
             Member Records
-          </h6>
+          </h4>
           <div className="col-12">
             <Link to="/user/members/all">
               <Button
+                style={buttonStyleC}
                 onClick={() => setallSelected(true)}
-                color="success mb-3 col-12"
+                className="mb-3 col-12 btn"
               >
                 {allSelected ? "All Member Records" : "Get All Records"}
               </Button>
@@ -59,21 +72,23 @@ function ViewMembers(props) {
           </div>
 
           {!allSelected && (
-            <div id="search" className="row">
+            <div id="search" className="row mt-3">
               <div className="input-group col-12">
-                <div className="form-outline col-10">
+                <div className="form-outline col-11">
                   <input
                     type="search"
                     id="searchMember"
                     onChange={(e) => setSearchWord(e.target.value)}
                     className="form-control"
                     placeholder="Search ..."
+                    style={{ borderRadius: "30px" }}
                   />
                 </div>
                 <button
                   type="submit"
                   onClick={handleSubmit}
-                  className="btn btn-primary col-2"
+                  className="btn btn-secondary"
+                  style={bstyle}
                 >
                   <FontAwesomeIcon icon={faSearch} size="1x" />
                 </button>

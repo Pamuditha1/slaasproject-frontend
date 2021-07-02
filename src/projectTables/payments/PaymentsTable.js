@@ -2,17 +2,19 @@ import React, {useMemo, useState, useEffect} from 'react'
 import {useTable, useSortBy, useGlobalFilter, useFilters, usePagination} from 'react-table'
 import { Table, Button } from 'reactstrap';
 import Loader from 'react-loader-spinner'
+import { Link, Redirect, Route, Switch} from 'react-router-dom'
 
 import DayPicker from '../../components/DayPicker'
 
 import {COLUMNS, GROUPED_COLUMNS} from './paymentColumns'
 import Pagination from '../common/Pagination'
 import { GlobalFilter } from '../common/GlobalFilter';
+import ExportingButtons from '../common/ExportingButtons';
 
 import {getAllPayments} from '../../services/getAllPayments'
 import {filterPayments} from '../../services/filterPayments'
 
-export const PaymentsTable = () => {
+export const PaymentsTable = (props) => {
     const [payments, setPayments] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [dateRange, setdateRange] = useState({
@@ -21,6 +23,7 @@ export const PaymentsTable = () => {
         show: false
     })
     const [filterNum, setfilterNum] = useState('')
+    const [showFilters, setshowFilters] = useState(false)
 
     const filterRecords = async () => {
         console.log(dateRange)
@@ -60,6 +63,8 @@ export const PaymentsTable = () => {
         setPageSize,
         state,
         setGlobalFilter,
+        selectedFlatRows,
+        exportData,
         prepareRow
     } = useTable({
         columns,
@@ -72,6 +77,14 @@ export const PaymentsTable = () => {
     )
 
     const {globalFilter, pageIndex, pageSize} = state
+
+    const [selectedMails, setselectedMails] = useState([])
+    
+
+    const bstyle = {
+        borderRadius: '30px',
+        boxShadow: "0px 5px 10px grey",
+    }
 
     return (
         <div>
@@ -86,22 +99,25 @@ export const PaymentsTable = () => {
                 <div>
                     
 
-                    <p className="alert alert-info"> {data.length} records.</p>
-                    <div className="row">
+                    <p className="ml-5"> {data.length} payment records.
+                        <span><Button style={bstyle} onClick={() => setshowFilters(!showFilters)} outline color="dark" className="ml-5">Filter Records</Button></span>
+                    </p>
+                    {showFilters && <div className="row ml-5">
                         <div className="col-12">
                             <input type="checkbox" {...getToggleHideAllColumnsProps()} />All Columns
                         </div>
-                        {
+                        <>{
                             allColumns.map(column => (
                                 <div key={column.id} className="col-3" style={{float: "left"}}>
-                                    <label>
+                                    <label key={column.id}>
                                         <input type="checkbox" {...column.getToggleHiddenProps()}/>
-                                        {column.Header}
+                                        <>{column.Header}</>
                                     </label>
                                 </div>
                             ))
-                        }
-                    </div>
+                            
+                        }</>
+                    </div>}
 
                     
                     <DayPicker dateRange={dateRange} setdateRange={setdateRange} filterRecords={filterRecords}/>
@@ -115,8 +131,16 @@ export const PaymentsTable = () => {
                         <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
                     </div>                    */}
 
+                    <div className="row mb-3 mt-5">
+                        <div className="col-6">
+                        </div>
+                        <div className="col-6">
+                            <ExportingButtons exportData={exportData}/>
+                        </div>
+                    </div>
+
                     <Table size="sm"  dark hover {...getTableProps()} responsive style={{height: "200px"}}>
-                        <thead> 
+                        <thead className="text-center"> 
                             {headerGroups.map((headerGroups) => (
                                 <tr {...headerGroups.getHeaderGroupProps()}>
                                     {
@@ -134,7 +158,7 @@ export const PaymentsTable = () => {
                             ))}
                             
                         </thead>
-                        <tbody {...getTableBodyProps()}>
+                        <tbody {...getTableBodyProps()} className="text-center">
                             {
                                 page.map( row => {
                                     prepareRow(row)

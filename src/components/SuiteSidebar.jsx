@@ -12,6 +12,8 @@ import {
   faMoneyBill,
   faBan,
   faSignOutAlt,
+  faUserTie,
+  faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -151,7 +153,7 @@ function SuiteSidebar(props) {
               title="Payments"
               icon={<Icon icon="money" />}
             >
-              <Dropdown.Item
+              {/* <Dropdown.Item
                 eventKey="3-1"
                 style={clicked == "receipt" ? onClickStyle : s}
               >
@@ -167,10 +169,8 @@ function SuiteSidebar(props) {
                     />
                     Receipt
                   </span>
-
-                  {/* </p> */}
                 </Link>
-              </Dropdown.Item>
+              </Dropdown.Item> */}
               <Dropdown.Item
                 eventKey="3-2"
                 style={clicked == "payments" ? onClickStyle : s}
@@ -187,10 +187,51 @@ function SuiteSidebar(props) {
                     />
                     Payments
                   </span>
-
-                  {/* </p> */}
                 </Link>
               </Dropdown.Item>
+              <Dropdown.Menu
+                eventKey="3-2"
+                title="Receipt"
+                icon={<Icon icon="file-text" />}
+                style={clicked == "receipt" ? onClickStyle : s}
+              >
+                <Dropdown.Item
+                  eventKey="3-2-1"
+                  style={clicked == "receipt1" ? onClickStyle : s}
+                >
+                  <Link
+                    to="/user/receipt/member"
+                    style={clicked == "receipt1" ? onClickLink : linkColor}
+                  >
+                    <span onClick={onClick} id="receipt1">
+                      <FontAwesomeIcon
+                        icon={faUserTie}
+                        size="1x"
+                        className="mr-2"
+                      />
+                      Member
+                    </span>
+                  </Link>
+                </Dropdown.Item>
+                <Dropdown.Item
+                  eventKey="3-2-2"
+                  style={clicked == "receipt2" ? onClickStyle : s}
+                >
+                  <Link
+                    to="/user/receipt/new"
+                    style={clicked == "receipt2" ? onClickLink : linkColor}
+                  >
+                    <span onClick={onClick} id="receipt2">
+                      <FontAwesomeIcon
+                        icon={faUserPlus}
+                        size="1x"
+                        className="mr-2"
+                      />
+                      Applicant
+                    </span>
+                  </Link>
+                </Dropdown.Item>
+              </Dropdown.Menu>
             </Dropdown>
             <Nav.Item
               eventKey="10"

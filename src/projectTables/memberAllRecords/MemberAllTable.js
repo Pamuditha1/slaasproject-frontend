@@ -21,6 +21,7 @@ import {getAllMembers} from '../../services/getAllMemberRecords'
 export const MemberAllTable = (props) => {
     const [allMembers, setallMembers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [showFilters, setshowFilters] = useState(false)
 
     useEffect(() => {
         async function fetchMembers() {
@@ -109,6 +110,10 @@ export const MemberAllTable = (props) => {
         // })
         // props.history.push("/user/members/send-emails")
     }
+    const bstyle = {
+        borderRadius: '30px',
+        boxShadow: "0px 5px 10px grey",
+    }
     return (
         <div>
             {
@@ -124,9 +129,13 @@ export const MemberAllTable = (props) => {
                 </>:
                 
                 <div>
-                    
-                    <p className="alert alert-info"> {data.length} records.</p>
-                    <div className="row">
+                    {/* <p className="alert alert-info" style={{borderRadius: '30px'}}> {data.length} records.
+                        <span><Button outline color="dark" className="ml-5">Filter Records</Button></span>
+                    </p> */}
+                    <p className="ml-5"> {data.length} member records.
+                        <span><Button style={bstyle} onClick={() => setshowFilters(!showFilters)} outline color="dark" className="ml-5">Filter Records</Button></span>
+                    </p>
+                    {showFilters && <div className="row ml-5">
                         <div className="col-12">
                             <input type="checkbox" {...getToggleHideAllColumnsProps()} />All Columns
                         </div>
@@ -141,50 +150,39 @@ export const MemberAllTable = (props) => {
                             ))
                             
                         }</>
-                    </div>
+                    </div>}
                     {/* <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/> */}
                     
                     {/* <EmailComponent mails={selectedFlatRows}/> */}
-                    {selectedFlatRows != 0 ?
-
-                        <h6 style={{color: 'green'}} className="mt-2">{selectedFlatRows.length} records selected</h6>
-                        : <p></p>
-                        // <Link to={{
-                        //     pathname: '/user/members/emails',
-                        //     data: {
-                        //         emails: selectedFlatRows
-                        //     }
-                        // }}>
-                        //     <Button color="primary">Send Emails</Button>
-                        // </Link> 
-                                            
-                        
-                    
-                    }
-                    <div className="row ml-3">
-                        {/* <div className="col-5">
-                            <Link to="/user/members/send-emails"> 
-                                <Button onClick={saveMails} color="primary">Send Emails</Button>
-                            </Link>
-                        </div> */}
+                    {/* {selectedFlatRows != 0 ?
+                    <h6 style={{color: 'black'}} className="mt-2">{selectedFlatRows.length} records selected</h6>
+                        : <p></p>                                          
+                    } */}
+                    {/* <div className="row ml-3">
                         <Link to="/user/members/send-emails"
-                        // to={{
-                        //     pathname: '/user/members-table/send-emails',
-                        //     data: {
-                        //         emails: selectedFlatRows
-                        //     }
-                        // }}
                         >
-                            <Button onClick={saveMails} color="primary">Send Emails</Button>
+                            <Button onClick={saveMails} outline color="primary">Send Emails</Button>
                         </Link> 
+                        
                         <div className="col-7 mb-2">
                             <ExportingButtons exportData={exportData}/>
                         </div>
+                    </div> */}
+                    
+                    <div className="row mb-3">
+                        <div className="col-6">
+                        <Link to="/user/members/send-emails"
+                        >
+                            <Button style={bstyle} onClick={saveMails} disabled={selectedFlatRows.length == 0} outline color="dark">Send Emails to {selectedFlatRows.length}</Button>
+                        </Link> 
+                        </div>
+                        <div className="col-6">
+                            <ExportingButtons exportData={exportData}/>
+                        </div>
                     </div>
-                    
-                    
+
                     <Table size="sm" dark hover {...getTableProps()} responsive style={{height: "200px"}}>
-                        <thead> 
+                        <thead className="text-center"> 
                             {headerGroups.map((headerGroups) => (
                                 <tr {...headerGroups.getHeaderGroupProps()}>
                                     {
@@ -203,7 +201,7 @@ export const MemberAllTable = (props) => {
                             ))}
                             
                         </thead>
-                        <tbody {...getTableBodyProps()}>
+                        <tbody {...getTableBodyProps()} className="text-center">
                             {
                                 page.map( row => {
                                     prepareRow(row)

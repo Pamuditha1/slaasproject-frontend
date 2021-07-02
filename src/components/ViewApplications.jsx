@@ -2,14 +2,15 @@ import React from "react";
 import { ApplicationsTable } from "../projectTables/applications/ApplicationsTable";
 
 function ViewApplications() {
+  const headStyle = {
+    textShadow: "0px 0px 1px #111111",
+  };
+
   return (
     <div>
-      <h6
-        style={{ backgroundColor: "#e95045" }}
-        className="pl-5 pt-1 pb-1 mb-5"
-      >
-        Applications
-      </h6>
+      <h4 className="mt-5 mb-5 text-center" style={headStyle}>
+        Membership Applications
+      </h4>
       <ApplicationsTable />
     </div>
   );

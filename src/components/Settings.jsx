@@ -5,7 +5,7 @@ import SettingItem from "./SettingItem";
 function Settings() {
   return (
     <div>
-      <div className="row mr-3">
+      <div className="row mr-3 mt-5">
         <SettingItem name="Membership Grades" link="/user/settings/grades" />
         <SettingItem
           name="Membership Sections"

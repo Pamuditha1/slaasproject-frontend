@@ -18,6 +18,7 @@ import getExportFileBlob from '../common/exportFunction'
 export const MemberSearchTable = (props) => {
     const [searchedMembers, setsearchedMembers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [showFilters, setshowFilters] = useState(false)
 
     const columns = useMemo(() => COLUMNS, [])
 
@@ -87,6 +88,11 @@ export const MemberSearchTable = (props) => {
         console.log(selectedFlatRows[0].original)
         props.setList(list)
     }
+
+    const bstyle = {
+        borderRadius: '30px',
+        boxShadow: "0px 5px 10px grey",
+    }
     return (
         <div>
             {
@@ -98,21 +104,26 @@ export const MemberSearchTable = (props) => {
                     width={300}
                 /> :
                 <div>
-                    
-                    <div className="row">
+                    <p className="ml-5"> 
+                    {/* {data.length} member records. */}
+                        <span><Button style={bstyle} onClick={() => setshowFilters(!showFilters)} outline color="dark">Filter Records</Button></span>
+                    </p>
+                    {showFilters && <div className="row ml-5">
                         <div className="col-12">
                             <input type="checkbox" {...getToggleHideAllColumnsProps()} />All Columns
                         </div>
-                        {   allColumns.map(column => (
+                        <>{
+                            allColumns.map(column => (
                                 <div key={column.id} className="col-3" style={{float: "left"}}>
-                                    <label>
+                                    <label key={column.id}>
                                         <input type="checkbox" {...column.getToggleHiddenProps()}/>
-                                        {column.Header}
+                                        <>{column.Header}</>
                                     </label>
                                 </div>
-                            ))                            
-                        }
-                    </div>
+                            ))
+                            
+                        }</>
+                    </div>}
                     {/* <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/> */}
                     {/* <EmailComponent mails={selectedFlatRows}/> */}
                     {/* {selectedFlatRows &&
@@ -128,9 +139,9 @@ export const MemberSearchTable = (props) => {
                         // <Button color="primary">Send Emails</Button>
                         // </Link>  
                     } */}
-                    {selectedFlatRows != 0 ?
+                    {/* {selectedFlatRows != 0 ?
                     <h6 style={{color: 'green'}}>{selectedFlatRows.length} records selected</h6>
-                    : <p></p>}
+                    : <p></p>} */}
 
                     {/* <div className="row">
                         <div className="col-5">
@@ -142,12 +153,25 @@ export const MemberSearchTable = (props) => {
                             <ExportingButtons exportData={exportData}/>
                         </div>
                     </div> */}
-                    <Link to="/user/members/send-emails">
+                    {/* <Link to="/user/members/send-emails">
                             <Button onClick={saveMails} color="primary" className="ml-3">Send Emails</Button>
+                        </Link>  */}
+
+
+                    <div className="row mb-3">
+                        <div className="col-6">
+                        <Link to="/user/members/send-emails"
+                        >
+                            <Button style={bstyle} onClick={saveMails} disabled={selectedFlatRows.length == 0} outline color="dark">Send Emails to {selectedFlatRows.length}</Button>
                         </Link> 
+                        </div>
+                        <div className="col-6">
+                            <ExportingButtons exportData={exportData}/>
+                        </div>
+                    </div>
                     
                     <Table size="sm" dark hover {...getTableProps()} responsive style={{height: "200px"}}>
-                        <thead> 
+                        <thead className="text-center"> 
                             {headerGroups.map((headerGroups) => (
                                 <tr {...headerGroups.getHeaderGroupProps()}>
                                     {
@@ -165,7 +189,7 @@ export const MemberSearchTable = (props) => {
                             ))}
                             
                         </thead>
-                        <tbody {...getTableBodyProps()}>
+                        <tbody {...getTableBodyProps()} className="text-center">
                             {page.map( row => {
                                     prepareRow(row)
                                     return (

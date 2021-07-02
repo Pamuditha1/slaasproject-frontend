@@ -5,15 +5,25 @@ import { Button } from "reactstrap";
 import "../css/startPageStyle.css";
 
 let welcome = {
-  marginTop: "6%",
+  // marginTop: "6%",
   textShadow: "1px 1px 1px #57585a",
+  color: "white",
+};
+
+let backCover = {
+  position: "absolute",
+  backgroundColor: "black",
+  height: "100%",
+  width: "100%",
+  marginLeft: "20%",
 };
 
 class StartPage extends Component {
   render() {
     return (
-      <div className="container">
+      <div className="container-fulid homepage-bgimage">
         <h1 style={welcome}>Welcome !.</h1>
+        {/* <div className="row" style={{ marginTop: "10%" }}> */}
         <div className="row" style={{ marginTop: "10%" }}>
           <div className="col-md col-sm-12">
             <Link to="/applicant">

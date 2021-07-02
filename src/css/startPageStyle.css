@@ -39,3 +39,11 @@ h1{
     text-align: center;
 }
 
+.homepage-bgimage {
+    background: url("../images/cover.webp");
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+

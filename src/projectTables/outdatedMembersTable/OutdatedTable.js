@@ -27,6 +27,8 @@ export const OutdatedTable = (props) => {
     const [isModalOpen, setisModalOpen] = useState(false)
     const toggle = () => setisModalOpen(!isModalOpen);
 
+    const [showFilters, setshowFilters] = useState(false)
+    
     useEffect(() => { 
         async function fetchOutdated() {
             setIsLoading(true)
@@ -104,6 +106,10 @@ export const OutdatedTable = (props) => {
         // console.log(selectedFlatRows[0].original)
         props.setList(list)
     }
+    const bstyle = {
+        borderRadius: '30px',
+        boxShadow: "0px 5px 10px grey",
+    }
 
     return (
         <div>
@@ -117,23 +123,25 @@ export const OutdatedTable = (props) => {
                 /> :
                 <div>
                     
-                    <div className="row">
-                        <p className="alert alert-info ml-2"> {data.length} records.</p>
+                    <p className="ml-5"> {data.length} member records.
+                        <span><Button style={bstyle} onClick={() => setshowFilters(!showFilters)} outline color="dark" className="ml-5">Filter Records</Button></span>
+                    </p>
+                    {showFilters && <div className="row ml-5">
                         <div className="col-12">
                             <input type="checkbox" {...getToggleHideAllColumnsProps()} />All Columns
                         </div>
-                        {
+                        <>{
                             allColumns.map(column => (
                                 <div key={column.id} className="col-3" style={{float: "left"}}>
                                     <label key={column.id}>
-                                        <input type="checkbox" key={column.id} {...column.getToggleHiddenProps()}/>
-                                        {column.Header}
+                                        <input type="checkbox" {...column.getToggleHiddenProps()}/>
+                                        <>{column.Header}</>
                                     </label>
                                 </div>
                             ))
                             
-                        }
-                    </div>
+                        }</>
+                    </div>}
                     {/* <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/> */}
                     
                     {/* <EmailComponent mails={selectedFlatRows}/> */}
@@ -164,10 +172,20 @@ export const OutdatedTable = (props) => {
                         </div>
                     </div> */}
 
-                        <Link to="/user/outdated-list/send-emails">
+                        {/* <Link to="/user/outdated-list/send-emails">
                             <Button onClick={saveMails} color="primary">Send Emails</Button>
+                        </Link>  */}
+                    <div className="row mb-3">
+                        <div className="col-6">
+                        <Link to="/user/members/send-emails"
+                        >
+                            <Button style={bstyle} onClick={saveMails} disabled={selectedFlatRows.length == 0} outline color="dark">Send Emails to {selectedFlatRows.length}</Button>
                         </Link> 
-                    
+                        </div>
+                        <div className="col-6">
+                            <ExportingButtons exportData={exportData}/>
+                        </div>
+                    </div>
                     
                     <Table size="sm" dark hover {...getTableProps()} responsive style={{height: "200px"}}>
                         <thead style={{textAlign: 'center'}}> 

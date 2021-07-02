@@ -32,8 +32,8 @@ function NewApplicantLogin(props) {
     e.preventDefault();
     // setLoading(true);
     const result = await applicantLogin(loginData);
-    console.log("Res", result);
-    if (result) {
+    // console.log("Res", result);
+    if (result.jwt) {
       localStorage.setItem("token", result.jwt);
       const jwt = localStorage.getItem("token");
       let type = jwtDecode(jwt).type;
