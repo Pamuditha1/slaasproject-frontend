@@ -177,10 +177,10 @@ export const OutdatedTable = (props) => {
                         </Link>  */}
                     <div className="row mb-3">
                         <div className="col-6">
-                        <Link to="/user/members/send-emails"
+                        {/* <Link to="/user/members/send-emails"
                         >
                             <Button style={bstyle} onClick={saveMails} disabled={selectedFlatRows.length == 0} outline color="dark">Send Emails to {selectedFlatRows.length}</Button>
-                        </Link> 
+                        </Link>  */}
                         </div>
                         <div className="col-6">
                             <ExportingButtons exportData={exportData}/>

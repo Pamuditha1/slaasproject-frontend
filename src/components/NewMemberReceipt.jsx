@@ -299,7 +299,7 @@ function NewMemberReceipt() {
                 Description
               </label>
               <input
-                onChangeD={onchangeData}
+                onChange={onchangeData}
                 className="form-control col-11 ml-3"
                 type="text"
                 id="description"

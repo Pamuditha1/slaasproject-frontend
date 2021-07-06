@@ -28,6 +28,13 @@ function OneCommittee({ comm }) {
       const records = await getCommMembers(comm);
       //   console.log(records);
       setcommMembers(records);
+      setnewMember({
+        position: "",
+        from: "",
+        to: "",
+        membershipNo: "",
+        name: "",
+      });
       console.log(records);
     }
     fetchSections();
@@ -115,6 +122,17 @@ function OneCommittee({ comm }) {
     setisUpdating(false);
   };
 
+  const onCancel = () => {
+    setnewMember({
+      position: "",
+      from: "",
+      to: "",
+      membershipNo: "",
+      name: "",
+    });
+    setisUpdating(false);
+  };
+
   // const viewModal = (m) => {
   //   console.log(m);
   //   setmodalPosition(m);
@@ -122,19 +140,47 @@ function OneCommittee({ comm }) {
   //   setmodalPosition(m);
   //   console.log(modalPosition);
   // };
+  const subheadStyle = {
+    backgroundColor: "#002263",
+    borderRadius: "20px",
+    boxShadow: "0px 5px 5px grey",
+    color: "white",
+  };
+  const buttonStyleC = {
+    boxShadow: "0px 5px 10px grey",
+    fontWeight: "bold",
+    backgroundColor: "#005336",
+    borderRadius: "40px",
+  };
+  const buttonStyleU = {
+    boxShadow: "0px 5px 10px grey",
+    fontWeight: "bold",
+    backgroundColor: "#fdd30f",
+    borderRadius: "40px",
+  };
+  const buttonStyle = {
+    boxShadow: "0px 5px 10px grey",
+    fontWeight: "bold",
+    borderRadius: "40px",
+  };
 
   return (
     <div>
       {/* <h4>{comm}</h4> */}
-      <h4
+      {/* <h4
         style={{ backgroundColor: "#e95045" }}
         className="pl-5 pt-1 pb-1 mb-5 mt-5"
       >
         {comm}
-      </h4>
+      </h4> */}
+      <h6 style={subheadStyle} className="pl-5 pt-2 pb-2 m-5">
+        {comm}
+      </h6>
 
       {/* <div className="row"> */}
-      <h6 className="pl-5 pt-1 pb-1 mb-3 mt-3">Assign New Position</h6>
+      <h5 className="mb-5 mt-5 text-center font-weight-bold">
+        Assign New Position
+      </h5>
       {/* </div> */}
       <div className="row">
         <div className="col-6">
@@ -185,7 +231,7 @@ function OneCommittee({ comm }) {
               />
             </div>
 
-            <div className="col-5">
+            <div className="col-4">
               Name
               <input
                 onChange={addChange}
@@ -197,13 +243,30 @@ function OneCommittee({ comm }) {
             </div>
             {/* <div className="col-3"> */}
             {!isUpdating ? (
-              <button onClick={onAdd} className="btn btn-success col-2 mt-3">
+              <button
+                onClick={onAdd}
+                style={buttonStyleC}
+                className="btn btn-success col-2 mt-3"
+              >
                 Save
               </button>
             ) : (
-              <button onClick={onUpdate} className="btn btn-warning col-2 mt-3">
-                Update
-              </button>
+              <>
+                <button
+                  style={buttonStyle}
+                  onClick={onCancel}
+                  className="btn btn-secondary col-1 mt-3 mr-3"
+                >
+                  Cancel
+                </button>
+                <button
+                  style={buttonStyleU}
+                  onClick={onUpdate}
+                  className="btn btn-warning col-1 mt-3"
+                >
+                  Update
+                </button>
+              </>
             )}
 
             {/* </div> */}
@@ -211,7 +274,9 @@ function OneCommittee({ comm }) {
         </div>
       </div>
 
-      <h6 className="pl-5 pt-1 pb-1 mb-3 mt-5">Committee Members</h6>
+      <h5 className="mb-5 mt-5 text-center font-weight-bold">
+        Committee Members
+      </h5>
       <Table borderless className="mt-5 text-center">
         <thead>
           <tr>
@@ -236,6 +301,7 @@ function OneCommittee({ comm }) {
                   <td>
                     <button
                       // onClick={() => viewModal(m)}
+                      style={buttonStyle}
                       onClick={() => updateSet(m)}
                       className="btn btn-outline-warning"
                     >
@@ -245,7 +311,10 @@ function OneCommittee({ comm }) {
                       to={`/user/member/profile/${m.membershipNo}`}
                       target="_blank"
                     >
-                      <button className="btn btn-outline-primary ml-3">
+                      <button
+                        style={buttonStyle}
+                        className="btn btn-outline-primary ml-3"
+                      >
                         Profile
                       </button>
                     </Link>

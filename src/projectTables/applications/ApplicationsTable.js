@@ -21,6 +21,7 @@ import {getAllMembers} from '../../services/getAllMemberRecords'
 export const ApplicationsTable = (props) => {
     const [allMembers, setallMembers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [showFilters, setshowFilters] = useState(false)
 
     useEffect(() => {
         async function fetchMembers() {
@@ -112,6 +113,11 @@ export const ApplicationsTable = (props) => {
         // })
         // props.history.push("/user/members/send-emails")
     }
+
+    const bstyle = {
+        borderRadius: '30px',
+        boxShadow: "0px 5px 10px grey",
+    }
     return (
         <div>
             {
@@ -128,8 +134,10 @@ export const ApplicationsTable = (props) => {
                 
                 <div>
                     
-                    <p className="alert alert-info"> {data.length} records.</p>
-                    <div className="row">
+                    <p className="ml-5"> {data.length} membership applications.
+                        <span><Button style={bstyle} onClick={() => setshowFilters(!showFilters)} outline color="dark" className="ml-5">Filter Records</Button></span>
+                    </p>
+                    {showFilters && <div className="row ml-5">
                         <div className="col-12">
                             <input type="checkbox" {...getToggleHideAllColumnsProps()} />All Columns
                         </div>
@@ -144,11 +152,11 @@ export const ApplicationsTable = (props) => {
                             ))
                             
                         }</>
-                    </div>
+                    </div>}
                     {/* <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/> */}
                     
                     {/* <EmailComponent mails={selectedFlatRows}/> */}
-                    {selectedFlatRows != 0 ?
+                    {/* {selectedFlatRows != 0 ?
 
                         <h6 style={{color: 'green'}} className="mt-2">{selectedFlatRows.length} records selected</h6>
                         : <p></p>
@@ -160,27 +168,16 @@ export const ApplicationsTable = (props) => {
                         // }}>
                         //     <Button color="primary">Send Emails</Button>
                         // </Link> 
-                                            
-                        
-                    
-                    }
-                    <div className="row ml-3">
-                        {/* <div className="col-5">
-                            <Link to="/user/members/send-emails"> 
-                                <Button onClick={saveMails} color="primary">Send Emails</Button>
-                            </Link>
-                        </div> */}
+                    } */}
+
+                    <div className="row mb-3">
+                        <div className="col-6">
                         {/* <Link to="/user/members/send-emails"
-                        // to={{
-                        //     pathname: '/user/members-table/send-emails',
-                        //     data: {
-                        //         emails: selectedFlatRows
-                        //     }
-                        // }}
                         >
-                            <Button onClick={saveMails} color="primary">Send Emails</Button>
+                            <Button style={bstyle} onClick={saveMails} disabled={selectedFlatRows.length == 0} outline color="dark">Send Emails to {selectedFlatRows.length}</Button>
                         </Link>  */}
-                        <div className="col-7 mb-2">
+                        </div>
+                        <div className="col-6">
                             <ExportingButtons exportData={exportData}/>
                         </div>
                     </div>

@@ -72,13 +72,26 @@ function Operations({ setArr }) {
     height: "auto",
     borderRadius: "30px",
     padding: "20px",
+    boxShadow: "0px 10px 10px grey",
+  };
+
+  const headStyle = {
+    textShadow: "0px 0px 1px #111111",
+  };
+
+  const buttonStyle = {
+    boxShadow: "0px 5px 10px black",
+    fontWeight: "bold",
+    borderRadius: "40px",
   };
 
   return (
     // <div className="row">
     <div className="container mt-5">
       <div className="col-12 mt-5 text-center">
-        <h5>Membership Management Operations</h5>
+        <h4 className="mt-5 mb-5 text-center" style={headStyle}>
+          Membership Management Operations
+        </h4>
       </div>
       <div className="row">
         <div className="col-2"></div>
@@ -93,10 +106,11 @@ function Operations({ setArr }) {
             </div>
             <div className="col-4">
               <Button
+                style={buttonStyle}
                 onClick={toggle}
                 outline
                 color="light"
-                className="float-right"
+                className="float-right pl-3 pr-3"
               >
                 Calculate Arrears
               </Button>
@@ -113,10 +127,11 @@ function Operations({ setArr }) {
             </div>
             <div className="col-4">
               <Button
+                style={buttonStyle}
                 onClick={sendMails}
                 outline
                 color="light"
-                className="float-right"
+                className="float-right pl-3 pr-3"
               >
                 Send Reminder Mails
               </Button>
@@ -133,10 +148,11 @@ function Operations({ setArr }) {
             </div>
             <div className="col-4">
               <Button
+                style={buttonStyle}
                 onClick={terminate}
                 outline
                 color="light"
-                className="float-right"
+                className="float-right pl-3 pr-3"
               >
                 Auto Terminate
               </Button>

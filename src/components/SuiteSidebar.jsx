@@ -51,6 +51,12 @@ function SuiteSidebar(props) {
     textDecoration: "none",
   };
 
+  const buttonStyle = {
+    boxShadow: "0px 10px 10px black",
+    fontWeight: "bold",
+    borderRadius: "40px",
+  };
+
   return (
     <div className="sidenav">
       <Sidenav defaultOpenKeys={["2"]} activeKey="1">
@@ -358,6 +364,7 @@ function SuiteSidebar(props) {
                 style={clicked == "logout" ? onClickLink : linkColor}
               >
                 <button
+                  style={buttonStyle}
                   onClick={logout}
                   id="logout"
                   className="btn btn-outline-dark text-light float-center"

@@ -29,11 +29,27 @@ function OneCommityHistory({ comm }) {
     });
   });
 
+  const subheadStyle = {
+    backgroundColor: "#002263",
+    borderRadius: "20px",
+    boxShadow: "0px 5px 5px grey",
+    color: "white",
+  };
+
+  const timeheadStyle = {
+    backgroundColor: "#69706b",
+    borderRadius: "20px",
+    boxShadow: "0px 5px 5px grey",
+    color: "white",
+  };
+
   return (
     <div>
       <div className="row">
         <div className="col-12 mt-5">
-          <h5>Former {comm} Committees</h5>
+          <h6 style={subheadStyle} className="pt-2 pb-2 m-5 text-center">
+            Former {comm}
+          </h6>
         </div>
         {dateRanges &&
           dateRanges.map((r) => {
@@ -42,10 +58,13 @@ function OneCommityHistory({ comm }) {
             });
             return (
               <div className="container mt-5">
-                <h6 className="row">
+                <p
+                  className="row pt-1 pb-1 pl-5 font-weight-bold"
+                  style={timeheadStyle}
+                >
                   From {new Date(r.fromD).toLocaleDateString()} To{" "}
                   {new Date(r.toD).toLocaleDateString()}
-                </h6>
+                </p>
                 <Table borderless className="mt-3 text-center">
                   <thead>
                     <tr>

@@ -84,6 +84,22 @@ function SendMails(props) {
     // setloading(false);
   };
 
+  const headStyle = {
+    textShadow: "0px 0px 1px #111111",
+  };
+  const buttonStyle = {
+    boxShadow: "0px 5px 5px grey",
+    fontWeight: "bold",
+    borderRadius: "60px",
+    backgroundColor: "grey",
+  };
+  const buttonStyleC = {
+    boxShadow: "0px 5px 10px grey",
+    fontWeight: "bold",
+    backgroundColor: "#005336",
+    borderRadius: "30px",
+  };
+
   return (
     <div>
       {loading ? (
@@ -99,12 +115,9 @@ function SendMails(props) {
         </>
       ) : (
         <form className="container" autoComplete="off">
-          <h6
-            style={{ backgroundColor: "#e95045" }}
-            className="pl-5 pt-1 pb-1 mb-5"
-          >
+          <h4 className="mt-5 mb-5 text-center" style={headStyle}>
             Send Emails
-          </h6>
+          </h4>
 
           <div className="row">
             <div className="row ml-3 mb-3">
@@ -115,7 +128,7 @@ function SendMails(props) {
                   title="Sections"
                 />
               </div>
-              <div className="col-3 ml-3">
+              <div className="col-3 ml-5">
                 <SendMailButtons
                   array={membershipGrades}
                   setselected={setselected}
@@ -124,7 +137,7 @@ function SendMails(props) {
               </div>
             </div>
 
-            <div className="form-group col-12">
+            <div className="form-group col-12 mt-5">
               <div>
                 <label htmlFor="to" className="col-12">
                   To :{" "}
@@ -152,8 +165,9 @@ function SendMails(props) {
                   name="to"
                 />
                 <button
+                  style={buttonStyle}
                   type="button"
-                  className="btn btn-success ml-2 col-1"
+                  className="btn btn-success ml-2"
                   onClick={ontoAdd}
                 >
                   {" "}
@@ -238,11 +252,12 @@ function SendMails(props) {
                     </div> */}
 
           <button
+            style={buttonStyleC}
             type="submit"
             onClick={onSubmit}
-            className="btn btn-primary float-right m-1"
+            className="btn btn-primary float-right mb-5 mt-3 pl-5 pr-5"
           >
-            Send Mails
+            Send
           </button>
           {/* <button type="submit" onClick={() => setStep(1)} className="btn btn-primary float-right m-1">Back</button> */}
         </form>
