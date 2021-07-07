@@ -1,6 +1,7 @@
 import React from "react";
-// import { Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
+import { oneCalculateArrears } from "../services/getOneArrears";
 
 function PaymentRecordsForReceipt({ paymentRecords, membershipNo }) {
   const backgroundStyle = {
@@ -15,8 +16,18 @@ function PaymentRecordsForReceipt({ paymentRecords, membershipNo }) {
 
   const bstyle = {
     borderRadius: "30px",
-    boxShadow: "0px 5px 10px grey",
-    color: "black",
+    boxShadow: "0px 3px 10px black",
+    color: "white",
+  };
+  const bstyleCal = {
+    borderRadius: "30px",
+    boxShadow: "0px 3px 10px black",
+    color: "white",
+    backgroundColor: "#002263",
+  };
+
+  const onCalArrears = async (id) => {
+    await oneCalculateArrears(id);
   };
 
   return (
@@ -27,7 +38,19 @@ function PaymentRecordsForReceipt({ paymentRecords, membershipNo }) {
         </p>
       ) : (
         <p className="col-12">
-          <strong>No Record</strong>
+          Arrears to pay - <strong>No Record</strong>
+        </p>
+      )}
+      {paymentRecords.arrearsUpdated ? (
+        <p className="col-12">
+          Arrears Updated -{" "}
+          <strong>
+            {new Date(paymentRecords.arrearsUpdated).toLocaleDateString()}
+          </strong>
+        </p>
+      ) : (
+        <p className="col-12">
+          Arrears Updated - <strong>No Record</strong>
         </p>
       )}
       {paymentRecords.lastPaidForYear ? (
@@ -37,7 +60,7 @@ function PaymentRecordsForReceipt({ paymentRecords, membershipNo }) {
         </p>
       ) : (
         <p className="col-12">
-          <strong>No Record</strong>
+          Last payment for membership year - <strong>No Record</strong>
         </p>
       )}
       {paymentRecords.lastMembershipPaid ? (
@@ -49,7 +72,7 @@ function PaymentRecordsForReceipt({ paymentRecords, membershipNo }) {
         </p>
       ) : (
         <p className="col-12">
-          <strong>No Record</strong>
+          Last membership payment date - <strong>No Record</strong>
         </p>
       )}
       {paymentRecords.memPaidLast ? (
@@ -58,15 +81,27 @@ function PaymentRecordsForReceipt({ paymentRecords, membershipNo }) {
         </p>
       ) : (
         <p className="col-12">
-          <strong>No Record</strong>
+          Last payment date - <strong>No Record</strong>
         </p>
       )}
       <center>
         <HashLink to={`/user/member/profile/${membershipNo}#paymentRecords`}>
-          <button className="btn btn-light" style={bstyle}>
+          <button
+            className="btn btn-dark mt-3"
+            style={bstyle}
+            disabled={!paymentRecords.memberID}
+          >
             View Payment Records
           </button>
         </HashLink>
+        <button
+          onClick={() => onCalArrears(paymentRecords.memberID)}
+          className="btn btn-dark ml-2 mt-3"
+          style={bstyleCal}
+          disabled={!paymentRecords.memberID}
+        >
+          Calculate Arrears
+        </button>
       </center>
     </div>
   );

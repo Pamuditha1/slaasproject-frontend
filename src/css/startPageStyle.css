@@ -8,9 +8,15 @@ h1{
     
     padding: 20%;
     color: white;
-    margin: 10px;
-    width: 100%;
-    height: 200px
+    width: 80%;
+    height: 300px;
+    align-items: center;
+    /* box-shadow: "0px 30px 5px black"; */
+    background-color: #28272d;  
+    opacity: 70%;
+    border-radius: 50px;
+    z-index: +3;
+
 }
 .selectionButton:hover {
     opacity: 90%;
@@ -18,18 +24,26 @@ h1{
 
 #appBtn {
     background-color: #28272d;   
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.19);  */
+    box-shadow: "0px 30px 5px black";
     border-radius: 50px;
+    margin-left: 70px;
+    z-index: +3;
 }
 #useBtn {
-    background-color: #191938;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #28272d;  
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+    box-shadow: "0px 30px 5px black";
     border-radius: 50px;
+    margin-left: 35px;
+    z-index: +3;
 }
 #memBtn {
-    background-color: #57585a;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #28272d;  
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+    box-shadow: "0px 30px 5px black";
     border-radius: 50px;
+    z-index: +3;
 }
 .textStyle {
     
@@ -40,10 +54,21 @@ h1{
 }
 
 .homepage-bgimage {
-    background: url("../images/cover.webp");
+    /* background: url("../images/cover.webp"); */
+    /* background-color: black; */
     height: 100vh;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-  }
+    z-index: -1;
+}
+
+#video {
+    position: fixed;
+    z-index: 0;
+    width: 100%;
+    opacity: 0.7;
+    
+    /* background-color: black; */
+}
 

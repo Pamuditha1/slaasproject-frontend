@@ -36,6 +36,8 @@ function MemberReceipt() {
     memPaidLast: null,
     lastPaidForYear: null,
     arrearsConti: null,
+    arrearsUpdated: null,
+    memberID: null,
   });
   const [totalState, setTotalState] = useState(0);
   const [type, settype] = useState("member");
@@ -68,6 +70,8 @@ function MemberReceipt() {
           lastPaidForYear: res.data.lastPaidForYear,
           lastMembershipPaid: res.data.lastMembershipPaid,
           arrearsConti: res.data.arrearsConti,
+          arrearsUpdated: res.data.arrearsUpdated,
+          memberID: res.data.memberID,
         };
         setPaymentData({
           ...paymentData,
@@ -108,6 +112,8 @@ function MemberReceipt() {
       memPaidLast: null,
       lastPaidForYear: null,
       arrearsConti: null,
+      arrearsUpdated: null,
+      memberID: null,
     });
   };
   const onchange = (e) => {

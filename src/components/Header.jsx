@@ -10,7 +10,7 @@ class Header extends Component {
     color: "white",
     fontSize: "30px",
     fontFamily: "Times New Roman",
-    boxShadow: "0px 5px 10px grey",
+    boxShadow: "0px 7px 10px black",
     textShadow: "2px 2px 4px #000000",
   };
   imageStyle = {
@@ -23,7 +23,7 @@ class Header extends Component {
     marginTop: "5px",
     borderRadius: "50px",
     boxShadow:
-      " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+      " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 30px 0 rgba(0, 0, 0, 0.3)",
   };
   render() {
     return (

@@ -6,6 +6,7 @@ import Main from './components/Main'
 import AutoSuggestNew from './testingComponents/AutoSuggestNew';
 import Search from './testingComponents/searchAutoComplete/AutoComplete'
 import{ MemberProfileWUpdate} from './components/MemberProfileWUpdate'
+import BackgroundVideo from './components/video/BackgroundVideo';
 
 class App extends Component{
 
@@ -15,6 +16,7 @@ class App extends Component{
     return (
       <>
         <Main /> 
+        {/* <BackgroundVideo /> */}
         {/* <MemberProfileWUpdate /> */}
         {/* <AutoSuggestNew /> */}
         {/* <Autosuggest
