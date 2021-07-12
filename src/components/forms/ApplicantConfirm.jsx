@@ -70,14 +70,39 @@ export const ApplicantConfirm = ({
   } = memberData;
   // const {receivedDate,paymentDoneDate,paymentMethod,amount,bank,branch,accountNo} = paymentData
 
+  const headStyle = {
+    textShadow: "0px 0px 1px #111111",
+  };
+  const subheadStyle = {
+    backgroundColor: "#fdd30f",
+    borderRadius: "20px",
+    color: "black",
+    boxShadow: "0px 5px 5px grey",
+  };
+  const buttonStyle = {
+    boxShadow: "0px 5px 10px grey",
+    fontWeight: "bold",
+    borderRadius: "30px",
+    width: "150px",
+  };
+  const buttonStyleC = {
+    boxShadow: "0px 5px 10px grey",
+    fontWeight: "bold",
+    backgroundColor: "#005336",
+    borderRadius: "30px",
+  };
+
   console.log("File Previewing", filePreview);
   return (
-    <>
+    <div className="mt-1">
       {/* <div className="col-4">                
       <img style={{ width: "100%" }, { height: "200px"}} src={file} />
     </div> */}
+      <h4 className="mt-5 mb-5 text-center" style={headStyle}>
+        Details Confirmation
+      </h4>
       <div className="row" id="personal">
-        <h6 className="col-12" style={{ backgroundColor: "yellow" }}>
+        <h6 style={subheadStyle} className="col-12 pl-5 pt-2 pb-2 mr-3 mb-5">
           Personal Details
         </h6>
         <p className="col-3">Name with Initials : </p>
@@ -95,7 +120,9 @@ export const ApplicantConfirm = ({
         <p className="col-3">NIC : </p>
         <strong className="col-9">{nic}</strong>
         <p className="col-3">Date of Birth : </p>
-        <strong className="col-9">{new Date(dob).toLocaleDateString()}</strong>
+        <strong className="col-9">
+          {dob && new Date(dob).toLocaleDateString()}
+        </strong>
         <p className="col-3">Residence Address :</p>
         <strong className="col-9">
           {resAddOne ? `${resAddOne}` : null}
@@ -125,7 +152,10 @@ export const ApplicantConfirm = ({
       </div>
 
       <div className="row" id="official">
-        <h6 className="col-12" style={{ backgroundColor: "yellow" }}>
+        <h6
+          style={subheadStyle}
+          className="col-12 pl-5 pt-2 pb-2 mr-3 mb-5 mt-5"
+        >
           Official Details
         </h6>
         <p className="col-3">Designation : </p>
@@ -153,7 +183,10 @@ export const ApplicantConfirm = ({
       </div>
 
       <div className="row" id="professional">
-        <h6 className="col-12" style={{ backgroundColor: "yellow" }}>
+        <h6
+          style={subheadStyle}
+          className="col-12 pl-5 pt-2 pb-2 mr-3 mb-5 mt-5"
+        >
           Professional Details
         </h6>
         <p className="col-3">Profession : </p>
@@ -184,7 +217,10 @@ export const ApplicantConfirm = ({
       </div>
 
       <div className="row" id="membership">
-        <h6 className="col-12" style={{ backgroundColor: "yellow" }}>
+        <h6
+          style={subheadStyle}
+          className="col-12 pl-5 pt-2 pb-2 mr-3 mb-5 mt-5"
+        >
           Membership Details
         </h6>
         {/* <div className="col-12 mt-3 mb-3">
@@ -268,10 +304,11 @@ export const ApplicantConfirm = ({
 
       <Button
         color="primary"
-        className="float-right m-1"
+        className="float-right m-3 pr-4 pl-4"
+        style={buttonStyleC}
         onClick={() => submit()}
       >
-        Confirm & Continue
+        Confirm & Submit
         <span>
           {loading && (
             <Loader type="ThreeDots" color="white" height={30} width={30} />
@@ -279,15 +316,16 @@ export const ApplicantConfirm = ({
         </span>
       </Button>
       <Button
-        color="secondary"
-        className="float-right m-1"
+        color="dark"
+        className="float-left m-3 mb-5"
         onClick={() => prevStep()}
+        style={buttonStyle}
       >
         Back
       </Button>
 
       <div className="mb-5"></div>
-    </>
+    </div>
   );
 };
 

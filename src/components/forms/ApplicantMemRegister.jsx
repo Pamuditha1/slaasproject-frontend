@@ -177,7 +177,7 @@ function ApplicantMemRegister(props) {
     console.log(nameOfImage);
     console.log("MemId", localStorage.getItem("id"));
 
-    const jwt = localStorage.getItem("token");
+    const jwt = localStorage.getItem("ApplicantToken");
     let username = "";
     let id = "";
     if (jwt) username = jwtDecode(jwt).username;
@@ -196,8 +196,8 @@ function ApplicantMemRegister(props) {
     let result = await registerMember(member);
     console.log("Req result", result);
     if (result) {
-      localStorage.removeItem("token");
-      localStorage.setItem("token", result.jwt);
+      localStorage.removeItem("ApplicantToken");
+      localStorage.setItem("ApplicantToken", result.jwt);
     }
     onImageSubmit();
 
@@ -207,15 +207,38 @@ function ApplicantMemRegister(props) {
   const reload = () => {
     window.location.reload(false);
   };
+  const headStyle = {
+    textShadow: "0px 0px 1px #111111",
+  };
+  const subheadStyle = {
+    backgroundColor: "#002263",
+    borderRadius: "20px",
+    boxShadow: "0px 5px 5px grey",
+    color: "white",
+  };
+  const buttonStyle = {
+    boxShadow: "0px 5px 10px grey",
+    fontWeight: "bold",
+    borderRadius: "40px",
+  };
+  const buttonStyleC = {
+    boxShadow: "0px 5px 10px grey",
+    fontWeight: "bold",
+    backgroundColor: "#005336",
+    borderRadius: "40px",
+  };
 
   switch (step) {
     case 1:
       return (
-        <>
-          <h4 className="pl-5 pt-1 pb-1 mt-3 mb-5 text-center">
+        <div className="mt-1">
+          {/* <h4 className="pl-5 pt-1 pb-1 mt-3 mb-5 text-center">
+            Application for Membership
+          </h4> */}
+          <h4 className="mt-5 mb-5 text-center" style={headStyle}>
             Application for Membership
           </h4>
-          <h6 style={{ backgroundColor: "#e95045" }} className="pl-5 pt-1 pb-1">
+          <h6 style={subheadStyle} className="pl-5 pt-2 pb-2 mr-3 mb-5">
             Personal Details
           </h6>
           <Formik
@@ -625,8 +648,8 @@ function ApplicantMemRegister(props) {
                     </div>
 
                     <h6
-                      style={{ backgroundColor: "#e95045" }}
-                      className="pl-5 pt-1 pb-1"
+                      style={subheadStyle}
+                      className="pl-5 pt-2 pb-2 mr-3 mb-5 mt-5"
                     >
                       Official Details
                     </h6>
@@ -798,8 +821,8 @@ function ApplicantMemRegister(props) {
                     </div>
 
                     <h6
-                      style={{ backgroundColor: "#e95045" }}
-                      className="pl-5 pt-1 pb-1"
+                      style={subheadStyle}
+                      className="pl-5 pt-2 pb-2 mr-3 mb-5 mt-5"
                     >
                       Professional Details
                     </h6>
@@ -846,6 +869,7 @@ function ApplicantMemRegister(props) {
                                       )}
                                       {index <= 3 && (
                                         <button
+                                          style={buttonStyle}
                                           type="button"
                                           className="btn btn-success m-1"
                                           onClick={() => push("")}
@@ -926,6 +950,7 @@ function ApplicantMemRegister(props) {
                                       )}
                                       {index <= 3 && (
                                         <button
+                                          style={buttonStyle}
                                           type="button"
                                           className="btn btn-success m-1"
                                           onClick={() => push("")}
@@ -945,8 +970,8 @@ function ApplicantMemRegister(props) {
                     </div>
 
                     <h6
-                      style={{ backgroundColor: "#e95045" }}
-                      className="pl-5 pt-1 pb-1"
+                      style={subheadStyle}
+                      className="pl-5 pt-2 pb-2 mr-3 mb-5 mt-5"
                     >
                       Membership Details
                     </h6>
@@ -1259,15 +1284,17 @@ function ApplicantMemRegister(props) {
                       type="submit"
                       className={
                         isConfirmed
-                          ? "btn btn-success float-right m-2 is-valid"
-                          : "btn btn-primary float-right m-2"
+                          ? "btn btn-success float-right m-2 mr-5 is-valid pr-5 pl-5"
+                          : "btn btn-success float-right m-2 mr-5 pr-5 pl-5"
                       }
+                      style={buttonStyleC}
                     >
                       {isConfirmed ? "Confirmed" : "Confirm"}
                     </button>
                     <button
+                      style={buttonStyle}
                       type="reset"
-                      className="btn btn-warning  m-2"
+                      className="btn btn-warning m-2 pr-5 pl-5"
                       onClick={() => formik.resetForm()}
                     >
                       Reset
@@ -1277,7 +1304,7 @@ function ApplicantMemRegister(props) {
               );
             }}
           </Formik>
-        </>
+        </div>
       );
 
     case 2:

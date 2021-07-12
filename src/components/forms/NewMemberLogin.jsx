@@ -35,11 +35,11 @@ function NewMemberLogin(props) {
     const result = await memberLogin(loginData);
     console.log("Res", result);
     if (result) {
-      localStorage.setItem("token", result.jwt);
+      localStorage.setItem("MemberToken", result.jwt);
       console.log(props);
       switch (result.type) {
         case "Member":
-          const jwt = localStorage.getItem("token");
+          const jwt = localStorage.getItem("MemberToken");
           let memNo = jwtDecode(jwt).memNo;
           props.history.push(`/member/profile/${memNo}`);
           break;
@@ -91,8 +91,8 @@ function NewMemberLogin(props) {
           </button>
         </Link> */}
 
-      <div className="col-3"></div>
-      <form className="container mt-5 mb-5 col-6" style={formStyle}>
+      <div className="col-4"></div>
+      <form className="container mt-5 mb-5 col-4" style={formStyle}>
         <center>
           <FontAwesomeIcon icon={faUserCircle} size="10x" />
         </center>
@@ -150,7 +150,7 @@ function NewMemberLogin(props) {
           </div>
         </div>
       </form>
-      <div className="col-3"></div>
+      <div className="col-4"></div>
     </div>
   );
 }

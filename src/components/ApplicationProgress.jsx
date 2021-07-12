@@ -19,7 +19,7 @@ function ApplicationProgress(props) {
   const [reason, setreason] = useState("");
   const [enroll, setenroll] = useState("");
   useEffect(() => {
-    const jwt = localStorage.getItem("token");
+    const jwt = localStorage.getItem("ApplicantToken");
     let token = jwtDecode(jwt);
     console.log("Token", token);
 
@@ -42,18 +42,27 @@ function ApplicationProgress(props) {
   }, []);
 
   const logout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("ApplicantToken");
     props.history.push("/");
   };
 
-  return (
-    <div className="container">
-      <div className="row">
-        <h3 className="text-center">Membership Application Process</h3>
+  const headStyle = {
+    textShadow: "0px 0px 1px #111111",
+    textAlign: "center",
+    marginLeft: "30%",
+  };
 
-        <button onClick={logout} className="btn btn-outline-dark float-right">
+  return (
+    <div className="container mt-3">
+      <div className="row">
+        {/* <h3 className="text-center">Membership Application Process</h3> */}
+        <h4 className="mt-5 mb-5 text-center" style={headStyle}>
+          Membership Application Process
+        </h4>
+
+        {/* <button onClick={logout} className="btn btn-outline-dark float-right">
           Logout
-        </button>
+        </button> */}
       </div>
       <div className="row mt-5" style={{ textAlign: "center" }}>
         <div style={style}>

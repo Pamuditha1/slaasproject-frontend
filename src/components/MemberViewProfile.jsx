@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import Loader from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import jwtDecode from "jwt-decode";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import ViewImage from "./ViewImage";
 import PaymentsHistory from "./PaymentsHistory";
@@ -19,8 +21,23 @@ export const MemberViewProfile = (props) => {
   const [memberIDR, setmemberIDR] = useState("");
   const [updateDetailsReq, setupdateDetailsReq] = useState("");
 
+  const [username, setusername] = useState("");
+  const [type, settype] = useState("");
   console.log(props.match.params.id);
   useEffect(() => {
+    const jwt = localStorage.getItem("ApplicantToken");
+    let type = "";
+    let username = "";
+    if (jwt) {
+      type = jwtDecode(jwt).type;
+      username = jwtDecode(jwt).memNo;
+      setusername(username);
+      settype(type);
+    } else {
+      setusername(" ");
+      settype(" ");
+    }
+
     async function fetchProfile() {
       setIsLoading(true);
       const profileData = await getMemberProfile(props.match.params.id);
@@ -88,6 +105,33 @@ export const MemberViewProfile = (props) => {
   // const enrolledDate = Date(`${enrollDate}`).toLocaleDateString()
   const displayMembershipNo = `${membershipNo}/${section}`;
 
+  const headStyle = {
+    textShadow: "0px 0px 1px #111111",
+  };
+
+  const subheadStyle = {
+    backgroundColor: "#002263",
+    borderRadius: "20px",
+    boxShadow: "0px 5px 5px grey",
+    color: "white",
+  };
+
+  const logout = () => {
+    // console.log("Logging Out");
+    localStorage.removeItem("MemberToken");
+    props.history.push("/");
+  };
+
+  console.log("props", props);
+
+  const logoutStyle = {
+    position: "fixed",
+    top: "10",
+    right: "0",
+    zIndex: "+1",
+    textAlign: "right",
+  };
+
   return isLoading ? (
     <Loader
       style={{ marginLeft: "35%" }}
@@ -98,10 +142,22 @@ export const MemberViewProfile = (props) => {
     />
   ) : (
     <div className="container">
+      <div className="text-right mr-5 mt-3" style={logoutStyle}>
+        <FontAwesomeIcon icon={faUserCircle} size="2x" className="mr-3" />
+        <h6>{username}</h6>
+        <small>
+          <button className="btn btn-light btn-sm" onClick={logout}>
+            Logout
+          </button>
+        </small>
+      </div>
       <div className="row" id="main">
-        <h3 className="col-12 text-center mb-5" style={{ color: "#e95045" }}>
+        {/* <h3 className="col-12 text-center mb-5" style={{ color: "#e95045" }}>
           Member Profile
-        </h3>
+        </h3> */}
+        <h4 className="col-12 mt-5 mb-5 text-center" style={headStyle}>
+          Member Profile
+        </h4>
         <div className="col-2 mr-5">
           <ViewImage nic={nic} />
         </div>
@@ -182,9 +238,12 @@ export const MemberViewProfile = (props) => {
       </div>
 
       <div className="row" id="personal">
-        <h5 className="col-12" style={{ backgroundColor: "#e95045" }}>
+        <h6
+          style={subheadStyle}
+          className="col-12 pl-5 pt-2 pb-2 mt-5 mr-3 mb-5"
+        >
           Personal Details
-        </h5>
+        </h6>
         <p className="col-3">Name with Initials : </p>
         <strong className="col-9">
           {title} {nameWinitials}
@@ -218,9 +277,15 @@ export const MemberViewProfile = (props) => {
       </div>
 
       <div className="row" id="official">
-        <h5 className="col-12" style={{ backgroundColor: "#e95045" }}>
+        {/* <h5 className="col-12" style={{ backgroundColor: "#e95045" }}>
           Official Details
-        </h5>
+        </h5> */}
+        <h6
+          style={subheadStyle}
+          className="col-12 pl-5 pt-2 pb-2 mt-5 mr-3 mb-5"
+        >
+          Official Details
+        </h6>
         <p className="col-3">Designation : </p>
         <strong className="col-9">{designation}</strong>
         <p className="col-3">Division/Department : </p>
@@ -240,9 +305,15 @@ export const MemberViewProfile = (props) => {
       </div>
 
       <div className="row" id="professional">
-        <h5 className="col-12" style={{ backgroundColor: "#e95045" }}>
+        {/* <h5 className="col-12" style={{ backgroundColor: "#e95045" }}>
           Professional Details
-        </h5>
+        </h5> */}
+        <h6
+          style={subheadStyle}
+          className="col-12 pl-5 pt-2 pb-2 mt-5 mr-3 mb-5"
+        >
+          Professional Details
+        </h6>
         <p className="col-3">Profession : </p>
         <strong className="col-9">{profession}</strong>
         <p className="col-3">Fields of Specialization : </p>
@@ -269,9 +340,15 @@ export const MemberViewProfile = (props) => {
       </div>
 
       <div className="row" id="membership">
-        <h5 className="col-12" style={{ backgroundColor: "#e95045" }}>
+        {/* <h5 className="col-12" style={{ backgroundColor: "#e95045" }}>
           Membership Details
-        </h5>
+        </h5> */}
+        <h6
+          style={subheadStyle}
+          className="col-12 pl-5 pt-2 pb-2 mt-5 mr-3 mb-5"
+        >
+          Membership Details
+        </h6>
         <p className="col-3">Membership No : </p>
         <strong className="col-9">{displayMembershipNo}</strong>
         <p className="col-3">Grade of Membership : </p>
@@ -340,7 +417,7 @@ export const MemberViewProfile = (props) => {
           <textarea
             type="input"
             placeholder="Details to Update"
-            className="col-12"
+            className="col-12 from-control"
             rows="4"
             onChange={(e) => setupdateDetailsReq(e.target.value)}
           />
