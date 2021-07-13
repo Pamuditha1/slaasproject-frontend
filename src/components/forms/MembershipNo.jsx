@@ -35,14 +35,14 @@ function MembershipNo(props) {
     <div style={noStyle}>
       <label
         style={{ color: "white" }}
-        className="col-4"
+        className="col-5"
         htmlFor="membershipNo"
       >
         <strong>Membership No</strong>
       </label>
       <input
         style={({ fontWeight: "50px" }, { fontStyle: "bold" })}
-        className="col-3 mt-1"
+        className="col-5 mt-1"
         type="text"
         id="membershipNo"
         name="membershipNo"

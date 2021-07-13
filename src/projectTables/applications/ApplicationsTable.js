@@ -72,20 +72,20 @@ export const ApplicationsTable = (props) => {
         usePagination,
         useExportData,
         useRowSelect,
-        (hooks) => {
-            hooks.visibleColumns.push((columns) => {
-                return[{
-                    id: 'selection',
-                    Header: ({ getToggleAllRowsSelectedProps}) => (
-                        <Checkbox {...getToggleAllRowsSelectedProps()}/>
-                    ),
-                    Cell: ({row}) => (
-                        <Checkbox {...row.getToggleRowSelectedProps()}/>
-                    )
-                }
-                ,...columns]
-            })
-        }
+        // (hooks) => {
+        //     hooks.visibleColumns.push((columns) => {
+        //         return[{
+        //             id: 'selection',
+        //             Header: ({ getToggleAllRowsSelectedProps}) => (
+        //                 <Checkbox {...getToggleAllRowsSelectedProps()}/>
+        //             ),
+        //             Cell: ({row}) => (
+        //                 <Checkbox {...row.getToggleRowSelectedProps()}/>
+        //             )
+        //         }
+        //         ,...columns]
+        //     })
+        // }
     )
 
     const {globalFilter, pageIndex, pageSize} = state
@@ -184,7 +184,7 @@ export const ApplicationsTable = (props) => {
                     
                     
                     <Table size="sm" dark hover {...getTableProps()} responsive style={{height: "200px"}}>
-                        <thead> 
+                        <thead className="text-center"> 
                             {headerGroups.map((headerGroups) => (
                                 <tr {...headerGroups.getHeaderGroupProps()}>
                                     {

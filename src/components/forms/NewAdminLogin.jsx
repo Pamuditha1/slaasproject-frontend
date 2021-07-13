@@ -66,14 +66,28 @@ function NewAdminLogin(props) {
     padding: "50px 30px 30px 30px",
     color: "white",
     borderRadius: "20px",
-    boxShadow:
-      " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+    boxShadow: "-5px 7px 15px black",
+    // boxShadow:
+    //   " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
   };
 
   let linkStyle = {
     textDecoration: "none",
     color: "white",
     marginTop: "10px",
+  };
+
+  const buttonStyle = {
+    boxShadow: "0px 5px 10px black",
+    fontWeight: "bold",
+    borderRadius: "40px",
+  };
+
+  const inputStyle = {
+    boxShadow: "0px 2px 3px white",
+    // fontWeight: "bold",
+    borderRadius: "40px",
+    // border: "0",
   };
 
   return (
@@ -91,8 +105,8 @@ function NewAdminLogin(props) {
           </button>
         </Link> */}
 
-      <div className="col-3"></div>
-      <form className="container mt-5 mb-5 col-6" style={formStyle}>
+      <div className="col-4"></div>
+      <form className="container mt-5 mb-5 col-4" style={formStyle}>
         <center>
           <FontAwesomeIcon icon={faUserCircle} size="10x" />
         </center>
@@ -108,6 +122,7 @@ function NewAdminLogin(props) {
                   Email
                 </label>
                 <input
+                  style={inputStyle}
                   onChange={onchange}
                   value={loginData.email}
                   className="form-control col-11 ml-3"
@@ -121,6 +136,7 @@ function NewAdminLogin(props) {
                   Password
                 </label>
                 <input
+                  style={inputStyle}
                   onChange={onchange}
                   value={loginData.password}
                   className="form-control col-11 ml-3"
@@ -132,14 +148,15 @@ function NewAdminLogin(props) {
               <div className="form-group col-12 mt-3">
                 <center>
                   <button
+                    style={buttonStyle}
                     onClick={submit}
                     type="submit"
-                    className="btn btn-success"
+                    className="btn btn-success pr-4 pl-4"
                   >
                     Login
                   </button>
                   <Link to="/" style={linkStyle}>
-                    <p className="mt-3">Home</p>
+                    <p className="mt-5">Home</p>
                   </Link>
                 </center>
               </div>
@@ -147,7 +164,7 @@ function NewAdminLogin(props) {
           </div>
         </div>
       </form>
-      <div className="col-3"></div>
+      <div className="col-4"></div>
     </div>
   );
 }

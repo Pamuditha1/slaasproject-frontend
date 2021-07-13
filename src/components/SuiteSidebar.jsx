@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Sidenav, Dropdown, Nav, Icon } from "rsuite";
 import "rsuite/dist/styles/rsuite-default.css";
 import "../css/sideBar.css";
+import { Badge } from "reactstrap";
 
 import { Link } from "react-router-dom";
 import {
@@ -16,9 +17,38 @@ import {
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect } from "react";
+
+import { getMemberRequests } from "../services/getMemberRequests";
+import { getAllMembers } from "../services/getAllMemberRecords";
 
 function SuiteSidebar(props) {
   const [clicked, setclicked] = useState("");
+  const [reqCount, setreqCount] = useState("");
+  const [appCount, setappCount] = useState("");
+
+  async function getReqCount() {
+    let re = await getMemberRequests();
+    let newR = re.filter((r) => {
+      if (r.status == "Requested") return true;
+    });
+    let co = newR.length;
+    setreqCount(co);
+  }
+
+  async function getAppliCount() {
+    const records = await getAllMembers();
+    let applicants = records.filter((r) => {
+      if (r.status == "Applicant") return true;
+    });
+    let co = applicants.length;
+    setappCount(co);
+  }
+
+  useEffect(() => {
+    getReqCount();
+    getAppliCount();
+  }, []);
 
   const onClickStyle = {
     backgroundColor: "white",
@@ -250,6 +280,36 @@ function SuiteSidebar(props) {
               >
                 <span onClick={onClick} id="applications">
                   Applications
+                  <Badge
+                    color="warning"
+                    pill
+                    className="ml-2"
+                    style={{ borderRadius: "30px" }}
+                  >
+                    {appCount}
+                  </Badge>
+                </span>
+              </Link>
+            </Nav.Item>
+            <Nav.Item
+              eventKey="11"
+              style={clicked == "mem-requests" ? onClickStyle : s}
+              icon={<Icon icon="commenting" />}
+            >
+              <Link
+                to="/user/member-requests"
+                style={clicked == "mem-requests" ? onClickLink : linkColor}
+              >
+                <span onClick={onClick} id="mem-requests">
+                  Member Requests{" "}
+                  <Badge
+                    color="warning"
+                    pill
+                    className="ml-1"
+                    style={{ borderRadius: "30px" }}
+                  >
+                    {reqCount}
+                  </Badge>
                 </span>
               </Link>
             </Nav.Item>

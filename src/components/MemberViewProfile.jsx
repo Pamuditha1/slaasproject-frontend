@@ -10,6 +10,7 @@ import ViewImage from "./ViewImage";
 import PaymentsHistory from "./PaymentsHistory";
 
 import { getMemberProfile } from "../services/getMemberProfile";
+import { addMemberRequest } from "../services/addMemberRequest";
 
 export const MemberViewProfile = (props) => {
   const [memberData, setMemberData] = useState({});
@@ -25,7 +26,7 @@ export const MemberViewProfile = (props) => {
   const [type, settype] = useState("");
   console.log(props.match.params.id);
   useEffect(() => {
-    const jwt = localStorage.getItem("ApplicantToken");
+    const jwt = localStorage.getItem("MemberToken");
     let type = "";
     let username = "";
     if (jwt) {
@@ -132,6 +133,21 @@ export const MemberViewProfile = (props) => {
     textAlign: "right",
   };
 
+  const buttonStyle = {
+    boxShadow: "0px 5px 10px grey",
+    fontWeight: "bold",
+    borderRadius: "40px",
+  };
+
+  const sendRequest = async () => {
+    const memReq = {
+      request: updateDetailsReq,
+      membershipNo: username,
+    };
+    console.log("UPDATE", memReq);
+    await addMemberRequest(memReq);
+  };
+
   return isLoading ? (
     <Loader
       style={{ marginLeft: "35%" }}
@@ -144,7 +160,7 @@ export const MemberViewProfile = (props) => {
     <div className="container">
       <div className="text-right mr-5 mt-3" style={logoutStyle}>
         <FontAwesomeIcon icon={faUserCircle} size="2x" className="mr-3" />
-        <h6>{username}</h6>
+        <h6 className="text-center">{username}</h6>
         <small>
           <button className="btn btn-light btn-sm" onClick={logout}>
             Logout
@@ -423,7 +439,13 @@ export const MemberViewProfile = (props) => {
           />
         </div>
         <div className="col-4">
-          <button className="btn btn-warning">Request to Update Details</button>
+          <button
+            onClick={sendRequest}
+            style={buttonStyle}
+            className="btn btn-warning"
+          >
+            Request to Update Details
+          </button>
         </div>
       </div>
 

@@ -108,6 +108,23 @@ export const ViewOneApplication = (props) => {
     // props.history.push("/user/view-applications");
   };
 
+  const headStyle = {
+    textShadow: "0px 0px 1px #111111",
+  };
+
+  const subheadStyle = {
+    backgroundColor: "#002263",
+    borderRadius: "20px",
+    boxShadow: "0px 5px 5px grey",
+    color: "white",
+  };
+
+  const buttonStyle = {
+    boxShadow: "0px 5px 10px grey",
+    fontWeight: "bold",
+    borderRadius: "40px",
+  };
+
   return isLoading ? (
     <Loader
       style={{ marginLeft: "35%" }}
@@ -119,9 +136,12 @@ export const ViewOneApplication = (props) => {
   ) : (
     <div className="container">
       <div className="row" id="main">
-        <h3 className="col-12 text-center mb-5" style={{ color: "#e95045" }}>
+        {/* <h3 className="col-12 text-center mb-5" style={{ color: "#e95045" }}>
           Application for Membership
-        </h3>
+        </h3> */}
+        <h4 className="col-12 mt-5 mb-5 text-center" style={headStyle}>
+          Application for Membership
+        </h4>
         <div className="col-2 mr-5">
           <ViewImage nic={nic} />
         </div>
@@ -153,17 +173,17 @@ export const ViewOneApplication = (props) => {
           </p>
           <p className="row">
             Status:
-            {status == "Terminated" ? (
+            {status == "Rejected" ? (
               <div>
                 <strong className="ml-5" style={{ color: "red" }}>
                   {status}{" "}
                 </strong>
-                <p className="row">
+                {/* <p className="row">
                   DOT :{" "}
                   <strong className="ml-2">
                     {new Date(dot).toLocaleDateString()}
                   </strong>
-                </p>
+                </p> */}
               </div>
             ) : (
               <strong className="ml-5">{status} </strong>
@@ -183,9 +203,12 @@ export const ViewOneApplication = (props) => {
       </div>
 
       <div className="row" id="personal">
-        <h5 className="col-12" style={{ backgroundColor: "#e95045" }}>
+        <h6
+          style={subheadStyle}
+          className="col-12 pl-5 pt-2 pb-2 mt-5 mr-3 mb-5"
+        >
           Personal Details
-        </h5>
+        </h6>
         <p className="col-3">Name with Initials : </p>
         <strong className="col-9">
           {title} {nameWinitials}
@@ -219,9 +242,12 @@ export const ViewOneApplication = (props) => {
       </div>
 
       <div className="row" id="official">
-        <h5 className="col-12" style={{ backgroundColor: "#e95045" }}>
+        <h6
+          style={subheadStyle}
+          className="col-12 pl-5 pt-2 pb-2 mt-5 mr-3 mb-5"
+        >
           Official Details
-        </h5>
+        </h6>
         <p className="col-3">Designation : </p>
         <strong className="col-9">{designation}</strong>
         <p className="col-3">Division/Department : </p>
@@ -241,9 +267,12 @@ export const ViewOneApplication = (props) => {
       </div>
 
       <div className="row" id="professional">
-        <h5 className="col-12" style={{ backgroundColor: "#e95045" }}>
+        <h6
+          style={subheadStyle}
+          className="col-12 pl-5 pt-2 pb-2 mt-5 mr-3 mb-5"
+        >
           Professional Details
-        </h5>
+        </h6>
         <p className="col-3">Profession : </p>
         <strong className="col-9">{profession}</strong>
         <p className="col-3">Fields of Specialization : </p>
@@ -270,9 +299,12 @@ export const ViewOneApplication = (props) => {
       </div>
 
       <div className="row" id="membership">
-        <h5 className="col-12" style={{ backgroundColor: "#e95045" }}>
+        <h6
+          style={subheadStyle}
+          className="col-12 pl-5 pt-2 pb-2 mt-5 mr-3 mb-5"
+        >
           Membership Details
-        </h5>
+        </h6>
         <p className="col-3">Membership No : </p>
         <strong className="col-9">{displayMembershipNo}</strong>
         <p className="col-3">Grade of Membership : </p>
@@ -333,7 +365,7 @@ export const ViewOneApplication = (props) => {
       </div>
 
       <div className="row p-3 mt-3 ml-5">
-        <div className="col-6">
+        <div className="col-8">
           <textarea
             type="input"
             placeholder="Reasons..."
@@ -345,6 +377,7 @@ export const ViewOneApplication = (props) => {
         <div className="col-3">
           <button
             className="btn btn-danger"
+            style={buttonStyle}
             onClick={rejectApp}
             disabled={!reasons}
           >
@@ -353,7 +386,7 @@ export const ViewOneApplication = (props) => {
         </div>
       </div>
       <div className="row p-3 mt-3 ml-5">
-        <div className="col-6">
+        <div className="col-8">
           <MembershipNo
             membershipNo={membershipNo}
             section={section}
@@ -361,7 +394,11 @@ export const ViewOneApplication = (props) => {
           />
         </div>
         <div className="col-3">
-          <button className="btn btn-success" onClick={register}>
+          <button
+            className="btn btn-success"
+            onClick={register}
+            style={buttonStyle}
+          >
             Register as a Member
           </button>
         </div>

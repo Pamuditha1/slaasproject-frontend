@@ -4,6 +4,7 @@ import Loader from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import "../css/updateButtonStyle.css";
 
 import ViewImage from "./ViewImage";
 import PaymentsHistory from "./PaymentsHistory";
@@ -135,6 +136,34 @@ export const MemberProfileWUpdate = (props) => {
     fetchProfile();
     return;
   }
+  const headStyle = {
+    textShadow: "0px 0px 1px #111111",
+  };
+
+  const subheadStyle = {
+    backgroundColor: "#002263",
+    borderRadius: "20px",
+    boxShadow: "0px 5px 5px grey",
+    color: "white",
+  };
+
+  const buttonStyle = {
+    boxShadow: "0px 5px 10px grey",
+    fontWeight: "bold",
+    borderRadius: "40px",
+  };
+
+  const buttonStyleU = {
+    boxShadow: "0px 5px 10px grey",
+    fontWeight: "bold",
+    borderRadius: "40px",
+  };
+  const buttonStyleUNotDisplay = {
+    boxShadow: "0px 5px 10px grey",
+    fontWeight: "bold",
+    borderRadius: "40px",
+    display: "none",
+  };
 
   return isLoading ? (
     <Loader
@@ -145,42 +174,50 @@ export const MemberProfileWUpdate = (props) => {
       width={300}
     />
   ) : (
-    <div>
-      <div className="container row" id="main">
-        <h3 className="col-12 text-center mb-5" style={{ color: "#e95045" }}>
+    <div className="container">
+      <div className="row" id="main">
+        <h4 className="col-12 mt-5 mb-5 text-center" style={headStyle}>
           Member Profile
-        </h3>
+        </h4>
         <div className="col-12 mb-5">
           <div className="row">
-            <div className="col-3">
+            <div className="col-4"></div>
+            {!enableEdit && <div className="col-4"></div>}
+            {status == "Member" ? (
+              <div
+                className="col-4 text-right"
+                style={{ display: !enableEdit && "none" }}
+              >
+                <button
+                  style={buttonStyle}
+                  onClick={() => terminateOnClick(membershipNo)}
+                  className="btn btn-danger float-right"
+                >
+                  Terminate Member
+                </button>
+              </div>
+            ) : (
+              <div className="col-4" style={{ display: !enableEdit && "none" }}>
+                <button
+                  style={buttonStyle}
+                  onClick={() => getBackOnClick(membershipNo)}
+                  className="btn btn-success float-right"
+                >
+                  Continue Membership
+                </button>
+              </div>
+            )}
+            <div className="col-4">
               {/* <Link to={`/user/member/profile/update/${membershipNo}`}> */}
               <button
-                className="btn btn-warning"
+                style={buttonStyle}
+                className="btn btn-warning float-right"
                 onClick={() => setenableEdit(!enableEdit)}
               >
                 Update Member
               </button>
               {/* </Link> */}
             </div>
-            {status == "Member" ? (
-              <div className="col-3" style={{ display: !enableEdit && "none" }}>
-                <button
-                  onClick={() => terminateOnClick(membershipNo)}
-                  className="btn btn-danger"
-                >
-                  Terminate Member
-                </button>
-              </div>
-            ) : (
-              <div className="col-3" style={{ display: !enableEdit && "none" }}>
-                <button
-                  onClick={() => getBackOnClick(membershipNo)}
-                  className="btn btn-success"
-                >
-                  Continue Membership
-                </button>
-              </div>
-            )}
           </div>
         </div>
         <div className="col-2 mr-5">
@@ -263,9 +300,12 @@ export const MemberProfileWUpdate = (props) => {
       </div>
 
       <div className="row" id="personal">
-        <h5 className="col-12" style={{ backgroundColor: "#e95045" }}>
+        <h6
+          style={subheadStyle}
+          className="col-12 pl-5 pt-2 pb-2 mt-5 mr-3 mb-5"
+        >
           Personal Details
-        </h5>
+        </h6>
         <p className="col-3">Name with Initials : </p>
         <strong className="col-9">
           {title} {nameWinitials}{" "}
@@ -290,7 +330,8 @@ export const MemberProfileWUpdate = (props) => {
               onClick={() => setUpdate("resAddrs", resAddrs)}
               className="btn btn-outline-warning"
               //   style={{ display: !enableEdit && "none" }}
-              style={{ display: !enableEdit && "none" }}
+              // style={{ display: !enableEdit && "none" }}
+              style={enableEdit ? buttonStyleU : buttonStyleUNotDisplay}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
               {/* Edit */}
@@ -319,7 +360,8 @@ export const MemberProfileWUpdate = (props) => {
                 <button
                   onClick={() => setUpdate("perAddrs", perAddrs)}
                   className="btn btn-outline-warning"
-                  style={{ display: !enableEdit && "none" }}
+                  // style={{ display: !enableEdit && "none" }}
+                  style={enableEdit ? buttonStyleU : buttonStyleUNotDisplay}
                 >
                   <FontAwesomeIcon icon={faEdit} size="xs" />
                   {/* Edit */}
@@ -348,7 +390,8 @@ export const MemberProfileWUpdate = (props) => {
             <button
               onClick={() => setUpdate("mobileNo", mobileNo)}
               className="btn btn-outline-warning"
-              style={{ display: !enableEdit && "none" }}
+              // style={{ display: !enableEdit && "none" }}
+              style={enableEdit ? buttonStyleU : buttonStyleUNotDisplay}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
               {/* Edit */}
@@ -375,7 +418,8 @@ export const MemberProfileWUpdate = (props) => {
             <button
               onClick={() => setUpdate("fixedNo", fixedNo)}
               className="btn btn-outline-warning"
-              style={{ display: !enableEdit && "none" }}
+              // style={{ display: !enableEdit && "none" }}
+              style={enableEdit ? buttonStyleU : buttonStyleUNotDisplay}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
               {/* Edit */}
@@ -402,7 +446,8 @@ export const MemberProfileWUpdate = (props) => {
             <button
               onClick={() => setUpdate("email", email)}
               className="btn btn-outline-warning"
-              style={{ display: !enableEdit && "none" }}
+              // style={{ display: !enableEdit && "none" }}
+              style={enableEdit ? buttonStyleU : buttonStyleUNotDisplay}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
               {/* Edit */}
@@ -425,9 +470,12 @@ export const MemberProfileWUpdate = (props) => {
       </div>
 
       <div className="row" id="official">
-        <h5 className="col-12" style={{ backgroundColor: "#e95045" }}>
+        <h6
+          style={subheadStyle}
+          className="col-12 pl-5 pt-2 pb-2 mt-5 mr-3 mb-5"
+        >
           Official Details
-        </h5>
+        </h6>
         <p className="col-3">Designation : </p>
         <strong className="col-9">
           {designation}
@@ -435,7 +483,8 @@ export const MemberProfileWUpdate = (props) => {
             <button
               onClick={() => setUpdate("designation", designation)}
               className="btn btn-outline-warning"
-              style={{ display: !enableEdit && "none" }}
+              // style={{ display: !enableEdit && "none" }}
+              style={enableEdit ? buttonStyleU : buttonStyleUNotDisplay}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
               {/* Edit */}
@@ -462,7 +511,8 @@ export const MemberProfileWUpdate = (props) => {
             <button
               onClick={() => setUpdate("department", department)}
               className="btn btn-outline-warning"
-              style={{ display: !enableEdit && "none" }}
+              // style={{ display: !enableEdit && "none" }}
+              style={enableEdit ? buttonStyleU : buttonStyleUNotDisplay}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
               {/* Edit */}
@@ -489,7 +539,8 @@ export const MemberProfileWUpdate = (props) => {
             <button
               onClick={() => setUpdate("placeOfWork", placeOfWork)}
               className="btn btn-outline-warning"
-              style={{ display: !enableEdit && "none" }}
+              // style={{ display: !enableEdit && "none" }}
+              style={enableEdit ? buttonStyleU : buttonStyleUNotDisplay}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
               {/* Edit */}
@@ -516,7 +567,8 @@ export const MemberProfileWUpdate = (props) => {
             <button
               onClick={() => setUpdate("offAddrs", offAddrs)}
               className="btn btn-outline-warning"
-              style={{ display: !enableEdit && "none" }}
+              // style={{ display: !enableEdit && "none" }}
+              style={enableEdit ? buttonStyleU : buttonStyleUNotDisplay}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
               {/* Edit */}
@@ -543,7 +595,8 @@ export const MemberProfileWUpdate = (props) => {
             <button
               onClick={() => setUpdate("offMobile", offMobile)}
               className="btn btn-outline-warning"
-              style={{ display: !enableEdit && "none" }}
+              // style={{ display: !enableEdit && "none" }}
+              style={enableEdit ? buttonStyleU : buttonStyleUNotDisplay}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
               {/* Edit */}
@@ -570,7 +623,8 @@ export const MemberProfileWUpdate = (props) => {
             <button
               onClick={() => setUpdate("offLand", offLand)}
               className="btn btn-outline-warning"
-              style={{ display: !enableEdit && "none" }}
+              // style={{ display: !enableEdit && "none" }}
+              style={enableEdit ? buttonStyleU : buttonStyleUNotDisplay}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
               {/* Edit */}
@@ -597,7 +651,8 @@ export const MemberProfileWUpdate = (props) => {
             <button
               onClick={() => setUpdate("offFax", offFax)}
               className="btn btn-outline-warning"
-              style={{ display: !enableEdit && "none" }}
+              // style={{ display: !enableEdit && "none" }}
+              style={enableEdit ? buttonStyleU : buttonStyleUNotDisplay}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
               {/* Edit */}
@@ -624,7 +679,8 @@ export const MemberProfileWUpdate = (props) => {
             <button
               onClick={() => setUpdate("offEmail", offEmail)}
               className="btn btn-outline-warning"
-              style={{ display: !enableEdit && "none" }}
+              // style={{ display: !enableEdit && "none" }}
+              style={enableEdit ? buttonStyleU : buttonStyleUNotDisplay}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
               {/* Edit */}
@@ -647,9 +703,12 @@ export const MemberProfileWUpdate = (props) => {
       </div>
 
       <div className="row" id="professional">
-        <h5 className="col-12" style={{ backgroundColor: "#e95045" }}>
+        <h6
+          style={subheadStyle}
+          className="col-12 pl-5 pt-2 pb-2 mt-5 mr-3 mb-5"
+        >
           Professional Details
-        </h5>
+        </h6>
         <p className="col-3">Profession : </p>
         <strong className="col-9">
           {profession}
@@ -657,7 +716,8 @@ export const MemberProfileWUpdate = (props) => {
             <button
               onClick={() => setUpdate("profession", profession)}
               className="btn btn-outline-warning"
-              style={{ display: !enableEdit && "none" }}
+              // style={{ display: !enableEdit && "none" }}
+              style={enableEdit ? buttonStyleU : buttonStyleUNotDisplay}
             >
               <FontAwesomeIcon icon={faEdit} size="xs" />
               {/* Edit */}
@@ -702,9 +762,12 @@ export const MemberProfileWUpdate = (props) => {
       </div>
 
       <div className="row" id="membership">
-        <h5 className="col-12" style={{ backgroundColor: "#e95045" }}>
+        <h6
+          style={subheadStyle}
+          className="col-12 pl-5 pt-2 pb-2 mt-5 mr-3 mb-5"
+        >
           Membership Details
-        </h5>
+        </h6>
         <p className="col-3">Membership No : </p>
         <strong className="col-9">{displayMembershipNo}</strong>
         <p className="col-3">Grade of Membership : </p>
@@ -768,36 +831,44 @@ export const MemberProfileWUpdate = (props) => {
         <PaymentsHistory memberID={memberID} memNo={props.match.params.id} />
       </div>
 
-      <div className="row p-3 mt-3">
-        <div className="col-3">
+      <div className="row mt-5">
+        <div className="col-4"></div>
+        {!enableEdit && <div className="col-4"></div>}
+        {status == "Member" ? (
+          <div
+            className="col-4 text-right"
+            style={{ display: !enableEdit && "none" }}
+          >
+            <button
+              style={buttonStyle}
+              onClick={() => terminateOnClick(membershipNo)}
+              className="btn btn-danger float-right"
+            >
+              Terminate Member
+            </button>
+          </div>
+        ) : (
+          <div className="col-4" style={{ display: !enableEdit && "none" }}>
+            <button
+              style={buttonStyle}
+              onClick={() => getBackOnClick(membershipNo)}
+              className="btn btn-success float-right"
+            >
+              Continue Membership
+            </button>
+          </div>
+        )}
+        <div className="col-4">
           {/* <Link to={`/user/member/profile/update/${membershipNo}`}> */}
           <button
-            className="btn btn-warning"
+            style={buttonStyle}
+            className="btn btn-warning float-right"
             onClick={() => setenableEdit(!enableEdit)}
           >
             Update Member
           </button>
           {/* </Link> */}
         </div>
-        {status == "Member" ? (
-          <div className="col-3" style={{ display: !enableEdit && "none" }}>
-            <button
-              onClick={() => terminateOnClick(membershipNo)}
-              className="btn btn-danger"
-            >
-              Terminate Member
-            </button>
-          </div>
-        ) : (
-          <div className="col-3" style={{ display: !enableEdit && "none" }}>
-            <button
-              onClick={() => getBackOnClick(membershipNo)}
-              className="btn btn-success"
-            >
-              Continue Membership
-            </button>
-          </div>
-        )}
       </div>
 
       <div className="mb-5"></div>

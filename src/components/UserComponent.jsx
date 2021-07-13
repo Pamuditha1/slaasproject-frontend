@@ -33,6 +33,7 @@ import ViewApplications from "./ViewApplications";
 import { ViewOneApplication } from "./ViewOneApplication";
 import EmailSettings from "./EmailSettings";
 import EmailSettingElement from "./EmailSettingElement";
+import MemberRequests from "./MemberRequests";
 
 function UserComponent(props) {
   const [emailsList, setemailsList] = useState([]);
@@ -135,6 +136,11 @@ function UserComponent(props) {
             path="/user/view-applications"
             exact
             component={ViewApplications}
+          />
+          <Route
+            path="/user/member-requests"
+            exact
+            component={MemberRequests}
           />
           <Route
             path="/user/view-application/:nic"

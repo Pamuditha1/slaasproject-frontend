@@ -66,14 +66,29 @@ function NewMemberLogin(props) {
     padding: "50px 30px 30px 30px",
     color: "white",
     borderRadius: "20px",
-    boxShadow:
-      " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+    // boxShadow:
+    //   " 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+    boxShadow: "-5px 7px 15px black",
   };
 
   let linkStyle = {
     textDecoration: "none",
     color: "white",
+    // color: "#7b1418",
     marginTop: "10px",
+  };
+
+  const buttonStyle = {
+    boxShadow: "0px 5px 10px black",
+    fontWeight: "bold",
+    borderRadius: "40px",
+  };
+
+  const inputStyle = {
+    boxShadow: "0px 2px 3px white",
+    // fontWeight: "bold",
+    borderRadius: "40px",
+    // border: "0",
   };
 
   return (
@@ -108,6 +123,7 @@ function NewMemberLogin(props) {
                   Membership No
                 </label>
                 <input
+                  style={inputStyle}
                   onChange={onchange}
                   value={loginData.membershipNo}
                   className="form-control col-11 ml-3"
@@ -121,6 +137,7 @@ function NewMemberLogin(props) {
                   Password
                 </label>
                 <input
+                  style={inputStyle}
                   onChange={onchange}
                   value={loginData.password}
                   className="form-control col-11 ml-3"
@@ -132,9 +149,10 @@ function NewMemberLogin(props) {
               <div className="form-group col-12 mt-3">
                 <center>
                   <button
+                    style={buttonStyle}
                     onClick={submit}
                     type="submit"
-                    className="btn btn-success"
+                    className="btn btn-success pr-4 pl-4"
                   >
                     Login
                   </button>
@@ -142,7 +160,7 @@ function NewMemberLogin(props) {
                     <p className="mt-3">Haven't Registered yet? Register</p>
                   </Link>
                   <Link to="/" style={linkStyle}>
-                    <p className="mt-3">Home</p>
+                    <p className="mt-5">Home</p>
                   </Link>
                 </center>
               </div>

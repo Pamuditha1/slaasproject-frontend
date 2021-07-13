@@ -74,20 +74,20 @@ export const TerminatedTable = (props) => {
         usePagination,
         useExportData,
         useRowSelect,
-        (hooks) => {
-            hooks.visibleColumns.push((columns) => {
-                return[{
-                    id: 'selection',
-                    Header: ({ getToggleAllRowsSelectedProps}) => (
-                        <Checkbox {...getToggleAllRowsSelectedProps()}/>
-                    ),
-                    Cell: ({row}) => (
-                        <Checkbox {...row.getToggleRowSelectedProps()}/>
-                    )
-                }
-                ,...columns]
-            })
-        }
+        // (hooks) => {
+        //     hooks.visibleColumns.push((columns) => {
+        //         return[{
+        //             id: 'selection',
+        //             Header: ({ getToggleAllRowsSelectedProps}) => (
+        //                 <Checkbox {...getToggleAllRowsSelectedProps()}/>
+        //             ),
+        //             Cell: ({row}) => (
+        //                 <Checkbox {...row.getToggleRowSelectedProps()}/>
+        //             )
+        //         }
+        //         ,...columns]
+        //     })
+        // }
     )
 
     const {globalFilter, pageIndex, pageSize} = state
