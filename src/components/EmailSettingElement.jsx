@@ -34,15 +34,40 @@ function EmailSettingElement(props) {
     fetchData();
   };
 
+  const buttonStyle = {
+    boxShadow: "0px 5px 10px grey",
+    fontWeight: "bold",
+    borderRadius: "40px",
+  };
+
+  const headStyle = {
+    textShadow: "0px 0px 1px #111111",
+  };
+
+  const buttonStyleC = {
+    boxShadow: "0px 5px 10px grey",
+    fontWeight: "bold",
+    backgroundColor: "#005336",
+    borderRadius: "40px",
+  };
+
   return (
     <>
-      <div className="row">
+      <div className="row mt-3">
         <Link to="/user/email-settings">
-          <button className="btn btn-outline-dark">Back</button>
+          <button
+            style={buttonStyle}
+            className="btn btn-outline-dark pl-4 pr-4"
+          >
+            Back
+          </button>
         </Link>
       </div>
       <div className="container">
-        <h5>Edit Mail Content</h5>
+        {/* <h5>Edit Mail Content</h5> */}
+        <h4 className="mb-5 text-center" style={headStyle}>
+          Edit Mail Content
+        </h4>
         <div className="row mt-5">
           <input
             value={mailData.type}
@@ -69,7 +94,11 @@ function EmailSettingElement(props) {
           ></textarea>
         </div>
         <center>
-          <button onClick={update} className="btn btn-success mt-5">
+          <button
+            style={buttonStyleC}
+            onClick={update}
+            className="btn btn-success mt-5 mb-5"
+          >
             Update Email
           </button>
         </center>

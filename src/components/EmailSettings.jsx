@@ -14,13 +14,32 @@ function EmailSettings() {
     }
     fetchData();
   }, []);
+
+  const buttonStyle = {
+    boxShadow: "0px 5px 10px grey",
+    fontWeight: "bold",
+    borderRadius: "40px",
+  };
+
+  const headStyle = {
+    textShadow: "0px 0px 1px #111111",
+  };
+
   return (
     <>
-      <div className="row">
+      <div className="row mt-3">
         <Link to="/user/settings">
-          <button className="btn btn-outline-dark">Back</button>
+          <button
+            style={buttonStyle}
+            className="btn btn-outline-dark pl-4 pr-4"
+          >
+            Back
+          </button>
         </Link>
       </div>
+      <h4 className="mb-5 text-center" style={headStyle}>
+        Email Settings
+      </h4>
       <div className="container">
         <Table hover borderless className="mt-5">
           <thead className="text-center">
@@ -42,7 +61,12 @@ function EmailSettings() {
                   <td className="text-center">{e.subject}</td>
                   <td className="text-center">
                     <Link to={`/user/email-settings/edit/${e.id}`}>
-                      <button className="btn btn-outline-warning">Edit</button>
+                      <button
+                        className="btn btn-outline-warning"
+                        style={buttonStyle}
+                      >
+                        Edit
+                      </button>
                     </Link>
                   </td>
                 </tr>

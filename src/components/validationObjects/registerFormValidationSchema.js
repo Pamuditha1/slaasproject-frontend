@@ -34,11 +34,11 @@ const validationSchema = Yup.object({
     offEmail: Yup.string().email('Invalid Email'), 
     offFax: Yup.number('Invalid Contact Number'),
     profession: Yup.string(),
-    gradeOfMem : Yup.string(),
-    section: Yup.string(),
+    gradeOfMem : Yup.string().required("Membership Grade is Required"),
+    section: Yup.string().required("Membership Section is Required"),
     memBefore: Yup.boolean(),
     memFrom : Yup.string(),  memTo: Yup.string(),
-    sendingAddrs: Yup.string(),
+    sendingAddrs: Yup.string().required("Preffered Address is Required"),
     status: Yup.string(),
     enrollDate: Yup.string()
 })

@@ -60,6 +60,9 @@ function TerminationPeriods() {
     setisModalOpen(false);
     setupdatingItem("");
   };
+  const headStyle = {
+    textShadow: "0px 0px 1px #111111",
+  };
 
   // setneedToSave([...needToSave, {grade: grade, membershipFee: value}])
   // }
@@ -76,6 +79,9 @@ function TerminationPeriods() {
           </button>
         </Link>
       </div>
+      <h4 className="mb-5 text-center" style={headStyle}>
+        Termination Settings
+      </h4>
       <div className="mt-5">
         <center className="mt-5 mr-5">
           {/* {isModalOpen && (

@@ -102,10 +102,10 @@ export const ViewOneApplication = (props) => {
   const register = async () => {
     let approve = {
       id: memberID,
-      memNo: membershipNo,
+      memNo: membershipNo.split("/")[0],
     };
     await approveApplication(approve);
-    // props.history.push("/user/view-applications");
+    props.history.push("/user/view-applications");
   };
 
   const headStyle = {
@@ -363,28 +363,30 @@ export const ViewOneApplication = (props) => {
           </div>
         </div>
       </div>
+      {status != "Rejected" && (
+        <div className="row p-3 mt-3 ml-5">
+          <div className="col-8">
+            <textarea
+              type="input"
+              placeholder="Reasons..."
+              className="col-12"
+              rows="4"
+              onChange={(e) => setreasons(e.target.value)}
+            />
+          </div>
 
-      <div className="row p-3 mt-3 ml-5">
-        <div className="col-8">
-          <textarea
-            type="input"
-            placeholder="Reasons..."
-            className="col-12"
-            rows="4"
-            onChange={(e) => setreasons(e.target.value)}
-          />
+          <div className="col-3">
+            <button
+              className="btn btn-danger"
+              style={buttonStyle}
+              onClick={rejectApp}
+              disabled={!reasons}
+            >
+              Reject Application
+            </button>
+          </div>
         </div>
-        <div className="col-3">
-          <button
-            className="btn btn-danger"
-            style={buttonStyle}
-            onClick={rejectApp}
-            disabled={!reasons}
-          >
-            Reject Application
-          </button>
-        </div>
-      </div>
+      )}
       <div className="row p-3 mt-3 ml-5">
         <div className="col-8">
           <MembershipNo

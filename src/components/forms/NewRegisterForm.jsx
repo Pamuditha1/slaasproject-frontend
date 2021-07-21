@@ -55,7 +55,15 @@ function NewRegisterForm() {
     { key: "Male", value: "Male" },
     { key: "Female", value: "Female" },
   ];
-  const titleOptions = ["Rev.", "Prof.", "Dr.", "Mr.", "Mrs.", "Miss."];
+  const titleOptions = [
+    "Title",
+    "Rev.",
+    "Prof.",
+    "Dr.",
+    "Mr.",
+    "Mrs.",
+    "Miss.",
+  ];
   const addressOptions = ["Residence", "Permanent", "Official"];
   const [membershipGrades, setmembershipGrades] = useState([]);
   const [gradesWfees, setgradesWfees] = useState([]);
@@ -220,7 +228,7 @@ function NewRegisterForm() {
           <Formik
             className="container mt-5 mb-5"
             initialValues={memberData}
-            // validationSchema={validationSchema}
+            validationSchema={validationSchema}
             onSubmit={(values) => {
               setNameOfImage(`${values.nic}`);
               setMemberData(values);
@@ -283,6 +291,10 @@ function NewRegisterForm() {
                             name="nameWinitials"
                           />
                         </div>
+                        <ErrorMessage
+                          name="title"
+                          component={ValidationError}
+                        />
                         <ErrorMessage
                           name="nameWinitials"
                           component={ValidationError}
@@ -857,6 +869,7 @@ function NewRegisterForm() {
                                       )}
                                       {index <= 3 && (
                                         <button
+                                          style={buttonStyle}
                                           type="button"
                                           className="btn btn-success m-1"
                                           onClick={() => push("")}
@@ -927,6 +940,7 @@ function NewRegisterForm() {
                                     <div className="col-3">
                                       {index > 0 && (
                                         <button
+                                          style={buttonStyle}
                                           type="button"
                                           className="btn btn-warning m-1"
                                           onClick={() => remove(index)}
@@ -937,6 +951,7 @@ function NewRegisterForm() {
                                       )}
                                       {index <= 3 && (
                                         <button
+                                          style={buttonStyle}
                                           type="button"
                                           className="btn btn-success m-1"
                                           onClick={() => push("")}
@@ -1034,7 +1049,7 @@ function NewRegisterForm() {
                       </div>
                     </div>
                     <div className="row border border-danger mt-2 mb-2 mr-5 ml-3">
-                      <p style={{ color: "red" }} className="col-12">
+                      <p className="col-12 font-weight-bold">
                         Membership Details for Registering Current Members
                       </p>
                       <div className="form-group form-check-inline col-6">
@@ -1073,7 +1088,7 @@ function NewRegisterForm() {
                           component={ValidationError}
                         />
                       </div>
-                      <div className="form-group col-5">
+                      {/* <div className="form-group col-5">
                         <label htmlFor="council">Council Position</label>
                         <Field
                           className={`${handleStyle("council")}`}
@@ -1085,7 +1100,7 @@ function NewRegisterForm() {
                           name="council"
                           component={ValidationError}
                         />
-                      </div>
+                      </div> */}
                     </div>
                     <div className="form-group row">
                       <div className="form-check-inline">
@@ -1208,7 +1223,7 @@ function NewRegisterForm() {
                           }}
                         </Field>
                         <ErrorMessage
-                          name="gender"
+                          name="sendingAddrs"
                           component={ValidationError}
                         />
                       </div>
@@ -1246,7 +1261,7 @@ function NewRegisterForm() {
                       Payment Details
                     </h6>
 
-                    <p style={{ color: "red" }}>
+                    <p className="font-weight-bold">
                       Payment History for Registering Current Members
                     </p>
                     <div className="row border border-danger mt-2 mb-5 mr-5 ml-3 pt-2 pb-2">

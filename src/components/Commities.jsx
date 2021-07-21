@@ -42,16 +42,42 @@ function Commities() {
     setcommittee("");
   };
 
+  const headStyle = {
+    textShadow: "0px 0px 1px #111111",
+  };
+
+  const buttonStyle = {
+    boxShadow: "0px 5px 10px grey",
+    fontWeight: "bold",
+    borderRadius: "40px",
+  };
+
+  const savebuttonStyle = {
+    boxShadow: "0px 5px 10px grey",
+    fontWeight: "bold",
+    borderRadius: "40px",
+    backgroundColor: "#002263",
+    color: "white",
+  };
+
   return (
     <>
-      <div className="row">
+      <div className="row mt-3">
         <Link to="/user/settings">
-          <button className="btn btn-outline-dark">Back</button>
+          <button
+            style={buttonStyle}
+            className="btn btn-outline-dark pl-4 pr-4"
+          >
+            Back
+          </button>
         </Link>
       </div>
+      <h4 className="mb-5 text-center" style={headStyle}>
+        Manage Committees
+      </h4>
       <div className="mt-5">
         <div className="row ml-3">
-          <div className="mr-3">Add New Committee</div>
+          <div className="mr-3 ml-5">Add New Committee</div>
 
           {/* <input onChange={addChange} value={key} name="key" className="form-control col-1" type="text" /> */}
           <input
@@ -62,7 +88,11 @@ function Commities() {
             type="text"
           />
           <div className="input-group-append col-2 mb-3">
-            <button onClick={onAdd} className="btn btn-outline-success">
+            <button
+              style={buttonStyle}
+              onClick={onAdd}
+              className="btn btn-outline-success"
+            >
               +
             </button>
           </div>

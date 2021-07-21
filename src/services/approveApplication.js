@@ -10,7 +10,7 @@ export function approveApplication(data) {
     return http.post(apiEndPoint, data)
     .then(function (response) {
         console.log(response.msg);
-        toast.dark(`${response.data}`);
+        toast.success(`${response.data}`);
         // return response.data.data
     })
     .catch(function (error) {

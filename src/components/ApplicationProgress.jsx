@@ -37,6 +37,7 @@ function ApplicationProgress(props) {
         setenroll(new Date(result.enrollDate).toLocaleDateString());
       }
       console.log("Pro", result);
+      // console.log("Action", );
     }
     fetchData();
   }, []);
@@ -82,22 +83,34 @@ function ApplicationProgress(props) {
           {action == "active" ? (
             <Circle percent={100} status={action} showInfo={false} />
           ) : (
-            action == "success" ||
-            (action == "fail" ? (
-              <Circle percent={100} status={action} />
-            ) : (
-              <Circle showInfo={false} />
-            ))
+            // action == "success" ||
+            // (action == "fail" ? (
+            <Circle percent={100} status={action} />
+            // ) : (
+            //   <Circle showInfo={false} />
+            // ))
           )}
           Action <strong className="mt-3">{enroll}</strong>
         </div>
       </div>
-      {reason && (
+      {reason ? (
         <div className="row mt-5 ml-5">
+          <h4 className="text-center col-12 mb-5">
+            <strong>YOUR APPLICATION HAS BEEN REJECTED !!!...</strong>
+          </h4>
           <div className="col-4">
             <strong>Reasons for Reject Application : </strong>
           </div>
           <div className="col-7">{reason}</div>
+        </div>
+      ) : (
+        <div className="row mt-5 ml-5">
+          <h4 className="text-center">
+            <strong>
+              YOU HAVE SUCCESSFULLY COMPLETED THE MEMBER REGISTRATION PROCESS
+              AND GAINED THE SLAAS MEMBERSHIP !!!...
+            </strong>
+          </h4>
         </div>
       )}
     </div>

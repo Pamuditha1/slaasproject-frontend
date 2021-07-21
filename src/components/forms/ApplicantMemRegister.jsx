@@ -244,7 +244,7 @@ function ApplicantMemRegister(props) {
           <Formik
             className="container mt-5 mb-5"
             initialValues={memberData}
-            // validationSchema= {validationSchema}
+            validationSchema={validationSchema}
             onSubmit={(values) => {
               setNameOfImage(`${values.nic}`);
               setMemberData(values);

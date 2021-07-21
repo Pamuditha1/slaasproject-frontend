@@ -43,6 +43,12 @@ function OneCommityHistory({ comm }) {
     color: "white",
   };
 
+  const buttonStyle = {
+    boxShadow: "0px 5px 10px grey",
+    fontWeight: "bold",
+    borderRadius: "40px",
+  };
+
   return (
     <div>
       <div className="row">
@@ -91,7 +97,10 @@ function OneCommityHistory({ comm }) {
                                 to={`/user/member/profile/${m.membershipNo}`}
                                 target="_blank"
                               >
-                                <button className="btn btn-outline-primary">
+                                <button
+                                  style={buttonStyle}
+                                  className="btn btn-outline-primary"
+                                >
                                   Profile
                                 </button>
                               </Link>

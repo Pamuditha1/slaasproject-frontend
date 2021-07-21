@@ -15,6 +15,8 @@ import {
   faSignOutAlt,
   faUserTie,
   faUserPlus,
+  faChartBar,
+  faChartLine,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
@@ -387,7 +389,7 @@ function SuiteSidebar(props) {
                 </span>
               </Link>
             </Nav.Item>
-            <Nav.Item
+            {/* <Nav.Item
               eventKey="8"
               style={clicked == "reports" ? onClickStyle : s}
               icon={<Icon icon="bar-chart" />}
@@ -400,7 +402,53 @@ function SuiteSidebar(props) {
                   Reports
                 </span>
               </Link>
-            </Nav.Item>
+            </Nav.Item> */}
+            <Dropdown
+              eventKey="8"
+              title="Reports"
+              icon={<Icon icon="pie-chart" />}
+            >
+              <Dropdown.Item
+                eventKey="8-1"
+                style={clicked == "mem-report" ? onClickStyle : s}
+              >
+                <Link
+                  to="/user/reports/membership"
+                  style={clicked == "mem-report" ? onClickLink : linkColor}
+                >
+                  <span onClick={onClick} id="comity">
+                    <FontAwesomeIcon
+                      icon={faChartBar}
+                      size="1x"
+                      className="mr-2"
+                    />
+                    Membership Reports
+                  </span>
+
+                  {/* </p> */}
+                </Link>
+              </Dropdown.Item>
+              <Dropdown.Item
+                eventKey="8-2"
+                style={clicked == "pay-report" ? onClickStyle : s}
+              >
+                <Link
+                  to="/user/reports/payments"
+                  style={clicked == "pay-report" ? onClickLink : linkColor}
+                >
+                  <span onClick={onClick} id="pay-report">
+                    <FontAwesomeIcon
+                      icon={faChartLine}
+                      size="1x"
+                      className="mr-2"
+                    />
+                    Payments Reports
+                  </span>
+
+                  {/* </p> */}
+                </Link>
+              </Dropdown.Item>
+            </Dropdown>
             <Nav.Item
               eventKey="9"
               style={clicked == "settings" ? onClickStyle : s}
