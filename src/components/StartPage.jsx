@@ -15,12 +15,12 @@ import backVideo from "../video/SLAAS.mp4";
 let welcome = {
   // marginTop: "6%",
   // textShadow: "1px 5px 5px white",
-  textShadow: "-5px 5px 5px white",
+  textShadow: "-3px 3px 5px black",
   fontWeight: "bold",
   color: "black",
   paddingTop: "40px",
   fontSize: "50px",
-  zIndex: +2,
+  zIndex: +3,
 };
 
 let backCover = {
@@ -49,7 +49,7 @@ const mainLinkStyle = {
 
 const fontStyle = {
   color: "black",
-  textShadow: "-2px 2px 10px black",
+  textShadow: "-2px 2px 5px black",
 };
 
 class StartPage extends Component {
@@ -107,7 +107,7 @@ class StartPage extends Component {
         </div>
         <div className="col-md col-sm-12 mt-5" style={mainLinkStyle}>
           <a href="https://www.slaas.lk/" target="_blank">
-            <h5 style={fontStyle}>SLAAS Main Site</h5>
+            <h5 style={fontStyle}>SLAAS Home</h5>
           </a>
         </div>
       </div>

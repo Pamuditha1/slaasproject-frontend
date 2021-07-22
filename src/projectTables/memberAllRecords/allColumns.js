@@ -138,9 +138,12 @@ export const COLUMNS = [
         Filter: ColumnFilter
     },
     {
-        Header: 'Fax',
+        Header: 'Fax Number',
         accessor: 'offFax',
         Filter: ColumnFilter,
+        style: {
+            width: '10%'
+        }
     },
     {
         Header: 'Official Email',

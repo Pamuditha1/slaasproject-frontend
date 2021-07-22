@@ -795,7 +795,7 @@ export const MemberProfileWUpdate = (props) => {
           </div>
           <div className="row col-12">
             <p className="col-3">Membership No : </p>
-            <strong className="col-9">{proposer.memNo}</strong>
+            <strong className="col-9">{proposer.membershipNo}</strong>
           </div>
           <div className="row col-12">
             <p className="col-3">Address : </p>
@@ -814,7 +814,7 @@ export const MemberProfileWUpdate = (props) => {
           </div>
           <div className="row col-12">
             <p className="col-3">Membership No : </p>
-            <strong className="col-9">{seconder.memNo}</strong>
+            <strong className="col-9">{seconder.membershipNo}</strong>
           </div>
           <div className="row col-12">
             <p className="col-3">Address : </p>

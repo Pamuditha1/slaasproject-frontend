@@ -187,7 +187,7 @@ export const MemberAllTable = (props) => {
                                 <tr {...headerGroups.getHeaderGroupProps()}>
                                     {
                                         headerGroups.headers.map( (column) => (
-                                            <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                                            <th {...column.getHeaderProps(column.getSortByToggleProps())} style={column.style} >
                                                 {column.render('Header')}
                                                 <span>
                                                     {column.isSorted ? (column.isSortedDesc ? '(D)': '(A)') : ''}

@@ -14,7 +14,7 @@ import { addProfilePic } from "../../services/addMemberProfilePic";
 import { getGrades } from "../../services/getGrades";
 import { getSections } from "../../services/getSections";
 
-function NewRegisterForm() {
+function NewRegisterForm(props) {
   useEffect(() => {
     async function fetchGrades() {
       const gradeRecords = await getGrades();
@@ -189,7 +189,11 @@ function NewRegisterForm() {
     let result = await registerMember(member);
     onImageSubmit();
     setLoading(false);
-    // if(result) setTimeout(function(){ reload() }, 3000);
+    // props.history.push("/user/register-member");
+    if (result)
+      setTimeout(function () {
+        reload();
+      }, 3000);
   };
   const reload = () => {
     window.location.reload(false);
@@ -859,6 +863,7 @@ function NewRegisterForm() {
                                     <div className="col-3">
                                       {index > 0 && (
                                         <button
+                                          style={buttonStyle}
                                           type="button"
                                           className="btn btn-warning m-1"
                                           onClick={() => remove(index)}
