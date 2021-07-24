@@ -169,7 +169,7 @@ export const MemberProfileWUpdate = (props) => {
     <Loader
       style={{ marginLeft: "35%" }}
       type="ThreeDots"
-      color="#00BFFF"
+      color="#8f2032"
       height={300}
       width={300}
     />
@@ -753,7 +753,7 @@ export const MemberProfileWUpdate = (props) => {
               <div className="col-12" key={field.year}>
                 <strong>
                   {field.year} - {field.degree} - {field.disciplines} -{" "}
-                  {field.uni}
+                  {field.university}
                 </strong>
               </div>
             );

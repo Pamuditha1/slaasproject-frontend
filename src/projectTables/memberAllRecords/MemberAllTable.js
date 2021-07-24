@@ -24,10 +24,20 @@ export const MemberAllTable = (props) => {
     const [showFilters, setshowFilters] = useState(false)
 
     useEffect(() => {
+        // async function fetchMembers() {
+        //     setIsLoading(true)
+        //     const records = await getAllMembers()
+        //     setallMembers(records)
+        //     setIsLoading(false)
+        // }
+        // fetchMembers()
         async function fetchMembers() {
             setIsLoading(true)
             const records = await getAllMembers()
-            setallMembers(records)
+            let applicants = records.filter(r => {
+                if(r.status == "Member") return true
+            })
+            setallMembers(applicants)
             setIsLoading(false)
         }
         fetchMembers()
@@ -121,7 +131,7 @@ export const MemberAllTable = (props) => {
                 <>
                     <Loader style={{marginLeft : "35%"}}
                         type="ThreeDots"
-                        color="#00BFFF"
+                        color="#8f2032"
                         height={300}
                         width={300}
                     /> 

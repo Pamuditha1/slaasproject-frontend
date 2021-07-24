@@ -13,7 +13,7 @@ import NewMemberPaymentForm from "./forms/NewMemberPaymentForm";
 import EmailComponent from "./EmailComponent";
 import SendMails from "./SendMails";
 import OutdatedMemberships from "./OutdatedMemberships";
-import UpdateMember from "./UpdateMember";
+// import UpdateMember from "./UpdateMember";
 import Settings from "./Settings";
 import Grades from "./Grades";
 import Sections from "./Sections";
@@ -84,10 +84,10 @@ function UserComponent(props) {
                 // component={MemberProfile}
                 component={MemberProfileWUpdate}
               />
-              <Route
+              {/* <Route
                 path="/user/member/profile/update/:id"
                 component={UpdateMember}
-              />
+              /> */}
               <Route
                 path="/user/members"
                 render={(props) => (

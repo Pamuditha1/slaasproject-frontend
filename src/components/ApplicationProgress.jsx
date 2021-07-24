@@ -85,7 +85,7 @@ function ApplicationProgress(props) {
           ) : (
             // action == "success" ||
             // (action == "fail" ? (
-            <Circle percent={100} status={action} />
+            <Circle percent={100} status={action} showInfo={false} />
             // ) : (
             //   <Circle showInfo={false} />
             // ))
@@ -104,14 +104,16 @@ function ApplicationProgress(props) {
           <div className="col-7">{reason}</div>
         </div>
       ) : (
-        <div className="row mt-5 ml-5">
-          <h4 className="text-center">
-            <strong>
-              YOU HAVE SUCCESSFULLY COMPLETED THE MEMBER REGISTRATION PROCESS
-              AND GAINED THE SLAAS MEMBERSHIP !!!...
-            </strong>
-          </h4>
-        </div>
+        enroll && (
+          <div className="row mt-5 ml-5">
+            <h4 className="text-center">
+              <strong>
+                YOU HAVE SUCCESSFULLY COMPLETED THE MEMBER REGISTRATION PROCESS
+                AND GAINED THE SLAAS MEMBERSHIP !!!...
+              </strong>
+            </h4>
+          </div>
+        )
       )}
     </div>
   );

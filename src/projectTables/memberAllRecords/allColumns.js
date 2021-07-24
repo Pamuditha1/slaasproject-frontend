@@ -107,11 +107,11 @@ export const COLUMNS = [
     //     accessor: 'councilPosition',
     //     Filter: ColumnFilter,
     // },
-    {
-        Header: 'Member Folio Number',
-        accessor: 'memberFolioNo',
-        Filter: ColumnFilter,
-    },
+    // {
+    //     Header: 'Member Folio Number',
+    //     accessor: 'memberFolioNo',
+    //     Filter: ColumnFilter,
+    // },
     {
         Header: 'Designation',
         accessor: 'designation',

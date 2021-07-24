@@ -193,7 +193,7 @@ function NewRegisterForm(props) {
     if (result)
       setTimeout(function () {
         reload();
-      }, 3000);
+      }, 2000);
   };
   const reload = () => {
     window.location.reload(false);

@@ -187,8 +187,7 @@ function RegisterApplicant() {
                     onChange={formik.handleChange}
                     value={formik.values.contact}
                     className="form-control col-11 ml-3"
-                    type="number"
-                    size="10"
+                    type="string"
                     id="contact"
                     name="contact"
                   />

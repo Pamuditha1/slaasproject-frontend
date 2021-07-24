@@ -416,7 +416,7 @@ function SuiteSidebar(props) {
                   to="/user/reports/membership"
                   style={clicked == "mem-report" ? onClickLink : linkColor}
                 >
-                  <span onClick={onClick} id="comity">
+                  <span onClick={onClick} id="mem-report">
                     <FontAwesomeIcon
                       icon={faChartBar}
                       size="1x"

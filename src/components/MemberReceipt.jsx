@@ -282,14 +282,32 @@ function MemberReceipt() {
                 name="yearlyFee"
               />
             </div>
-            {/* <div className="form-group col-6">
-                        <label htmlFor="admissionFee" className="col-5">Admission Fee</label> 
-                        <input onChange={onchange} value={paymentData.admissionFee} className="form-control col-11 ml-3" type="number" id="admissionFee" name="admissionFee"/>
-                    </div>                    
-                    <div className="form-group col-6">
-                        <label htmlFor="idCardFee" className="col-5">ID Card Fee</label> 
-                        <input onChange={onchange} value={paymentData.idCardFee} className="form-control col-11 ml-3" type="number" id="idCardFee" name="idCardFee"/>
-                    </div> */}
+            <div className="form-group col-6">
+              <label htmlFor="admissionFee" className="col-5">
+                Admission Fee
+              </label>
+              <input
+                onChange={onchange}
+                value={paymentData.admissionFee}
+                className="form-control col-11 ml-3"
+                type="number"
+                id="admissionFee"
+                name="admissionFee"
+              />
+            </div>
+            <div className="form-group col-6">
+              <label htmlFor="idCardFee" className="col-5">
+                ID Card Fee
+              </label>
+              <input
+                onChange={onchange}
+                value={paymentData.idCardFee}
+                className="form-control col-11 ml-3"
+                type="number"
+                id="idCardFee"
+                name="idCardFee"
+              />
+            </div>
           </div>
           <div className="row">
             <div className="form-group col-6">

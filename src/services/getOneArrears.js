@@ -5,7 +5,7 @@ import {api} from './api'
 const apiEndPoint = `${api}/user/cal-arrears`;
 
 export function oneCalculateArrears(id) {
-
+    console.log("CALL ID", id)
     return http.get(`${apiEndPoint}/${id}`)
     .then(function (response) {
         toast.success(`${response.data.msg}`);

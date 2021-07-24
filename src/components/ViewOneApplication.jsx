@@ -129,7 +129,7 @@ export const ViewOneApplication = (props) => {
     <Loader
       style={{ marginLeft: "35%" }}
       type="ThreeDots"
-      color="#00BFFF"
+      color="#8f2032"
       height={300}
       width={300}
     />
@@ -290,7 +290,7 @@ export const ViewOneApplication = (props) => {
               <div className="col-12" key={field.year}>
                 <strong>
                   {field.year} - {field.degree} - {field.disciplines} -{" "}
-                  {field.uni}
+                  {field.university}
                 </strong>
               </div>
             );
@@ -305,8 +305,8 @@ export const ViewOneApplication = (props) => {
         >
           Membership Details
         </h6>
-        <p className="col-3">Membership No : </p>
-        <strong className="col-9">{displayMembershipNo}</strong>
+        {/* <p className="col-3">Membership No : </p>
+        <strong className="col-9">{displayMembershipNo}</strong> */}
         <p className="col-3">Grade of Membership : </p>
         <strong className="col-9">{gradeOfMembership}</strong>
         <p className="col-3">Section: </p>

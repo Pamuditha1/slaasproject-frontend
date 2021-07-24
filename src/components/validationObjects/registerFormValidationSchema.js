@@ -7,7 +7,7 @@ const validationSchema = Yup.object({
     firstName: Yup.string().required('First Name is required.'),
     lastName : Yup.string().required('Last Name is required.'),
     gender: Yup.string().required('Gender is required.'),
-    nic : Yup.string().matches(/^([0-9]{9}[x|X|v|V]|[0-9]{12})$/,'Invalid NIC number').required('National Identity Card Number is required.'),
+    nic : Yup.string().matches(/^([0-9]{9}[X|V]|[0-9]{12})$/,'Invalid NIC number').required('National Identity Card Number is required.'),
     dob : Yup.string().required('Date of Birth is required.'),
     resAddOne : Yup.string(), resAddTwo : Yup.string(), resAddThree : Yup.string(), resAddFour : Yup.string(), resAddFive : Yup.string(),
     email: Yup.string().email('Invalid Email').required('Email is required'),

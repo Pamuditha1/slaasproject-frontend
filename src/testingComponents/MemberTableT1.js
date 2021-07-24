@@ -105,7 +105,7 @@ export const MemberTableT1 = () => {
                 isLoading ? 
                 <Loader style={{marginLeft : "35%"}}
                     type="ThreeDots"
-                    color="#00BFFF"
+                    color="#8f2032"
                     height={300}
                     width={300}
                 /> :
