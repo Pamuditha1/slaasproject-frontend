@@ -99,7 +99,7 @@ function OneCommityHistory({ comm }) {
                               >
                                 <button
                                   style={buttonStyle}
-                                  className="btn btn-outline-primary"
+                                  className="btn btn-outline-dark"
                                 >
                                   Profile
                                 </button>

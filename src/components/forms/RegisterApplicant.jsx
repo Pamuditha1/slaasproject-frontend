@@ -23,17 +23,20 @@ function RegisterApplicant() {
       name: Yup.string()
         .min(2, "Mininum 2 characters")
         .max(15, "Maximum 10 characters")
-        .required("Required!"),
-      email: Yup.string().email("Invalid Email").required("Required!"),
+        .required("Applicant Name is Required"),
+      email: Yup.string().email("Invalid Email").required("Email is Required"),
       contact: Yup.string()
-        .length(10, "Should be 10 Numbers")
-        .required("Required!"),
+        .matches(
+          /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
+          "Invalid Contact Number"
+        )
+        .required("Contact Number is Required"),
       password: Yup.string()
         .min(5, "Minimum 5 Characters")
-        .required("Required!"),
+        .required("Password is Required"),
       repeatpassword: Yup.string()
         .oneOf([Yup.ref("password")], "Password's Not Match")
-        .required("Required!"),
+        .required("Repeat Password is Required"),
     }),
     onSubmit: async (values) => {
       console.log("System User Register", values);
@@ -187,7 +190,7 @@ function RegisterApplicant() {
                     onChange={formik.handleChange}
                     value={formik.values.contact}
                     className="form-control col-11 ml-3"
-                    type="string"
+                    type="text"
                     id="contact"
                     name="contact"
                   />
@@ -218,7 +221,7 @@ function RegisterApplicant() {
                     onChange={formik.handleChange}
                     value={formik.values.password}
                     maxlength="10"
-                    minLength="6"
+                    minLength="5"
                     className="form-control col-11 ml-3"
                     type="password"
                     id="password"
@@ -239,7 +242,7 @@ function RegisterApplicant() {
                     value={formik.values.repeatpassword}
                     className="form-control col-11 ml-3"
                     maxlength="10"
-                    minLength="6"
+                    minLength="5"
                     type="password"
                     id="repeatpassword"
                     name="repeatpassword"

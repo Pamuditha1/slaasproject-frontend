@@ -313,7 +313,7 @@ function OneCommittee({ comm }) {
                     >
                       <button
                         style={buttonStyle}
-                        className="btn btn-outline-primary ml-3"
+                        className="btn btn-outline-dark ml-3"
                       >
                         Profile
                       </button>

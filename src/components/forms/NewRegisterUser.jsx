@@ -24,99 +24,37 @@ function NewRegisterUser() {
       userName: Yup.string()
         .min(2, "Mininum 2 characters")
         .max(15, "Maximum 10 characters")
-        .required("Required!"),
-      email: Yup.string().email("Invalid Email").required("Required!"),
-      officeID: Yup.string().required("Required!"),
-      nic: Yup.string().required("Required!"),
+        .required("User Name is Required"),
+      email: Yup.string().email("Invalid Email").required("Email is Required"),
+      officeID: Yup.string().required("Office ID is Required"),
+      nic: Yup.string()
+        .matches(/^([0-9]{9}[X|V]|[0-9]{12})$/, "Invalid NIC")
+        .required("NIC is Required"),
       mobile: Yup.string()
-        .length(10, "Should be 10 Numbers")
-        .required("Required!"),
+        .matches(
+          /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
+          "Invalid Contact Number"
+        )
+        .required("Mobile Contact Number is Required"),
       fixed: Yup.string()
-        .length(10, "Should be 10 Numbers")
-        .required("Required!"),
-      address: Yup.string().required("Required!"),
+        .matches(
+          /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
+          "Invalid Contact Number"
+        )
+        .required("Fixed Contact Number is Required"),
+      address: Yup.string().required("Address is Required"),
       password: Yup.string()
         .min(5, "Minimum 5 Characters")
-        .required("Required!"),
+        .required("Password is Required"),
       repeatpassword: Yup.string()
         .oneOf([Yup.ref("password")], "Password's Not Match")
-        .required("Required!"),
+        .required("Repeat Password is Required"),
     }),
     onSubmit: async (values) => {
       console.log("System User Register", values);
       await addUser(values);
     },
   });
-
-  // const [userData, setuserData] = useState({
-  //   userName: "",
-  //   officeID: "",
-  //   email: "",
-  //   nic: "",
-  //   mobile: "",
-  //   fixed: "",
-  //   address: "",
-
-  //   password: "",
-  //   firstpassword: "",
-  //   repeatpassword: "",
-  //   passError: "",
-  //   type: "applicant",
-  // });
-  // const [allowSubmit, setallowSubmit] = useState(true);
-  // const history = useHistory();
-
-  // const onchange = (e) => {
-  //   if (e.target.name == "password") {
-  //     setuserData({
-  //       ...userData,
-  //       ["firstpassword"]: e.target.value,
-  //     });
-  //     return;
-  //   }
-
-  //   if (e.target.name == "repeatpassword") {
-  //     if (e.target.value == userData.firstpassword) {
-  //       setuserData({
-  //         ...userData,
-  //         ["repeatpassword"]: e.target.value,
-  //         ["password"]: e.target.value,
-  //         ["passError"]: "",
-  //       });
-  //       setallowSubmit(true);
-  //       return;
-  //     } else {
-  //       setuserData({
-  //         ...userData,
-  //         ["repeatpassword"]: e.target.value,
-  //         ["passError"]: "Password is different to above",
-  //       });
-  //       setallowSubmit(false);
-  //       return;
-  //     }
-  //   }
-
-  //   setuserData({
-  //     ...userData,
-  //     [e.target.name]: e.target.value,
-  //   });
-  //   // console.log(userData)
-  // };
-
-  // const submit = async (e) => {
-  //   e.preventDefault();
-  //   console.log(userData);
-  //   // setLoading(true);
-  //   await addUser(userData);
-  //   // if (type) {
-  //   //   localStorage.setItem("user", type);
-  //   //   history.replace("/applicant/login");
-  //   // }
-
-  //   // // addProduct(userData)
-  //   // console.log(userData);
-  //   // setLoading(false);
-  // };
 
   let linkStyle = {
     textDecoration: "none",
@@ -249,8 +187,7 @@ function NewRegisterUser() {
                     onChange={formik.handleChange}
                     value={formik.values.mobile}
                     className="form-control col-11 ml-3"
-                    type="number"
-                    size="10"
+                    type="text"
                     id="mobile"
                     name="mobile"
                   />
@@ -268,8 +205,7 @@ function NewRegisterUser() {
                     onChange={formik.handleChange}
                     value={formik.values.fixed}
                     className="form-control col-10 ml-3"
-                    type="number"
-                    size="10"
+                    type="text"
                     id="fixed"
                     name="fixed"
                   />
@@ -305,7 +241,7 @@ function NewRegisterUser() {
                     onChange={formik.handleChange}
                     value={formik.values.password}
                     maxlength="10"
-                    minLength="6"
+                    minLength="5"
                     className="form-control col-10 ml-3"
                     type="password"
                     id="password"
@@ -326,7 +262,7 @@ function NewRegisterUser() {
                     value={formik.values.repeatpassword}
                     className="form-control col-10 ml-3"
                     maxlength="10"
-                    minLength="6"
+                    minLength="5"
                     type="password"
                     id="repeatpassword"
                     name="repeatpassword"
